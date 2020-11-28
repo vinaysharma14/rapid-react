@@ -1,19 +1,29 @@
-import { run, input } from './utils';
+import { run } from './utils';
+import { handleSetup, mappedAnswers } from './scripts';
 
 const init = async () => {
   console.log('Welcome to CRA Setup!\n');
 
   try {
-    // ask user for app name
-    const appName = await input('Let\'s start with your app name:');
+    // ask user for app information via an interactive setup
+    const inputs = await handleSetup();
 
-    // create a react app with the name
-    await run('\nCreating React app...', 'npx', ['create-react-app', appName], 'React app has been successfully created!');
+    // map the raw input in a proper structure
+    const {
+      appName,
+      language,
+      dependencies,
+      devDependencies,
+    } = mappedAnswers(inputs);
 
-    //TODO: replace hardcoded dependencies by dynamic ones
+    // create a react app with the name and typescript template flag conditionally
+    await run('\nCreating React app...', 'npx', ['create-react-app', appName, ...language === 'Typescript' ? ['--template typescript'] : []], 'React app has been successfully created!');
 
     // install dependencies in the app directory
-    await run('Installing dependencies...', 'npm', ['i', 'moment', 'lodash'], 'Dependencies have been successfully installed!', appName);
+    await run('Installing dependencies...', 'npm', ['i', ...dependencies], 'Dependencies have been successfully installed!', appName);
+
+    // install dev dependencies in the app directory
+    await run('Installing dev dependencies...', 'npm', ['i', '-D', ...devDependencies], 'Dependencies have been successfully installed!', appName);
   } catch (error) {
     console.error(error.message);
   }
