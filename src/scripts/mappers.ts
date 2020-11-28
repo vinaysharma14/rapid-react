@@ -76,6 +76,9 @@ const mappedAnswers = (answers: Answers) => {
     }
   })
 
+  // next line left blank before spinners kick in
+  console.log('\n');
+
   return {
     appName,
     language,
