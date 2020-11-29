@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 const heading = 'Welcome to CRA Setup! A zero config lightweight CLI for automating CRA boilerplate setup.';
 
 const features = [
@@ -8,16 +10,19 @@ const features = [
   'Store Setup',
 ];
 
-const info = 'This utility will walk you through steps to configure the CRA boilerplate as per your requirements.';
+const info = 'This utility will walk you through steps to configure a CRA boilerplate as per your requirements.';
 
-const done = 'Setup is complete! Thanks for using CRA Setup. Happy Coding! </>';
+const completeIn = 'Setup is complete! You can check app in';
 
-const issues = 'Raise an issue here: https://github.com/vinaysharma14/cra-setup/issues';
+const thanks = 'Thanks for using CRA Setup. Happy Coding! </>';
+
+const issues = `Raise an issue here: ${chalk.green('https://github.com/vinaysharma14/cra-setup/issues')}`;
 
 export {
   info,
-  done,
+  thanks,
   issues,
   heading,
   features,
+  completeIn,
 }
