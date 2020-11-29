@@ -1,3 +1,4 @@
+import ora from 'ora';
 import { spawn } from 'child_process';
 
 export const run = (
@@ -10,12 +11,16 @@ export const run = (
   return new Promise((resolve, reject) => {
     const process = spawn(command, args, { shell: true, cwd });
 
-    console.log(message);
+    const spinner = ora(`${message}...`).start();
+    spinner.start();
 
-    process.addListener('error', (error) => reject(error))
+    process.addListener('error', (error) => {
+      spinner.fail();
+      reject(error);
+    })
 
     process.addListener('exit', () => {
-      console.log(`${success}\n\n`);
+      spinner.succeed(success);
       resolve('');
     })
   })
