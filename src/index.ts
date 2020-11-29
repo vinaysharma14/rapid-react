@@ -27,7 +27,8 @@ const init = async () => {
     } = mappedAnswers(inputs);
 
     // compute directory
-    const directory = __dirname.replace('cra-setup/src', appName);
+    const [root] = __dirname.split('/').reverse();
+    const directory = __dirname.replace(`cra-setup/${root}`, appName);
 
     // inform user about directory where app would be installed
     console.log(`\nSetting up a new CRA in ${chalk.green(directory)}\n`);
