@@ -8,6 +8,11 @@ const ROUTING = {
   types: '@types/react-router-dom',
 }
 
+const EXPORT_PREFERENCE = {
+  named: 'named',
+  default: 'default',
+}
+
 const STATE_MANAGEMENT = {
   MobX: {
     lib: 'mobx',
@@ -49,4 +54,5 @@ export {
   LANGUAGES,
   REDUX_ADDONS,
   STATE_MANAGEMENT,
+  EXPORT_PREFERENCE,
 }

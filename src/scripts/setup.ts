@@ -1,6 +1,11 @@
 import inquirer from 'inquirer';
 
-import { LANGUAGES, STATE_MANAGEMENT, REDUX_ADDONS } from '../constants';
+import {
+  LANGUAGES,
+  REDUX_ADDONS,
+  STATE_MANAGEMENT,
+  EXPORT_PREFERENCE
+} from '../constants';
 
 export const handleSetup = async () => {
   return await inquirer.prompt([
@@ -17,10 +22,23 @@ export const handleSetup = async () => {
       message: 'Enter the app name:',
     },
     {
+      type: 'list',
+      name: 'exportPreference',
+      message: 'Choose preferred export:',
+      choices: [EXPORT_PREFERENCE.named, EXPORT_PREFERENCE.default],
+    },
+    {
       type: 'confirm',
       default: 'yes',
       name: 'isRoutingNeeded',
       message: 'Do you need routing?',
+    },
+    {
+      type: 'input',
+      name: 'routes',
+      default: 'home login about',
+      message: 'Enter space separated route names:',
+      when: (answers: any) => answers.isRoutingNeeded,
     },
     {
       type: 'list',

@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 
 import { run } from './utils';
-import { handleSetup, mappedAnswers } from './scripts';
+import { handleSetup, mappedAnswers, generateScaffoldConfig } from './scripts';
 import { info, heading, features, thanks, issues, completeIn } from './constants';
 
 const init = async () => {
@@ -21,15 +21,20 @@ const init = async () => {
 
     // map the raw input in a proper structure
     const {
+      routes,
       appName,
       language,
       dependencies,
+      defaultExport,
       devDependencies,
     } = mappedAnswers(inputs);
 
     // compute directory
     const [root] = __dirname.split('/').reverse();
     const directory = __dirname.replace(`cra-setup/${root}`, appName);
+
+    // generate folder structure
+    generateScaffoldConfig(routes, language === 'Typescript', defaultExport);
 
     // inform user about directory where app would be installed
     console.log(`\nSetting up a new CRA in ${chalk.green(directory)}\n`);

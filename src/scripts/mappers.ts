@@ -1,19 +1,28 @@
 import { stringToArray, removeDuplicatesFromArr } from "../utils";
-import { LANGUAGES, STATE_MANAGEMENT, REDUX_ADDONS, ROUTING } from "../constants";
+
+import {
+  ROUTING,
+  LANGUAGES,
+  REDUX_ADDONS,
+  STATE_MANAGEMENT,
+  EXPORT_PREFERENCE
+} from "../constants";
 
 interface Answers {
+  routes?: string;
   appName: string;
   dependencies: string;
   devDependencies: string;
   isRoutingNeeded: boolean;
   reduxAddons?: [keyof typeof REDUX_ADDONS];
   stateManagement: keyof typeof STATE_MANAGEMENT;
+  exportPreference: keyof typeof EXPORT_PREFERENCE,
   language: typeof LANGUAGES[keyof typeof LANGUAGES];
 }
 
 const mappedAnswers = (answers: Answers) => {
   // TODO: fix any type
-  let dependencies: any = [], devDependencies: any = [];
+  let dependencies: any = [], devDependencies: any = [], routes: string[] = [];
 
   const {
     appName,
@@ -21,6 +30,8 @@ const mappedAnswers = (answers: Answers) => {
     reduxAddons,
     isRoutingNeeded,
     stateManagement,
+    exportPreference,
+    routes: routesInput,
     dependencies: setupDependencies,
     devDependencies: setupDevDependencies,
   } = answers;
@@ -42,10 +53,20 @@ const mappedAnswers = (answers: Answers) => {
     devDependencies = devDependencies.filter((value: string) => !value.startsWith('@types/'));
   }
 
-  // add routing dependencies if chosen
   if (isRoutingNeeded) {
+    // add routing dependencies
     dependencies.push(ROUTING.lib);
     devDependencies.push(ROUTING.types);
+
+    // construct routes config
+    if (routesInput) {
+      // remove extra white space and duplicates in routes
+      let routesArr = stringToArray(routesInput);
+      routes = removeDuplicatesFromArr(routesArr);
+
+      // map routes with capitalized first letter of each
+      routes = routes.map((route) => `${route.charAt(0).toUpperCase()}${route.slice(1)}`);
+    }
   }
 
   // add state management and it's binding to the list of dependencies
@@ -77,11 +98,13 @@ const mappedAnswers = (answers: Answers) => {
   })
 
   return {
+    routes,
     appName,
     language,
     dependencies,
     devDependencies,
     isRoutingNeeded,
+    defaultExport: exportPreference === EXPORT_PREFERENCE.default,
   }
 }
 
