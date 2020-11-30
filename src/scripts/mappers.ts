@@ -100,10 +100,10 @@ const mappedAnswers = (answers: Answers) => {
   return {
     routes,
     appName,
-    language,
     dependencies,
     devDependencies,
     isRoutingNeeded,
+    typescriptUsed: language === LANGUAGES.typescript,
     defaultExport: exportPreference === EXPORT_PREFERENCE.default,
   }
 }

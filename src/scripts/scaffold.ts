@@ -7,10 +7,14 @@ export const generateScaffoldConfig = (routesArr: string[], ts: boolean, default
   const [cmpExt, fileExt] = [ts ? 'tsx' : 'js', ts ? 'ts' : 'js'];
 
   return {
-    router: routerTemplate(routesArr, ts, defaultExport),
+    router: [{
+      name: `index.${cmpExt}`,
+      data: routerTemplate(routesArr, ts, defaultExport)
+    }],
     routes: routesArr.map((route) => ({
-      file: `${route}.${cmpExt}`,
+      name: `${route}.${cmpExt}`,
       data: componentTemplate(route, ts, defaultExport)
+      // TODO: conditionally add an index file here incase of named exports
     }))
   }
 };

@@ -1,3 +1,5 @@
+// TODO: move below to a messages folder
+
 import chalk from "chalk";
 
 const heading = 'Welcome to CRA Setup! A zero config lightweight CLI for automating CRA boilerplate setup.';

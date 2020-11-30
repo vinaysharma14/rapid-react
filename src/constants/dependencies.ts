@@ -9,8 +9,8 @@ const ROUTING = {
 }
 
 const EXPORT_PREFERENCE = {
-  named: 'named',
-  default: 'default',
+  named: 'Named',
+  default: 'Default',
 }
 
 const STATE_MANAGEMENT = {

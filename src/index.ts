@@ -2,8 +2,22 @@
 import chalk from 'chalk';
 
 import { run } from './utils';
-import { handleSetup, mappedAnswers, generateScaffoldConfig } from './scripts';
-import { info, heading, features, thanks, issues, completeIn } from './constants';
+
+import {
+  info,
+  thanks,
+  issues,
+  heading,
+  features,
+  completeIn
+} from './constants';
+
+import {
+  handleSetup,
+  mappedAnswers,
+  writeFolderStructure,
+  generateScaffoldConfig
+} from './scripts';
 
 const init = async () => {
   // heading
@@ -23,9 +37,9 @@ const init = async () => {
     const {
       routes,
       appName,
-      language,
       dependencies,
       defaultExport,
+      typescriptUsed,
       devDependencies,
     } = mappedAnswers(inputs);
 
@@ -33,14 +47,19 @@ const init = async () => {
     const [root] = __dirname.split('/').reverse();
     const directory = __dirname.replace(`cra-setup/${root}`, appName);
 
-    // generate folder structure
-    generateScaffoldConfig(routes, language === 'Typescript', defaultExport);
+    // generate folder structure scaffold
+    const scaffoldConfig = generateScaffoldConfig(routes, typescriptUsed, defaultExport);
 
     // inform user about directory where app would be installed
     console.log(`\nSetting up a new CRA in ${chalk.green(directory)}\n`);
 
+    // TODO: place commands in constants and outputs as async messages with success & error cases
+
     // create a react app with the name and typescript template flag conditionally
-    await run('Installing CRA boilerplate', 'npx', ['create-react-app', appName, ...language === 'Typescript' ? ['--template typescript'] : []], 'CRA boilerplate successfully installed!');
+    await run('Installing CRA boilerplate', 'npx', ['create-react-app', appName, ...typescriptUsed ? ['--template typescript'] : []], 'CRA boilerplate successfully installed!');
+
+    // write the folder structure in project directory using the scaffold config
+    await writeFolderStructure(appName, scaffoldConfig);
 
     // install dependencies in the app directory
     await run('Installing dependencies', 'npm', ['i', ...dependencies], 'Dependencies successfully installed!', appName);
