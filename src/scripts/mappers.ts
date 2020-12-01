@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 import { stringToArray, removeDuplicatesFromArr } from "../utils";
 
 import {
@@ -66,6 +68,10 @@ const mappedAnswers = (answers: Answers) => {
 
       // map routes with capitalized first letter of each
       routes = routes.map((route) => `${route.charAt(0).toUpperCase()}${route.slice(1)}`);
+    } else {
+      // add a dummy route if user doesn't enter any
+      routes = ['Foo'];
+      console.log(chalk.cyan('\nA dummy route \'Foo\' has been added since you didn\'t enter any route(s)'))
     }
   }
 
