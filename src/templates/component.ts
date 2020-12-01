@@ -1,3 +1,4 @@
+import { toKebabCase } from '../utils';
 import { commonTemplates } from './common';
 
 export const componentTemplate = (name: string, ts: boolean, defaultExport: boolean) => {
@@ -8,7 +9,7 @@ export const componentTemplate = (name: string, ts: boolean, defaultExport: bool
   } = commonTemplates(name, ts, defaultExport);
 
   return `${rootImport}${cmpDefinition}
-  <div className='${name.toLowerCase()}-container'>
+  <div className='${toKebabCase(name)}-container'>
   {/* JSX goes here */}
   </div>
 );
