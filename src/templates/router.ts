@@ -14,7 +14,9 @@ export const routerTemplate = (routes: string[], ts: boolean, namedExport: boole
   BrowserRouter as Router,
 } from 'react-router-dom';
 
-${routes.map((route) => `import ${route} from '..routes/${route}';`).join('\n')}
+${namedExport ? `export {
+${routes.map(route => `  ${route},`).join('\n')}  
+} from '../routes';` : routes.map((route) => `import ${route} from '..routes/${route}';`).join('\n')}
 
 ${cmpDefinition}
   <Router>

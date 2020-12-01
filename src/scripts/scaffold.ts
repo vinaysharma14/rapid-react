@@ -1,4 +1,4 @@
-import { componentTemplate, routerTemplate } from '../templates';
+import { componentTemplate, rootExportTemplate, routerTemplate } from '../templates';
 
 // TODO: stylesheets based on CSS script type b/w CSS and SCSS(SASS)
 
@@ -11,10 +11,17 @@ export const generateScaffoldConfig = (routesArr: string[], ts: boolean, namedEx
       name: `index.${cmpExt}`,
       data: routerTemplate(routesArr, ts, namedExport)
     }],
-    routes: routesArr.map((route) => ({
-      name: `${route}.${cmpExt}`,
-      data: componentTemplate(route, ts, namedExport)
-      // TODO: conditionally add an index file here incase of named exports
-    }))
+    routes: [
+      // route components
+      ...routesArr.map((route) => ({
+        name: `${route}.${cmpExt}`,
+        data: componentTemplate(route, ts, namedExport),
+      })),
+      // conditionally add a root export file in case of named exports
+      ...namedExport ? [{
+        name: `index.${fileExt}`,
+        data: rootExportTemplate('routes', routesArr)
+      }] : [],
+    ]
   }
 };
