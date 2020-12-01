@@ -37,8 +37,8 @@ const init = async () => {
     const {
       routes,
       appName,
+      namedExport,
       dependencies,
-      defaultExport,
       typescriptUsed,
       devDependencies,
     } = mappedAnswers(inputs);
@@ -48,7 +48,7 @@ const init = async () => {
     const directory = __dirname.replace(`cra-setup/${root}`, appName);
 
     // generate folder structure scaffold
-    const scaffoldConfig = generateScaffoldConfig(routes, typescriptUsed, defaultExport);
+    const scaffoldConfig = generateScaffoldConfig(routes, typescriptUsed, namedExport);
 
     // inform user about directory where app would be installed
     console.log(`\nSetting up a new CRA in ${chalk.green(directory)}\n`);

@@ -104,7 +104,7 @@ const mappedAnswers = (answers: Answers) => {
     devDependencies,
     isRoutingNeeded,
     typescriptUsed: language === LANGUAGES.typescript,
-    defaultExport: exportPreference === EXPORT_PREFERENCE.default,
+    namedExport: exportPreference === EXPORT_PREFERENCE.named,
   }
 }
 

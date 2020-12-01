@@ -1,12 +1,12 @@
 import { toKebabCase } from '../utils';
 import { commonTemplates } from './common';
 
-export const routerTemplate = (routes: string[], ts: boolean, defaultExport: boolean) => {
+export const routerTemplate = (routes: string[], ts: boolean, namedExport: boolean) => {
   const {
     cmpExport,
     rootImport,
     cmpDefinition,
-  } = commonTemplates('Routes', ts, defaultExport);
+  } = commonTemplates('Routes', ts, namedExport);
 
   return `${rootImport}import {
   Route,
