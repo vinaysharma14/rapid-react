@@ -45,18 +45,18 @@ const init = async () => {
 
     // compute directory
     const [root] = __dirname.split('/').reverse();
-    const directory = __dirname.replace(`cra-setup/${root}`, appName);
+    const directory = __dirname.replace(`react-cli/${root}`, appName);
 
     // generate folder structure scaffold
     const scaffoldConfig = generateScaffoldConfig(routes, typescriptUsed, namedExport);
 
     // inform user about directory where app would be installed
-    console.log(`\nSetting up a new CRA in ${chalk.green(directory)}\n`);
+    console.log(`\nSetting up a new create-react-app in ${chalk.green(directory)}\n`);
 
     // TODO: place commands in constants and outputs as async messages with success & error cases
 
     // create a react app with the name and typescript template flag conditionally
-    await run('Installing CRA boilerplate', 'npx', ['create-react-app', appName, ...typescriptUsed ? ['--template typescript'] : []], 'CRA boilerplate successfully installed!');
+    await run('Installing create-react-app', 'npx', ['create-react-app', appName, ...typescriptUsed ? ['--template typescript'] : []], 'Create react app successfully installed!');
 
     // write the folder structure in project directory using the scaffold config
     await writeFolderStructure(appName, scaffoldConfig);
