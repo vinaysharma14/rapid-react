@@ -2,16 +2,16 @@ import ora from 'ora';
 import { spawn } from 'child_process';
 
 export const run = (
-  message: string,
-  command: string,
-  args: string[],
+  msg: string,
   success: string,
+  cmd: string,
+  args: string[],
   cwd?: string
 ): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const process = spawn(command, args, { shell: true, cwd });
+    const process = spawn(cmd, args, { shell: true, cwd });
 
-    const spinner = ora(`${message}...`).start();
+    const spinner = ora(`${msg}...`).start();
     spinner.start();
 
     process.addListener('error', (error) => {

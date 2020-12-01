@@ -2,15 +2,8 @@
 import chalk from 'chalk';
 
 import { run } from './utils';
-
-import {
-  info,
-  thanks,
-  issues,
-  heading,
-  features,
-  completeIn
-} from './constants';
+import { commands } from './constants';
+import { messages, features } from './messages';
 
 import {
   handleSetup,
@@ -20,14 +13,18 @@ import {
 } from './scripts';
 
 const init = async () => {
-  // heading
-  console.log(`\n${heading}\n`);
+  const {
+    welcome,
+    walkThrough,
+    complete,
+    thanks,
+    raiseIssue,
+  } = messages;
 
-  // features
+  // greetings
+  console.log(`\n${welcome}\n`);
   features.forEach((value, index) => console.log(`${chalk.green('✔')} ${value} ${index === features.length - 1 ? '\n' : ''}`));
-
-  // info
-  console.log(`${chalk.cyan(info)}\n`)
+  console.log(`${chalk.cyan(walkThrough)}\n`)
 
   try {
     // ask user for app information via an interactive setup
@@ -39,8 +36,8 @@ const init = async () => {
       appName,
       namedExport,
       dependencies,
-      typescriptUsed,
       devDependencies,
+      typescriptUsed: ts,
     } = mappedAnswers(inputs);
 
     // compute directory
@@ -48,29 +45,50 @@ const init = async () => {
     const directory = __dirname.replace(`react-cli/${root}`, appName);
 
     // generate folder structure scaffold
-    const scaffoldConfig = generateScaffoldConfig(routes, typescriptUsed, namedExport);
+    const scaffoldConfig = generateScaffoldConfig(routes, ts, namedExport);
 
     // inform user about directory where app would be installed
     console.log(`\nSetting up a new create-react-app in ${chalk.green(directory)}\n`);
 
-    // TODO: place commands in constants and outputs as async messages with success & error cases
+    const {
+      installReact,
+      installDependencies,
+      installDevDependencies,
+    } = commands;
 
     // create a react app with the name and typescript template flag conditionally
-    await run('Installing create-react-app', 'npx', ['create-react-app', appName, ...typescriptUsed ? ['--template typescript'] : []], 'Create react app successfully installed!');
+    await run(
+      installReact.msg,
+      installReact.success,
+      installReact.cmd,
+      [...installReact.args, appName, ...ts ? ['--template typescript'] : []],
+    );
 
     // write the folder structure in project directory using the scaffold config
     await writeFolderStructure(appName, scaffoldConfig);
 
     // install dependencies in the app directory
-    await run('Installing dependencies', 'npm', ['i', ...dependencies], 'Dependencies successfully installed!', appName);
+    await run(
+      installDependencies.msg,
+      installDependencies.success,
+      installDependencies.cmd,
+      [...installDependencies.args, ...dependencies],
+      appName,
+    );
 
     // install dev dependencies in the app directory
-    await run('Installing dev dependencies', 'npm', ['i', '-D', ...devDependencies], 'Dev dependencies successfully installed!', appName);
+    await run(
+      installDevDependencies.msg,
+      installDevDependencies.success,
+      installDevDependencies.cmd,
+      [...installDevDependencies.args, ...devDependencies],
+      appName,
+    );
 
     // ending note
-    console.log(`\n${completeIn} ${chalk.green(directory)}\n`);
+    console.log(`\n${complete} ${chalk.green(directory)}\n`);
     console.log(thanks);
-    console.log(`${issues}\n`);
+    console.log(`${raiseIssue}\n`);
   } catch (error) {
     console.error(error.message);
   }
