@@ -1,2 +1,2 @@
-export * from './greetings';
+export * from './commands';
 export * from './dependencies';
