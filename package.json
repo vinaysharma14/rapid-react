@@ -1,5 +1,5 @@
 {
-  "name": "cra-setup",
+  "name": "@react/cli",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -10,17 +10,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vinaysharma14/cra-setup.git"
+    "url": "https://github.com/vinaysharma14/react-cli.git"
   },
   "author": "vinay sharma",
   "license": "ISC",
   "bin": {
-    "cra-setup": "./lib/index.js"
+    "react": "./lib/index.js"
   },
   "bugs": {
-    "url": "https://github.com/vinaysharma14/cra-setup/issues"
+    "url": "https://github.com/vinaysharma14/react-cli/issues"
   },
-  "homepage": "https://github.com/vinaysharma14/cra-setup#readme",
+  "homepage": "https://github.com/vinaysharma14/react-cli#readme",
   "dependencies": {
     "chalk": "^4.1.0",
     "inquirer": "^7.3.3",
