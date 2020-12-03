@@ -1,6 +1,7 @@
 import inquirer from 'inquirer';
 
 import {
+  STYLES,
   LANGUAGES,
   REDUX_ADDONS,
   STATE_MANAGEMENT,
@@ -26,6 +27,12 @@ export const handleSetup = async () => {
       name: 'exportPreference',
       message: 'Choose preferred export:',
       choices: [EXPORT_PREFERENCE.named, EXPORT_PREFERENCE.default],
+    },
+    {
+      type: 'list',
+      name: 'stylingPreference',
+      choices: [STYLES.scss, STYLES.css],
+      message: 'Choose preferred style scripting:',
     },
     {
       type: 'confirm',
