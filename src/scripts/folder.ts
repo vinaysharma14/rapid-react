@@ -1,28 +1,47 @@
+import { ScaffoldConfig } from '../types';
 import { createDir, writeToFile } from '../utils'
-import { generateScaffoldConfig } from './scaffold';
+
+const directories: { path: string }[] = [];
+const files: { path: string, data: string }[] = [];
+
+const flattenScaffoldConfig = (
+  dir: string,
+  children: ScaffoldConfig['children'],
+) => {
+  if (typeof children === 'string') {
+    // return the file with it's path
+    return { path: dir, isFile: true };
+  } else {
+    // recursively traverse children until a file is not found
+    children.reverse().forEach(({ name, children }) => {
+      const { path, isFile } = flattenScaffoldConfig(`${dir}/${name}`, children);
+
+      if (isFile && typeof children === 'string') {
+        // maintain all files in an array with path & data
+        files.push({ path, data: children, });
+      }
+      else {
+        // maintain all directories with path
+        directories.push({ path });
+      }
+    });
+
+    // return the directory with it's path
+    return { path: dir, isFile: false };
+  }
+};
+
 
 export const writeFolderStructure = async (
   projectName: string,
-  // TODO: fix any type with ReturnType<typeof generateScaffoldConfig>
-  scaffoldConfig: any,
+  scaffoldConfig: ScaffoldConfig[],
 ) => {
-  // array of directories in project
-  const directories = Object.keys(scaffoldConfig);
+  // flatten the nested scaffold into arrays of dir and files
+  flattenScaffoldConfig(projectName, scaffoldConfig);
 
-  // array of promises to write files
-  const dirPromises = directories.map(dir => createDir(`${projectName}/src/${dir}`, true));
+  // write all the directories and the sub-directories first
+  await Promise.all(directories.map(({ path }) => createDir(path, true)));
 
-  // array of promises to write files
-  const filePromises: ReturnType<typeof writeToFile>[] = [];
-
-  // populate file write promises array
-  directories.forEach(dir => {
-    scaffoldConfig[dir].forEach(({ name, data }: { name: string, data: string }) => {
-      filePromises.push(writeToFile(`${projectName}/src/${dir}/${name}`, data));
-    })
-  })
-
-  // create all the directories and then write files
-  await Promise.all(dirPromises);
-  await Promise.all(filePromises);
+  // write all the files afterwards
+  await Promise.all(files.map(({ path, data }) => writeToFile(path, data)));
 }
