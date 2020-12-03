@@ -1,11 +1,16 @@
 import { ScaffoldConfig } from '../types';
-import { componentTemplate, rootExportTemplate, routerTemplate } from '../templates';
+import { componentTemplate, rootExportTemplate, routerTemplate, stylesheetTemplate } from '../templates';
 
-// TODO: stylesheets based on CSS script type b/w CSS and SCSS(SASS)
-
-export const generateScaffoldConfig = (routesArr: string[], ts: boolean, namedExport: boolean): ScaffoldConfig[] => {
-  // component and general file extensions
-  const [cmpExt, fileExt] = [ts ? 'tsx' : 'js', ts ? 'ts' : 'js'];
+export const generateScaffoldConfig = (
+  routesArr: string[],
+  ts: boolean,
+  namedExport: boolean,
+  scss: boolean,
+): ScaffoldConfig[] => {
+  // file extensions
+  const cmpExt = ts ? 'tsx' : 'js';         // component file
+  const fileExt = ts ? 'ts' : 'js';         // general file
+  const stylesExt = scss ? 'scss' : 'css';  // stylesheet
 
   return [
     {
@@ -20,10 +25,17 @@ export const generateScaffoldConfig = (routesArr: string[], ts: boolean, namedEx
     {
       name: 'routes',
       children: [
-        // route components
         ...routesArr.map(route => ({
-          name: `${route}.${cmpExt}`,
-          children: componentTemplate(route, ts, namedExport),
+          name: route,
+          children: [{
+            // component
+            name: `index.${cmpExt}`,
+            children: componentTemplate(route, ts, namedExport, stylesExt),
+          }, {
+            // stylesheet
+            name: `styles.${stylesExt}`,
+            children: stylesheetTemplate(route),
+          }],
         })),
         // conditionally add a root export file in case of named exports
         ...namedExport ? [{

@@ -6,12 +6,17 @@ const LANGUAGES = {
 const ROUTING = {
   lib: 'react-router-dom',
   types: '@types/react-router-dom',
-}
+};
 
 const EXPORT_PREFERENCE = {
   named: 'Named',
   default: 'Default',
-}
+};
+
+const STYLES = {
+  css: 'CSS',
+  scss: 'SCSS',
+} as const;
 
 const STATE_MANAGEMENT = {
   MobX: {
@@ -50,6 +55,7 @@ const REDUX_ADDONS = {
 } as const;
 
 export {
+  STYLES,
   ROUTING,
   LANGUAGES,
   REDUX_ADDONS,

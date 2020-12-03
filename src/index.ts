@@ -34,6 +34,7 @@ const init = async () => {
     const {
       routes,
       appName,
+      scssUsed,
       namedExport,
       dependencies,
       devDependencies,
@@ -45,7 +46,7 @@ const init = async () => {
     const directory = __dirname.replace(`react-cli/${root}`, appName);
 
     // generate folder structure scaffold
-    const scaffoldConfig = generateScaffoldConfig(routes, ts, namedExport);
+    const scaffoldConfig = generateScaffoldConfig(routes, ts, namedExport, scssUsed);
 
     // inform user about directory where app would be installed
     console.log(`\nSetting up a new create-react-app in ${chalk.green(directory)}\n`);

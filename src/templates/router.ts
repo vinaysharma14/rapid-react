@@ -8,7 +8,9 @@ export const routerTemplate = (routes: string[], ts: boolean, namedExport: boole
     cmpDefinition,
   } = commonTemplates('Routes', ts, namedExport);
 
-  return `${rootImport}import {
+  return `${rootImport}
+
+import {
   Route,
   Switch,
   BrowserRouter as Router,
