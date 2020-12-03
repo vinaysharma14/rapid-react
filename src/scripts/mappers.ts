@@ -3,6 +3,7 @@ import chalk from "chalk";
 import { stringToArray, removeDuplicatesFromArr } from "../utils";
 
 import {
+  STYLES,
   ROUTING,
   LANGUAGES,
   REDUX_ADDONS,
@@ -20,6 +21,7 @@ interface Answers {
   stateManagement: keyof typeof STATE_MANAGEMENT;
   exportPreference: keyof typeof EXPORT_PREFERENCE,
   language: typeof LANGUAGES[keyof typeof LANGUAGES];
+  stylingPreference: typeof STYLES[keyof typeof STYLES],
 }
 
 const mappedAnswers = (answers: Answers) => {
@@ -33,6 +35,7 @@ const mappedAnswers = (answers: Answers) => {
     isRoutingNeeded,
     stateManagement,
     exportPreference,
+    stylingPreference,
     routes: routesInput,
     dependencies: setupDependencies,
     devDependencies: setupDevDependencies,
@@ -109,6 +112,7 @@ const mappedAnswers = (answers: Answers) => {
     dependencies,
     devDependencies,
     isRoutingNeeded,
+    scssUsed: stylingPreference === STYLES.scss,
     typescriptUsed: language === LANGUAGES.typescript,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
   }

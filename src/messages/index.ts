@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { name, bugs } from '../package.json';
+const { name, bugs } = require('../package.json');
 
 const messages = {
   welcome: `Welcome to ${chalk.bold(name)}! A zero config lightweight CLI for automating React boilerplate setup.`,
