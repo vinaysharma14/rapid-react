@@ -37,7 +37,7 @@ export const writeFolderStructure = async (
   scaffoldConfig: ScaffoldConfig[],
 ) => {
   // flatten the nested scaffold into arrays of dir and files
-  flattenScaffoldConfig(projectName, scaffoldConfig);
+  flattenScaffoldConfig(`${projectName}/src`, scaffoldConfig);
 
   // write all the directories and the sub-directories first
   await Promise.all(directories.map(({ path }) => createDir(path, true)));
