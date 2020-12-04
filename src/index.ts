@@ -58,33 +58,16 @@ const init = async () => {
     } = commands;
 
     // create a react app with the name and typescript template flag conditionally
-    await run(
-      installReact.msg,
-      installReact.success,
-      installReact.cmd,
-      [...installReact.args, appName, ...ts ? ['--template typescript'] : []],
-    );
+    await run(installReact, [appName, ...ts ? ['--template typescript'] : []]);
 
     // write the folder structure in project directory using the scaffold config
     await writeFolderStructure(appName, scaffoldConfig);
 
     // install dependencies in the app directory
-    await run(
-      installDependencies.msg,
-      installDependencies.success,
-      installDependencies.cmd,
-      [...installDependencies.args, ...dependencies],
-      appName,
-    );
+    await run(installDependencies, dependencies, appName);
 
     // install dev dependencies in the app directory
-    await run(
-      installDevDependencies.msg,
-      installDevDependencies.success,
-      installDevDependencies.cmd,
-      [...installDevDependencies.args, ...devDependencies],
-      appName,
-    );
+    await run(installDevDependencies, devDependencies, appName);
 
     // ending note
     console.log(`\n${complete} ${chalk.green(directory)}\n`);
