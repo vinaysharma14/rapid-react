@@ -1,4 +1,6 @@
-export const commands = {
+import { CommandCollection } from "../types";
+
+export const commands: CommandCollection = {
   installReact: {
     cmd: 'npx',
     args: ['create-react-app'],
