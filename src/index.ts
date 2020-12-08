@@ -41,15 +41,14 @@ const init = async () => {
       typescriptUsed: ts,
     } = mappedAnswers(inputs);
 
-    // compute directory
-    const [root] = __dirname.split('/').reverse();
-    const directory = __dirname.replace(`react-cli/${root}`, appName);
+    // directory where app would be installed
+    const directory = `${process.cwd()}/${appName}`;
 
     // generate folder structure scaffold
     const scaffoldConfig = generateScaffoldConfig(routes, ts, namedExport, scssUsed);
 
-    // inform user about directory where app would be installed
-    console.log(`\nSetting up a new create-react-app in ${chalk.green(directory)}\n`);
+    // notify user about the directory
+    console.log(`\nSetting up a new React app in ${chalk.green(directory)}\n`);
 
     const {
       installReact,
@@ -57,16 +56,16 @@ const init = async () => {
       installDevDependencies,
     } = commands;
 
-    // create a react app with the name and typescript template flag conditionally
+    // create a react app with the given name and typescript template flag conditionally
     await run(installReact, [appName, ...ts ? ['--template typescript'] : []]);
 
     // write the folder structure in project directory using the scaffold config
     await writeFolderStructure(appName, scaffoldConfig);
 
-    // install dependencies in the app directory
+    // install dependencies in the project directory
     await run(installDependencies, dependencies, appName);
 
-    // install dev dependencies in the app directory
+    // install dev dependencies in the project directory
     await run(installDevDependencies, devDependencies, appName);
 
     // ending note
