@@ -1,3 +1,5 @@
+import ora from 'ora';
+
 import { ScaffoldConfig } from '../types';
 import { createDir, writeToFile } from '../utils'
 
@@ -36,6 +38,9 @@ export const writeFolderStructure = async (
   projectName: string,
   scaffoldConfig: ScaffoldConfig[],
 ) => {
+  const spinner = ora('Scaffolding the folder structure...').start();
+  spinner.start();
+
   // flatten the nested scaffold into arrays of dir and files
   flattenScaffoldConfig(`${projectName}/src`, scaffoldConfig);
 
@@ -44,4 +49,6 @@ export const writeFolderStructure = async (
 
   // write all the files afterwards
   await Promise.all(files.map(({ path, data }) => writeToFile(path, data)));
+
+  spinner.succeed('Folder structure successfully scaffolded!');
 }
