@@ -18,7 +18,7 @@ interface Answers {
   devDependencies: string;
   isRoutingNeeded: boolean;
   reduxAddons?: [keyof typeof REDUX_ADDONS];
-  stateManagement: keyof typeof STATE_MANAGEMENT;
+  stateManagement?: keyof typeof STATE_MANAGEMENT;
   exportPreference: keyof typeof EXPORT_PREFERENCE,
   language: typeof LANGUAGES[keyof typeof LANGUAGES];
   stylingPreference: typeof STYLES[keyof typeof STYLES],
@@ -78,19 +78,21 @@ const mappedAnswers = (answers: Answers) => {
     }
   }
 
-  // add state management and it's binding to the list of dependencies
-  dependencies = [
-    ...dependencies,
-    STATE_MANAGEMENT[stateManagement].lib,
-    STATE_MANAGEMENT[stateManagement].binding,
-  ];
+  if (stateManagement) {
+    // add state management and it's react binding to the list of dependencies
+    dependencies = [
+      ...dependencies,
+      STATE_MANAGEMENT[stateManagement].lib,
+      STATE_MANAGEMENT[stateManagement].binding,
+    ];
 
-  // add state management types definition to the list of dev dependencies (if exists)
-  devDependencies = [
-    ...devDependencies,
-    ...language === 'Typescript' && STATE_MANAGEMENT[stateManagement].types ?
-      [STATE_MANAGEMENT[stateManagement].types] : [],
-  ];
+    // add state management types definition to the list of dev dependencies (if exists)
+    devDependencies = [
+      ...devDependencies,
+      ...language === 'Typescript' && STATE_MANAGEMENT[stateManagement].types ?
+        [STATE_MANAGEMENT[stateManagement].types] : [],
+    ];
+  }
 
   // add redux addons based on whether they are dev dependency or not
   reduxAddons && reduxAddons.forEach((addOn: keyof typeof REDUX_ADDONS) => {
