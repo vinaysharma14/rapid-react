@@ -1,7 +1,7 @@
 import ora from 'ora';
 
-import { ScaffoldConfig } from '../types';
-import { createDir, writeToFile } from '../utils'
+import { Extensions, ScaffoldConfig } from '../types';
+import { createDir, writeToFile, deleteFile } from '../utils'
 
 const directories: { path: string }[] = [];
 const files: { path: string, data: string }[] = [];
@@ -37,12 +37,24 @@ const flattenScaffoldConfig = (
 export const writeFolderStructure = async (
   projectName: string,
   scaffoldConfig: ScaffoldConfig[],
+  fileExtensions: Extensions,
+  isRoutingNeeded: boolean,
 ) => {
   const spinner = ora('Scaffolding the folder structure...').start();
   spinner.start();
 
+  const { cmpExt } = fileExtensions;
+  const rootPath = `${projectName}/src`;
+
   // flatten the nested scaffold into arrays of dir and files
-  flattenScaffoldConfig(`${projectName}/src`, scaffoldConfig);
+  flattenScaffoldConfig(rootPath, scaffoldConfig);
+
+  if (isRoutingNeeded) {
+    // delete following files as now we'll import router
+    // in index file of src instead of App.js/tsx
+    const filesToBeDeleted = [`App.${cmpExt}`, `App.test.${cmpExt}`, 'App.css', 'logo.svg'];
+    await Promise.all(filesToBeDeleted.map(fileName => deleteFile(`${rootPath}/${fileName}`)));
+  };
 
   // write all the directories and the sub-directories first
   await Promise.all(directories.map(({ path }) => createDir(path, true)));

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import chalk from 'chalk';
 
-import { run } from './utils';
 import { commands } from './constants';
 import { messages, features } from './messages';
+import { run, getFileExtensions } from './utils';
 
 import {
   handleSetup,
@@ -44,8 +44,11 @@ const init = async () => {
     // directory where app would be installed
     const directory = `${process.cwd()}/${appName}`;
 
+    // get extension of component, stylesheet and general files
+    const fileExtensions = getFileExtensions(ts, scssUsed);
+
     // generate folder structure scaffold
-    const scaffoldConfig = generateScaffoldConfig(routes, ts, namedExport, scssUsed);
+    const scaffoldConfig = generateScaffoldConfig(routes, ts, namedExport, fileExtensions);
 
     // notify user about the directory
     console.log(`\nSetting up a new React app in ${chalk.green(directory)}\n`);
@@ -60,7 +63,7 @@ const init = async () => {
     await run(installReact, [appName, ...ts ? ['--template typescript'] : []]);
 
     // write the folder structure in project directory using the scaffold config
-    await writeFolderStructure(appName, scaffoldConfig);
+    await writeFolderStructure(appName, scaffoldConfig, fileExtensions, !!routes.length);
 
     // install dependencies in the project directory
     await run(installDependencies, dependencies, appName);

@@ -1,17 +1,32 @@
 import { promises as fs } from 'fs';
-const { mkdir, writeFile } = fs;
+const { mkdir, writeFile, unlink } = fs;
 
-// TODO: function to delete file
+const deleteFile = async (fileName: string) => {
+  try {
+    await unlink(fileName)
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 
 const createDir = async (dirPath: string, nested: boolean) => {
-  await mkdir(dirPath, { recursive: nested })
+  try {
+    await mkdir(dirPath, { recursive: nested })
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 
 const writeToFile = async (fileName: string, content: string) => {
-  await writeFile(fileName, content);
+  try {
+    await writeFile(fileName, content);
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 
 export {
   createDir,
+  deleteFile,
   writeToFile,
 }

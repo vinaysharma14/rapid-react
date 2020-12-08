@@ -1,7 +1,8 @@
+import { Extensions } from '../types';
 import { toKebabCase } from '../utils';
 import { commonTemplates } from './common';
 
-export const componentTemplate = (name: string, ts: boolean, namedExport: boolean, styleExt: 'scss' | 'css') => {
+export const componentTemplate = (name: string, ts: boolean, namedExport: boolean, styleExt: Extensions['stylesExt']) => {
   const {
     cmpExport,
     rootImport,
