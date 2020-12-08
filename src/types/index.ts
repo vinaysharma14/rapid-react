@@ -15,8 +15,15 @@ type CommandCollection = {
   [key: string]: Command
 }
 
+type Extensions = {
+  cmpExt: 'tsx' | 'js',
+  fileExt: 'ts' | 'js',
+  stylesExt: 'scss' | 'css',
+}
+
 export {
   Command,
+  Extensions,
   ScaffoldConfig,
   CommandCollection,
 }

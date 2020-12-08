@@ -1,3 +1,5 @@
+import { Extensions } from "../types";
+
 const removeDuplicatesFromArr = (array: any[]) => [...new Set(array)];
 
 const stringToArray = (string: string) => string.trim().split(/\s+/);
@@ -13,4 +15,15 @@ const toKebabCase = (string: string) => {
   return string;
 }
 
-export { removeDuplicatesFromArr, stringToArray, toKebabCase };
+const getFileExtensions = (ts: boolean, scss: boolean): Extensions => ({
+  cmpExt: ts ? 'tsx' : 'js',         // component file
+  fileExt: ts ? 'ts' : 'js',         // general file
+  stylesExt: scss ? 'scss' : 'css',  // stylesheet
+})
+
+export {
+  toKebabCase,
+  stringToArray,
+  getFileExtensions,
+  removeDuplicatesFromArr,
+};

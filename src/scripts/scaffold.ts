@@ -1,16 +1,13 @@
-import { ScaffoldConfig } from '../types';
+import { Extensions, ScaffoldConfig } from '../types';
 import { componentTemplate, rootExportTemplate, routerTemplate, stylesheetTemplate } from '../templates';
 
 export const generateScaffoldConfig = (
   routes: string[],
   ts: boolean,
   namedExport: boolean,
-  scss: boolean,
+  fileExtensions: Extensions
 ): ScaffoldConfig[] => {
-  // file extensions
-  const cmpExt = ts ? 'tsx' : 'js';         // component file
-  const fileExt = ts ? 'ts' : 'js';         // general file
-  const stylesExt = scss ? 'scss' : 'css';  // stylesheet
+  const { cmpExt, fileExt, stylesExt } = fileExtensions;
 
   return [
     // conditionally scaffold router and routes if any route present
