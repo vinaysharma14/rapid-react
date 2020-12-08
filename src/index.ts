@@ -63,7 +63,7 @@ const init = async () => {
     await run(installReact, [appName, ...ts ? ['--template typescript'] : []]);
 
     // write the folder structure in project directory using the scaffold config
-    await writeFolderStructure(appName, scaffoldConfig, fileExtensions, !!routes.length);
+    await writeFolderStructure(appName, scaffoldConfig, fileExtensions, !!routes.length, namedExport);
 
     // install dependencies in the project directory
     await run(installDependencies, dependencies, appName);
