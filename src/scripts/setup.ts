@@ -48,10 +48,17 @@ export const handleSetup = async () => {
       when: (answers: any) => answers.isRoutingNeeded,
     },
     {
+      type: 'confirm',
+      default: 'yes',
+      name: 'isStateManagementNeeded',
+      message: 'Do you need state management?',
+    },
+    {
       type: 'list',
       name: 'stateManagement',
       choices: [STATE_MANAGEMENT.Redux.label, STATE_MANAGEMENT.MobX.label],
       message: 'Choose your preferred state management:',
+      when: (answers: any) => answers.isStateManagementNeeded,
     },
     {
       type: 'checkbox',
