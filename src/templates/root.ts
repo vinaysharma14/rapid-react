@@ -1,5 +1,4 @@
-export const rootExportTemplate = (dir: string, exports: string[]) => {
-  return `// all the named exports of ${dir} are present here\n
-${exports.map((val) => `export * from './${val}';`).join('\n')}
-`
-}
+export const rootExportTemplate = (dir: string, exports?: string[]) => (
+  `// all the named exports of ${dir} ${exports ? 'are' : 'would be'} present here
+${exports ? `\n${exports.map((val) => `export * from './${val}';`).join('\n')}\n` : ''}`
+);

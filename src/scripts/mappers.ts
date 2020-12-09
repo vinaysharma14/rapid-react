@@ -17,6 +17,8 @@ interface Answers {
   dependencies: string;
   devDependencies: string;
   isRoutingNeeded: boolean;
+  additionalFolders: string;
+  predefinedFolders: string[];
   reduxAddons?: [keyof typeof REDUX_ADDONS];
   stateManagement?: keyof typeof STATE_MANAGEMENT;
   exportPreference: keyof typeof EXPORT_PREFERENCE,
@@ -26,7 +28,10 @@ interface Answers {
 
 const mappedAnswers = (answers: Answers) => {
   // TODO: fix any type
-  let dependencies: any = [], devDependencies: any = [], routes: string[] = [];
+  let dependencies: any = [],
+    devDependencies: any = [],
+    routes: string[] = [],
+    folders: string[] = [];
 
   const {
     appName,
@@ -35,6 +40,8 @@ const mappedAnswers = (answers: Answers) => {
     isRoutingNeeded,
     stateManagement,
     exportPreference,
+    predefinedFolders,
+    additionalFolders,
     stylingPreference,
     routes: routesInput,
     dependencies: setupDependencies,
@@ -105,8 +112,19 @@ const mappedAnswers = (answers: Answers) => {
     }
   })
 
+  // save if user selected any predefined folder(s)
+  if (predefinedFolders) {
+    folders = predefinedFolders;
+  }
+
+  // if user has entered any custom folder(s) combine with the predefined ones
+  if (additionalFolders) {
+    folders = [...new Set([...folders, ...toUniqueArray(additionalFolders)])];
+  }
+
   return {
     routes,
+    folders,
     appName,
     dependencies,
     devDependencies,

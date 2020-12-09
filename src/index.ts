@@ -34,6 +34,7 @@ const init = async () => {
     const {
       routes,
       appName,
+      folders,
       scssUsed,
       namedExport,
       dependencies,
@@ -48,7 +49,13 @@ const init = async () => {
     const fileExtensions = getFileExtensions(ts, scssUsed);
 
     // generate folder structure scaffold
-    const scaffoldConfig = generateScaffoldConfig(routes, ts, namedExport, fileExtensions);
+    const scaffoldConfig = generateScaffoldConfig(
+      routes,
+      folders,
+      ts,
+      namedExport,
+      fileExtensions,
+    );
 
     // notify user about the directory
     console.log(`\nSetting up a new React app in ${chalk.green(directory)}\n`);

@@ -15,7 +15,7 @@ const flattenScaffoldConfig = (
     return { path: dir, isFile: true };
   } else {
     // recursively traverse children until a file is not found
-    children.reverse().forEach(({ name, children }) => {
+    children && children.reverse().forEach(({ name, children }) => {
       const { path, isFile } = flattenScaffoldConfig(`${dir}/${name}`, children);
 
       if (isFile && typeof children === 'string') {
