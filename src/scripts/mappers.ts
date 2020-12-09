@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-import { stringToArray, removeDuplicatesFromArr } from "../utils";
+import { toUniqueArray } from "../utils";
 
 import {
   STYLES,
@@ -41,16 +41,14 @@ const mappedAnswers = (answers: Answers) => {
     devDependencies: setupDevDependencies,
   } = answers;
 
-  // remove extra white space and duplicates in dependencies
+  // remove extra white space & duplicates
   if (setupDependencies.length > 0) {
-    let dependenciesArr = stringToArray(setupDependencies);
-    dependencies = removeDuplicatesFromArr(dependenciesArr);
+    dependencies = toUniqueArray(setupDependencies);
   }
 
-  // remove extra white space and duplicates in dev dependencies
+  // remove extra white space & duplicates
   if (setupDevDependencies.length > 0) {
-    let devDependenciesArr = stringToArray(setupDevDependencies);
-    devDependencies = removeDuplicatesFromArr(devDependenciesArr);
+    devDependencies = toUniqueArray(setupDevDependencies);
   }
 
   // remove all the types definitions if user has chosen JavaScript
@@ -65,9 +63,8 @@ const mappedAnswers = (answers: Answers) => {
 
     // construct routes config
     if (routesInput) {
-      // remove extra white space and duplicates in routes
-      let routesArr = stringToArray(routesInput);
-      routes = removeDuplicatesFromArr(routesArr);
+      // remove extra white space & duplicates
+      routes = toUniqueArray(routesInput);
 
       // map routes with capitalized first letter of each
       routes = routes.map((route) => `${route.charAt(0).toUpperCase()}${route.slice(1)}`);
