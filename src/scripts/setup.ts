@@ -2,6 +2,7 @@ import inquirer from 'inquirer';
 
 import {
   STYLES,
+  FOLDERS,
   LANGUAGES,
   REDUX_ADDONS,
   STATE_MANAGEMENT,
@@ -66,6 +67,17 @@ export const handleSetup = async () => {
       choices: [REDUX_ADDONS['Redux Saga'].label, REDUX_ADDONS['Redux Logger'].label, REDUX_ADDONS['Redux Form'].label],
       when: (answers: any) => answers.stateManagement === STATE_MANAGEMENT.Redux.label,
       message: 'Choose any additional dependencies needed for state management:',
+    },
+    {
+      type: 'checkbox',
+      name: 'predefinedFolders',
+      choices: FOLDERS,
+      message: 'Choose from commonly used folders(s):',
+    },
+    {
+      type: 'input',
+      name: 'additionalFolders',
+      message: 'Enter space separated additional folder(s) you\'d like to have:',
     },
     {
       type: 'input',

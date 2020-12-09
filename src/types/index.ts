@@ -1,6 +1,6 @@
 type ScaffoldConfig = {
   name: string;
-  children: string | ScaffoldConfig[];
+  children?: string | ScaffoldConfig[];
 };
 
 type Command = {

@@ -54,9 +54,24 @@ const REDUX_ADDONS = {
   },
 } as const;
 
+const FOLDERS = [
+  'assets',
+  'components',
+  'data',
+  'errors',
+  'fallbacks',
+  'hooks',
+  'layouts',
+  'services',
+  'types',
+  'utils',
+  'validations',
+]
+
 export {
   STYLES,
   ROUTING,
+  FOLDERS,
   LANGUAGES,
   REDUX_ADDONS,
   STATE_MANAGEMENT,

@@ -3,6 +3,7 @@ import { componentTemplate, rootExportTemplate, routerTemplate, stylesheetTempla
 
 export const generateScaffoldConfig = (
   routes: string[],
+  folders: string[],
   ts: boolean,
   namedExport: boolean,
   fileExtensions: Extensions
@@ -44,5 +45,14 @@ export const generateScaffoldConfig = (
         ]
       },
     ] : [],
+    // scaffold folder(s) if user chose any
+    ...folders.length ? folders.map(name => ({
+      name,
+      // conditionally add a root export file in case of named exports
+      children: namedExport ? [{
+        name: `index.${fileExt}`,
+        children: rootExportTemplate(name)
+      }] : undefined,
+    })) : [],
   ]
 };
