@@ -19,4 +19,4 @@ ${cmpDefinition}
   </div>
 );
 ${cmpExport}`;
-}
+};

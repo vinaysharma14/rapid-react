@@ -6,7 +6,7 @@ import {
   LANGUAGES,
   REDUX_ADDONS,
   STATE_MANAGEMENT,
-  EXPORT_PREFERENCE
+  EXPORT_PREFERENCE,
 } from '../constants';
 
 export const handleSetup = async () => {
@@ -92,4 +92,4 @@ export const handleSetup = async () => {
       default: '@types/react-bootstrap @types/lodash @types/moment',
     },
   ]);
-}
+};

@@ -8,7 +8,7 @@ import {
   LANGUAGES,
   REDUX_ADDONS,
   STATE_MANAGEMENT,
-  EXPORT_PREFERENCE
+  EXPORT_PREFERENCE,
 } from "../constants";
 
 interface Answers {
@@ -78,7 +78,7 @@ const mappedAnswers = (answers: Answers) => {
     } else {
       // add a dummy route if user doesn't enter any
       routes = ['Foo'];
-      console.log(chalk.cyan('\nA dummy route \'Foo\' has been added since you didn\'t enter any route(s)'))
+      console.log(chalk.cyan('\nA dummy route \'Foo\' has been added since you didn\'t enter any route(s)'));
     }
   }
 
@@ -101,16 +101,16 @@ const mappedAnswers = (answers: Answers) => {
   // add redux addons based on whether they are dev dependency or not
   reduxAddons && reduxAddons.forEach((addOn: keyof typeof REDUX_ADDONS) => {
     if (REDUX_ADDONS[addOn].dev) {
-      devDependencies.push(REDUX_ADDONS[addOn].lib)
+      devDependencies.push(REDUX_ADDONS[addOn].lib);
     } else {
-      dependencies.push(REDUX_ADDONS[addOn].lib)
+      dependencies.push(REDUX_ADDONS[addOn].lib);
     }
 
     // add types definition for redux addon if user has chosen typescript
     if (language === 'Typescript' && REDUX_ADDONS[addOn].types) {
       devDependencies.push(REDUX_ADDONS[addOn].types);
     }
-  })
+  });
 
   // save if user selected any predefined folder(s)
   if (predefinedFolders) {
@@ -132,9 +132,9 @@ const mappedAnswers = (answers: Answers) => {
     scssUsed: stylingPreference === STYLES.scss,
     typescriptUsed: language === LANGUAGES.typescript,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
-  }
-}
+  };
+};
 
 export {
   mappedAnswers,
-}
+};

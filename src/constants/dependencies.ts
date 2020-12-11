@@ -29,7 +29,7 @@ const STATE_MANAGEMENT = {
     lib: 'redux',
     label: 'Redux',
     binding: 'react-redux',
-    types: '@types/react-redux'
+    types: '@types/react-redux',
   },
 } as const;
 
@@ -44,13 +44,13 @@ const REDUX_ADDONS = {
     dev: false,
     lib: 'redux-form',
     label: 'Redux Form',
-    types: '@types/redux-form'
+    types: '@types/redux-form',
   },
   'Redux Logger': {
     dev: true,
     lib: 'redux-logger',
     label: 'Redux Logger',
-    types: '@types/redux-logger'
+    types: '@types/redux-logger',
   },
 } as const;
 
@@ -66,7 +66,7 @@ const FOLDERS = [
   'types',
   'utils',
   'validations',
-]
+];
 
 export {
   STYLES,
@@ -76,4 +76,4 @@ export {
   REDUX_ADDONS,
   STATE_MANAGEMENT,
   EXPORT_PREFERENCE,
-}
+};

@@ -26,4 +26,4 @@ export {
   Extensions,
   ScaffoldConfig,
   CommandCollection,
-}
+};

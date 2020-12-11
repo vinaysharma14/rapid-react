@@ -1,7 +1,7 @@
 import ora from 'ora';
 
 import { Extensions, ScaffoldConfig } from '../types';
-import { createDir, writeToFile, deleteFile, replaceFileContents } from '../utils'
+import { createDir, writeToFile, deleteFile, replaceFileContents } from '../utils';
 
 const directories: { path: string }[] = [];
 const files: { path: string, data: string }[] = [];
@@ -20,7 +20,7 @@ const flattenScaffoldConfig = (
 
       if (isFile && typeof children === 'string') {
         // maintain all files in an array with path & data
-        files.push({ path, data: children, });
+        files.push({ path, data: children });
       }
       else {
         // maintain all directories with path
@@ -32,7 +32,6 @@ const flattenScaffoldConfig = (
     return { path: dir, isFile: false };
   }
 };
-
 
 export const writeFolderStructure = async (
   projectName: string,
@@ -74,4 +73,4 @@ export const writeFolderStructure = async (
   ]);
 
   spinner.succeed('Folder structure successfully scaffolded!');
-}
+};

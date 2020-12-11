@@ -6,7 +6,7 @@ export const generateScaffoldConfig = (
   folders: string[],
   ts: boolean,
   namedExport: boolean,
-  fileExtensions: Extensions
+  fileExtensions: Extensions,
 ): ScaffoldConfig[] => {
   const { cmpExt, fileExt, stylesExt } = fileExtensions;
 
@@ -18,9 +18,9 @@ export const generateScaffoldConfig = (
         children: [
           {
             name: `index.${cmpExt}`,
-            children: routerTemplate(routes, ts, namedExport)
+            children: routerTemplate(routes, ts, namedExport),
           },
-        ]
+        ],
       },
       {
         name: 'routes',
@@ -40,9 +40,9 @@ export const generateScaffoldConfig = (
           // conditionally add a root export file in case of named exports
           ...namedExport ? [{
             name: `index.${fileExt}`,
-            children: rootExportTemplate('routes', routes)
+            children: rootExportTemplate('routes', routes),
           }] : [],
-        ]
+        ],
       },
     ] : [],
     // scaffold folder(s) if user chose any
@@ -51,8 +51,8 @@ export const generateScaffoldConfig = (
       // conditionally add a root export file in case of named exports
       children: namedExport ? [{
         name: `index.${fileExt}`,
-        children: rootExportTemplate(name)
+        children: rootExportTemplate(name),
       }] : undefined,
     })) : [],
-  ]
+  ];
 };
