@@ -21,5 +21,5 @@ export const commands: CommandCollection = {
     msg: 'Installing dev dependencies',
     err: 'Dev dependencies installation failed.',
     success: 'Dev dependencies successfully installed!',
-  }
-}
+  },
+};

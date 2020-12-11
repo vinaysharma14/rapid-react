@@ -9,7 +9,7 @@ import {
   handleSetup,
   mappedAnswers,
   writeFolderStructure,
-  generateScaffoldConfig
+  generateScaffoldConfig,
 } from './scripts';
 
 const init = async () => {
@@ -24,7 +24,7 @@ const init = async () => {
   // greetings
   console.log(`\n${welcome}\n`);
   features.forEach((value, index) => console.log(`${chalk.green('✔')} ${value} ${index === features.length - 1 ? '\n' : ''}`));
-  console.log(`${chalk.cyan(walkThrough)}\n`)
+  console.log(`${chalk.cyan(walkThrough)}\n`);
 
   try {
     // ask user for app information via an interactive setup
@@ -85,6 +85,6 @@ const init = async () => {
   } catch (error) {
     console.error(error.message);
   }
-}
+};
 
 init();

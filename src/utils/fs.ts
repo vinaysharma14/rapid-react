@@ -1,21 +1,22 @@
 import { promises as fs } from 'fs';
+
 const { mkdir, writeFile, unlink, readFile } = fs;
 
 const deleteFile = async (fileName: string) => {
   try {
-    await unlink(fileName)
+    await unlink(fileName);
   } catch ({ message }) {
     console.error(message);
   }
-}
+};
 
 const createDir = async (dirPath: string, nested: boolean) => {
   try {
-    await mkdir(dirPath, { recursive: nested })
+    await mkdir(dirPath, { recursive: nested });
   } catch ({ message }) {
     console.error(message);
   }
-}
+};
 
 const writeToFile = async (fileName: string, content: string) => {
   try {
@@ -23,7 +24,7 @@ const writeToFile = async (fileName: string, content: string) => {
   } catch ({ message }) {
     console.error(message);
   }
-}
+};
 
 const replaceFileContents = async (
   fileName: string,
@@ -39,11 +40,11 @@ const replaceFileContents = async (
   } catch ({ message }) {
     console.log(message);
   }
-}
+};
 
 export {
   createDir,
   deleteFile,
   writeToFile,
   replaceFileContents,
-}
+};

@@ -28,4 +28,4 @@ ${routes.map((route) => `      <Route path="/${toKebabCase(route)}" component={$
   </Router>
 );
 ${cmpExport}`;
-}
+};
