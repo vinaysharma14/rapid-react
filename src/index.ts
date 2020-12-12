@@ -38,7 +38,9 @@ const init = async () => {
       scssUsed,
       namedExport,
       dependencies,
+      stateManagement,
       devDependencies,
+      storesOrReducers,
       typescriptUsed: ts,
     } = mappedAnswers(inputs);
 
@@ -55,6 +57,7 @@ const init = async () => {
       ts,
       namedExport,
       fileExtensions,
+      stateManagement ? { type: stateManagement, storesOrReducers } : undefined,
     );
 
     // notify user about the directory

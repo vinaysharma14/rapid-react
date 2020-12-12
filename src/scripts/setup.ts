@@ -63,11 +63,17 @@ export const handleSetup = async () => {
       when: (answers: any) => answers.isStateManagementNeeded,
     },
     {
+      type: 'input',
+      name: 'stores',
+      message: 'Enter space separated MobX stores you\'d like to have:',
+      when: (answers: any) => answers.stateManagement === STATE_MANAGEMENT.MobX.label,
+    },
+    {
       type: 'checkbox',
       name: 'reduxAddons',
       choices: [REDUX_ADDONS['Redux Saga'].label, REDUX_ADDONS['Redux Logger'].label, REDUX_ADDONS['Redux Form'].label],
       when: (answers: any) => answers.stateManagement === STATE_MANAGEMENT.Redux.label,
-      message: 'Choose any additional dependencies needed for state management:',
+      message: 'Would you like to install any of these additional dependencies usually needed for redux?',
     },
     {
       type: 'checkbox',

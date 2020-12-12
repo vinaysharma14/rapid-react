@@ -15,7 +15,8 @@ import {
 
 interface Answers {
   routes?: string;
-  appName: string;
+  stores?: string;
+  appName?: string;
   dependencies: string;
   devDependencies: string;
   isRoutingNeeded: boolean;
@@ -30,10 +31,12 @@ interface Answers {
 
 const mappedAnswers = (answers: Answers) => {
   // TODO: fix any type
-  let dependencies: any = [],
-    devDependencies: any = [],
-    routes: string[] = [],
-    folders: string[] = [];
+  let dependencies: any[] = [];
+  let devDependencies: any[] = [];
+
+  let stores: string[] = [];
+  let routes: string[] = [];
+  let folders: string[] = [];
 
   const warnings: string[] = [];
 
@@ -48,12 +51,13 @@ const mappedAnswers = (answers: Answers) => {
     additionalFolders,
     stylingPreference,
     routes: routesInput,
+    stores: storesInput,
     dependencies: setupDependencies,
     devDependencies: setupDevDependencies,
   } = answers;
 
   // default app name as fallback incase user doesn't enter one
-  if(!appName) {
+  if (!appName) {
     warnings.push(`App has been named as '${DEFAULT_APP_NAME}' since you didn\'t enter one.`);
   }
 
@@ -105,21 +109,26 @@ const mappedAnswers = (answers: Answers) => {
       ...language === 'Typescript' && STATE_MANAGEMENT[stateManagement].types ?
         [STATE_MANAGEMENT[stateManagement].types] : [],
     ];
+
+    // remove extra white space & duplicates
+    if (storesInput) {
+      stores = toUniqueArray(storesInput);
+    }
+
+    // add redux addons based on whether they are dev dependency or not
+    reduxAddons && reduxAddons.forEach((addOn: keyof typeof REDUX_ADDONS) => {
+      if (REDUX_ADDONS[addOn].dev) {
+        devDependencies.push(REDUX_ADDONS[addOn].lib);
+      } else {
+        dependencies.push(REDUX_ADDONS[addOn].lib);
+      }
+
+      // add types definition for redux addon if user has chosen typescript
+      if (language === 'Typescript' && REDUX_ADDONS[addOn].types) {
+        devDependencies.push(REDUX_ADDONS[addOn].types);
+      }
+    });
   }
-
-  // add redux addons based on whether they are dev dependency or not
-  reduxAddons && reduxAddons.forEach((addOn: keyof typeof REDUX_ADDONS) => {
-    if (REDUX_ADDONS[addOn].dev) {
-      devDependencies.push(REDUX_ADDONS[addOn].lib);
-    } else {
-      dependencies.push(REDUX_ADDONS[addOn].lib);
-    }
-
-    // add types definition for redux addon if user has chosen typescript
-    if (language === 'Typescript' && REDUX_ADDONS[addOn].types) {
-      devDependencies.push(REDUX_ADDONS[addOn].types);
-    }
-  });
 
   // save if user selected any predefined folder(s)
   if (predefinedFolders) {
@@ -140,7 +149,10 @@ const mappedAnswers = (answers: Answers) => {
     dependencies,
     devDependencies,
     isRoutingNeeded,
-    appName:appName || DEFAULT_APP_NAME,
+    stateManagement,
+    // TODO: reducers in case of Redux
+    storesOrReducers: stores,
+    appName: appName || DEFAULT_APP_NAME,
     scssUsed: stylingPreference === STYLES.scss,
     typescriptUsed: language === LANGUAGES.typescript,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
