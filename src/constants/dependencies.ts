@@ -68,12 +68,17 @@ const FOLDERS = [
   'validations',
 ];
 
+const DEFAULT_ROUTE = 'Foo';
+const DEFAULT_APP_NAME = 'my-app';
+
 export {
   STYLES,
   ROUTING,
   FOLDERS,
   LANGUAGES,
   REDUX_ADDONS,
+  DEFAULT_ROUTE,
+  DEFAULT_APP_NAME,
   STATE_MANAGEMENT,
   EXPORT_PREFERENCE,
 };
