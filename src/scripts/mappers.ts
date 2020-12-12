@@ -7,7 +7,9 @@ import {
   ROUTING,
   LANGUAGES,
   REDUX_ADDONS,
+  DEFAULT_ROUTE,
   STATE_MANAGEMENT,
+  DEFAULT_APP_NAME,
   EXPORT_PREFERENCE,
 } from "../constants";
 
@@ -33,6 +35,8 @@ const mappedAnswers = (answers: Answers) => {
     routes: string[] = [],
     folders: string[] = [];
 
+  const warnings: string[] = [];
+
   const {
     appName,
     language,
@@ -47,6 +51,11 @@ const mappedAnswers = (answers: Answers) => {
     dependencies: setupDependencies,
     devDependencies: setupDevDependencies,
   } = answers;
+
+  // default app name as fallback incase user doesn't enter one
+  if(!appName) {
+    warnings.push(`App has been named as '${DEFAULT_APP_NAME}' since you didn\'t enter one.`);
+  }
 
   // remove extra white space & duplicates
   if (setupDependencies.length > 0) {
@@ -76,9 +85,9 @@ const mappedAnswers = (answers: Answers) => {
       // map routes with capitalized first letter of each
       routes = routes.map((route) => `${route.charAt(0).toUpperCase()}${route.slice(1)}`);
     } else {
-      // add a dummy route if user doesn't enter any
-      routes = ['Foo'];
-      console.log(chalk.cyan('\nA dummy route \'Foo\' has been added since you didn\'t enter any route(s)'));
+      // add a mock route if user doesn't enter any
+      routes = [DEFAULT_ROUTE];
+      warnings.push(`A mock route '${DEFAULT_ROUTE}' has been added since you didn\'t enter any route(s).`);
     }
   }
 
@@ -122,13 +131,16 @@ const mappedAnswers = (answers: Answers) => {
     folders = [...new Set([...folders, ...toUniqueArray(additionalFolders)])];
   }
 
+  // display all warnings to user
+  warnings.forEach((warning, i) => console.log(`${!i ? '\n' : ''}${chalk.keyword('orange')(warning)}`));
+
   return {
     routes,
     folders,
-    appName,
     dependencies,
     devDependencies,
     isRoutingNeeded,
+    appName:appName || DEFAULT_APP_NAME,
     scssUsed: stylingPreference === STYLES.scss,
     typescriptUsed: language === LANGUAGES.typescript,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,

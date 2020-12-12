@@ -6,6 +6,7 @@ import {
   LANGUAGES,
   REDUX_ADDONS,
   STATE_MANAGEMENT,
+  DEFAULT_APP_NAME,
   EXPORT_PREFERENCE,
 } from '../constants';
 
@@ -20,7 +21,7 @@ export const handleSetup = async () => {
     {
       type: 'input',
       name: 'appName',
-      default: 'my-app',
+      default: DEFAULT_APP_NAME,
       message: 'Enter the app name:',
     },
     {
