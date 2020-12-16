@@ -13,6 +13,10 @@ function capitalizeFirstLetter(string: string) {
   return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 }
 
+function unCapitalizeFirstLetter(string: string) {
+  return `${string.charAt(0).toLowerCase()}${string.slice(1)}`;
+}
+
 const getFileExtensions = (ts: boolean, scss: boolean): Extensions => ({
   cmpExt: ts ? 'tsx' : 'js', // component file
   fileExt: ts ? 'ts' : 'js', // general file
@@ -24,4 +28,5 @@ export {
   toUniqueArray,
   getFileExtensions,
   capitalizeFirstLetter,
+  unCapitalizeFirstLetter,
 };

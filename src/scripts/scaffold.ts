@@ -1,6 +1,15 @@
+import { toKebabCase } from '../utils';
 import { STATE_MANAGEMENT } from '../constants';
 import { Extensions, ScaffoldConfig } from '../types';
-import { componentTemplate, mobxTemplate, rootExportTemplate, routerTemplate, stylesheetTemplate } from '../templates';
+
+import {
+  mobxTemplate,
+  storeTemplate,
+  routerTemplate,
+  componentTemplate,
+  stylesheetTemplate,
+  rootExportTemplate,
+} from '../templates';
 
 type MobXState = {
   storesOrReducers: string[],
@@ -63,8 +72,12 @@ export const generateScaffoldConfig = (
       name: 'store',
       children: [{
         name: `index.${fileExt}`,
-        children: mobxTemplate(stateManagement.storesOrReducers, ts, namedExport),
-      }],
+        children: mobxTemplate(stateManagement.storesOrReducers, namedExport),
+      }, ...stateManagement?.storesOrReducers.length ?
+        stateManagement.storesOrReducers.map(name => ({
+          name: `${toKebabCase(name)}.${fileExt}`,
+          children: storeTemplate(name, ts, namedExport),
+        })) : []],
     }] : [],
   ];
 };

@@ -1,6 +1,10 @@
-import { capitalizeFirstLetter } from '../utils';
+import {
+  toKebabCase,
+  capitalizeFirstLetter,
+  unCapitalizeFirstLetter,
+} from '../utils';
 
-export const mobxTemplate = (stores: string[], ts: boolean, namedExport: boolean) =>
+export const mobxTemplate = (stores: string[], namedExport: boolean) => (
   `import { observable } from 'mobx';
 
 // import all stores here
@@ -12,11 +16,11 @@ ${
 
       return `import ${
         namedExport ? `{ ${storeName} }` : `${storeName}`
-      } from './${store.toLowerCase()}';`;
+      } from './${toKebabCase(store)}';`;
     })
     .join('\n') : `// import ${namedExport ? '{ FooStore }' : 'FooStore'} from './foo';
 // import ${namedExport ? '{ BarStore }' : 'BarStore'} from './bar';`
-}
+  }
 
 class Store {
   // instantiate all the stores here
@@ -24,12 +28,12 @@ class Store {
   ${
   stores.length ?
     stores.map(store =>
-      `@observable ${store.toLowerCase()} = new ${capitalizeFirstLetter(store)}Store();`,
+      `@observable ${unCapitalizeFirstLetter(store)} = new ${capitalizeFirstLetter(store)}Store();`,
     ).join('\n  ') :
     `// @observable foo = new FooStore();
   // @observable bar = new BarStore();`
-}
+  }
 }
 
-export ${namedExport ? 'const store =' : 'default'} new Store();
-`;
+export ${namedExport ? 'const store =' : 'default'} new Store();\n`
+);
