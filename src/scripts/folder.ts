@@ -1,7 +1,7 @@
 import ora from 'ora';
 
-import { jsConfig } from '../templates';
 import { LANG_CONFIG } from '../constants';
+import { jsConfig, tsConfig } from '../templates';
 
 import { Extensions, ScaffoldConfig } from '../types';
 import { createDir, writeToFile, deleteFile, replaceFileContents } from '../utils';
@@ -37,10 +37,15 @@ const flattenScaffoldConfig = (
 };
 
 const enableExperimentalDecorators = async(projectName: string, ts: boolean) => {
+  const path = `${projectName}/${LANG_CONFIG[ts ? 'ts' : 'js']}`;
+
   if(ts) {
-    // TODO:
+    await replaceFileContents(path, [{
+      subStr: /"compilerOptions": {/g,
+      newSubStr: tsConfig(),
+    }]);
   } else {
-    await writeToFile(`${projectName}/${LANG_CONFIG.js}`, jsConfig());
+    await writeToFile(path, jsConfig());
   }
 };
 
