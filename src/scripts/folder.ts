@@ -1,5 +1,8 @@
 import ora from 'ora';
 
+import { LANG_CONFIG } from '../constants';
+import { jsConfig, tsConfig } from '../templates';
+
 import { Extensions, ScaffoldConfig } from '../types';
 import { createDir, writeToFile, deleteFile, replaceFileContents } from '../utils';
 
@@ -33,17 +36,31 @@ const flattenScaffoldConfig = (
   }
 };
 
+const enableExperimentalDecorators = async(projectName: string, ts: boolean) => {
+  const path = `${projectName}/${LANG_CONFIG[ts ? 'ts' : 'js']}`;
+
+  if(ts) {
+    await replaceFileContents(path, [{
+      subStr: /"compilerOptions": {/g,
+      newSubStr: tsConfig(),
+    }]);
+  } else {
+    await writeToFile(path, jsConfig());
+  }
+};
+
 export const writeFolderStructure = async (
   projectName: string,
   scaffoldConfig: ScaffoldConfig[],
   fileExtensions: Extensions,
   isRoutingNeeded: boolean,
   namedExport: boolean,
+  mobxUsed: boolean,
 ) => {
   const spinner = ora('Scaffolding the folder structure...').start();
   spinner.start();
 
-  const { cmpExt } = fileExtensions;
+  const { cmpExt, fileExt } = fileExtensions;
   const rootPath = `${projectName}/src`;
 
   // flatten the nested scaffold into arrays of dir and files
@@ -58,6 +75,11 @@ export const writeFolderStructure = async (
 
   // write all the directories and the sub-directories first
   await Promise.all(directories.map(({ path }) => createDir(path, true)));
+
+  // decorators need to be enabled explicitly
+  if(mobxUsed) {
+    await enableExperimentalDecorators(projectName, fileExt === 'ts');
+  }
 
   // write all the files afterwards
   await Promise.all([

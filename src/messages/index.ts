@@ -20,6 +20,7 @@ const features = [
 ];
 
 export {
+  name,
   messages,
   features,
 };
