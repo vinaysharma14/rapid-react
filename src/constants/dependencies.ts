@@ -71,11 +71,17 @@ const FOLDERS = [
 const DEFAULT_ROUTE = 'Foo';
 const DEFAULT_APP_NAME = 'my-app';
 
+const LANG_CONFIG = {
+  ts: 'tsconfig.json',
+  js: 'jsconfig.json',
+};
+
 export {
   STYLES,
   ROUTING,
   FOLDERS,
   LANGUAGES,
+  LANG_CONFIG,
   REDUX_ADDONS,
   DEFAULT_ROUTE,
   DEFAULT_APP_NAME,

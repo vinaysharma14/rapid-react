@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import chalk from 'chalk';
 
-import { commands } from './constants';
 import { messages, features } from './messages';
 import { run, getFileExtensions } from './utils';
+import { commands, STATE_MANAGEMENT } from './constants';
 
 import {
   handleSetup,
@@ -73,7 +73,13 @@ const init = async () => {
     await run(installReact, [appName, ...ts ? ['--template typescript'] : []]);
 
     // write the folder structure in project directory using the scaffold config
-    await writeFolderStructure(appName, scaffoldConfig, fileExtensions, !!routes.length, namedExport);
+    await writeFolderStructure(
+      appName,
+      scaffoldConfig,
+      fileExtensions,
+      !!routes.length, namedExport,
+      stateManagement === STATE_MANAGEMENT.MobX.label,
+    );
 
     // install dependencies in the project directory
     await run(installDependencies, dependencies, appName);
