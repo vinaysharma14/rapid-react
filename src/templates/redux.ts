@@ -1,7 +1,7 @@
 import { toKebabCase } from "../utils";
 import { MOCK_SAGAS, MOCK_REDUCERS, REDUX_ADDONS } from '../constants';
 
-const reducerTemplates = (customReducers: string[], namedExport: boolean) => {
+const reducerTemplates = (customReducers: string[], namedExport: boolean, useForm: boolean) => {
   const useMock = !customReducers.length;
   const reducers = useMock ? MOCK_REDUCERS : customReducers;
 
@@ -15,7 +15,7 @@ ${mockCmt(0)}} from './reducers';` :
     `${reducers.map(reducer => `${mockCmt(0)}import ${reducer} from './reducers/${toKebabCase(reducer)}';`).join('\n')}`}`;
 
   const rootReducer = `const rootReducer = combineReducers({
-${reducers.map(reducer => `  ${mockCmt(0)}${reducer},`).join('\n')}
+${reducers.map(reducer => `  ${mockCmt(0)}${reducer},`).join('\n')}${useForm ? '\n  formReducer,' : ''}
 });`;
 
   return {
@@ -59,7 +59,10 @@ export const reduxTemplate = (
   namedExport: boolean,
   addons?: [keyof typeof REDUX_ADDONS],
 ) => {
-  const { reducerImports, rootReducer } = reducerTemplates(customReducers, namedExport);
+  const useForm = addons?.includes('Redux Form');
+  const formImport = useForm ? `\nimport { reducer as formReducer } from 'redux-form';\n` : '';
+
+  const { reducerImports, rootReducer } = reducerTemplates(customReducers, namedExport, !!useForm);
 
   let sagaImports = '', rootSaga = '';
   const useSaga = addons?.includes('Redux Saga');
@@ -72,7 +75,7 @@ export const reduxTemplate = (
   }
 
   return `import { createStore, combineReducers${useSaga ? ', applyMiddleware' : ''} } from 'redux';
-${useSaga ? `\n${sagaImports}\n` : ''}
+${formImport}${useSaga ? `\n${sagaImports}\n` : ''}
 ${reducerImports}
 
 ${rootReducer}
