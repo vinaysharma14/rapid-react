@@ -1,4 +1,4 @@
-import { toKebabCase } from "../utils";
+import { sortArr, toKebabCase } from "../utils";
 import { MOCK_SAGAS, MOCK_REDUCERS, REDUX_ADDONS } from '../constants';
 
 const reducerTemplates = (customReducers: string[], namedExport: boolean, useForm: boolean) => {
@@ -74,7 +74,21 @@ export const reduxTemplate = (
     rootSaga = rootSg;
   }
 
-  return `import { createStore, combineReducers${useSaga ? ', applyMiddleware' : ''} } from 'redux';
+  const useLogger = addons?.includes('Redux Logger');
+
+  const reduxImports = sortArr([
+    'createStore',
+    'combineReducers',
+    ...useSaga ? ['applyMiddleware'] : [],
+    ...useLogger ? ['compose', ...ts ? ['Middleware'] : []] : [],
+  ]);
+
+  return `${reduxImports.length <= 3 ?
+    `import { ${reduxImports.join(', ')} } from 'redux';` :
+    `import {
+${reduxImports.map((importName) => `  ${importName},`).join('\n')}
+} from 'redux';`
+  }
 ${formImport}${useSaga ? `\n${sagaImports}\n` : ''}
 ${reducerImports}
 

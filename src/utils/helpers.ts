@@ -1,11 +1,13 @@
 import { Extensions } from "../types";
 
+const sortArr = (arr: string[]) => arr.sort(({ length: l1 }, { length: l2 }) => l1 - l2);
+
 const toUniqueArray = (value?: string, sort?: boolean) => {
-  if(value) {
+  if (value) {
     const arr = [...new Set(value.trim().split(/\s+/))];
 
-    if(sort) {
-      return arr.sort(({ length: l1 }, { length: l2 }) => l1 - l2);
+    if (sort) {
+      return sortArr(arr);
     }
 
     return arr;
@@ -36,6 +38,7 @@ const getFileExtensions = (ts: boolean, scss: boolean): Extensions => ({
 });
 
 export {
+  sortArr,
   toKebabCase,
   toUniqueArray,
   getFileExtensions,
