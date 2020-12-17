@@ -1,4 +1,5 @@
 export * from './root';
+export * from './redux';
 export * from './store';
 export * from './router';
 export * from './jsconfig';

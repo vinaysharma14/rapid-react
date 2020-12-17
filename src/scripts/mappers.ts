@@ -17,6 +17,7 @@ interface Answers {
   routes?: string;
   stores?: string;
   appName?: string;
+  reducers: string;
   dependencies: string;
   devDependencies: string;
   isRoutingNeeded: boolean;
@@ -35,6 +36,7 @@ const mappedAnswers = (answers: Answers) => {
   let devDependencies: any[] = [];
 
   let stores: string[] = [];
+  let reducers: string[] = [];
   let routes: string[] = [];
   let folders: string[] = [];
 
@@ -52,6 +54,7 @@ const mappedAnswers = (answers: Answers) => {
     stylingPreference,
     routes: routesInput,
     stores: storesInput,
+    reducers: reducersInput,
     dependencies: setupDependencies,
     devDependencies: setupDevDependencies,
   } = answers;
@@ -84,7 +87,7 @@ const mappedAnswers = (answers: Answers) => {
     // construct routes config
     if (routesInput) {
       // remove extra white space & duplicates
-      routes = toUniqueArray(routesInput);
+      routes = toUniqueArray(routesInput, true);
 
       // map routes with capitalized first letter of each
       routes = routes.map((route) => `${route.charAt(0).toUpperCase()}${route.slice(1)}`);
@@ -112,7 +115,12 @@ const mappedAnswers = (answers: Answers) => {
 
     // remove extra white space & duplicates
     if (storesInput) {
-      stores = toUniqueArray(storesInput);
+      stores = toUniqueArray(storesInput, true);
+    }
+
+    // remove extra white space & duplicates
+    if (reducersInput) {
+      reducers = toUniqueArray(reducersInput, true);
     }
 
     // add redux addons based on whether they are dev dependency or not
@@ -150,11 +158,10 @@ const mappedAnswers = (answers: Answers) => {
     devDependencies,
     isRoutingNeeded,
     stateManagement,
-    // TODO: reducers in case of Redux
-    storesOrReducers: stores,
     appName: appName || DEFAULT_APP_NAME,
     scssUsed: stylingPreference === STYLES.scss,
     typescriptUsed: language === LANGUAGES.typescript,
+    storesOrReducers: stores.length ? stores : reducers,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
   };
 };

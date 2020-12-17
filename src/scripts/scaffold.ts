@@ -5,6 +5,7 @@ import { Extensions, ScaffoldConfig } from '../types';
 import {
   mobxTemplate,
   storeTemplate,
+  reduxTemplate,
   routerTemplate,
   componentTemplate,
   stylesheetTemplate,
@@ -68,6 +69,7 @@ export const generateScaffoldConfig = (
         children: rootExportTemplate(name),
       }] : undefined,
     })) : [],
+    // generate MobX template
     ...stateManagement?.type === STATE_MANAGEMENT.MobX.label ? [{
       name: 'store',
       children: [{
@@ -78,6 +80,14 @@ export const generateScaffoldConfig = (
           name: `${toKebabCase(name)}.${fileExt}`,
           children: storeTemplate(name, ts, namedExport),
         })) : []],
+    }] : [],
+    // generate Redux template
+    ...stateManagement?.type === STATE_MANAGEMENT.Redux.label ? [{
+      name: 'store',
+      children: [{
+        name: `index.${fileExt}`,
+        children: reduxTemplate(stateManagement.storesOrReducers, ts, namedExport),
+      }],
     }] : [],
   ];
 };
