@@ -15,7 +15,7 @@ ${mockCmt(0)}} from './reducers';` :
     `${reducers.map(reducer => `${mockCmt(0)}import ${reducer} from './reducers/${toKebabCase(reducer)}';`).join('\n')}`}`;
 
   const rootReducer = `const rootReducer = combineReducers({
-${reducers.map(reducer => `${mockCmt(2)}${reducer},`).join('\n')}
+${reducers.map(reducer => `  ${mockCmt(0)}${reducer},`).join('\n')}s
 });`;
 
   return {
