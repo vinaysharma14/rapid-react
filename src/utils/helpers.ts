@@ -1,13 +1,17 @@
 import { Extensions } from "../types";
 
-const toUniqueArray = (value: string, sort?: boolean) => {
-  const arr = [...new Set(value.trim().split(/\s+/))];
+const toUniqueArray = (value?: string, sort?: boolean) => {
+  if(value) {
+    const arr = [...new Set(value.trim().split(/\s+/))];
 
-  if(sort) {
-    return arr.sort(({ length: l1 }, { length: l2 }) => l1 - l2);
+    if(sort) {
+      return arr.sort(({ length: l1 }, { length: l2 }) => l1 - l2);
+    }
+
+    return arr;
   }
 
-  return arr;
+  return [];
 };
 
 // reference: https://www.w3resource.com/javascript-exercises/fundamental/javascript-fundamental-exercise-123.php

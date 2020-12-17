@@ -14,6 +14,7 @@ import {
 } from "../constants";
 
 interface Answers {
+  sagas?: string;
   routes?: string;
   stores?: string;
   appName?: string;
@@ -35,6 +36,7 @@ const mappedAnswers = (answers: Answers) => {
   let dependencies: any[] = [];
   let devDependencies: any[] = [];
 
+  let sagas: string[] = [];
   let stores: string[] = [];
   let reducers: string[] = [];
   let routes: string[] = [];
@@ -52,6 +54,7 @@ const mappedAnswers = (answers: Answers) => {
     predefinedFolders,
     additionalFolders,
     stylingPreference,
+    sagas: sagasInput,
     routes: routesInput,
     stores: storesInput,
     reducers: reducersInput,
@@ -114,14 +117,9 @@ const mappedAnswers = (answers: Answers) => {
     ];
 
     // remove extra white space & duplicates
-    if (storesInput) {
-      stores = toUniqueArray(storesInput, true);
-    }
-
-    // remove extra white space & duplicates
-    if (reducersInput) {
-      reducers = toUniqueArray(reducersInput, true);
-    }
+    sagas = toUniqueArray(sagasInput, true);
+    stores = toUniqueArray(storesInput, true);
+    reducers = toUniqueArray(reducersInput, true);
 
     // add redux addons based on whether they are dev dependency or not
     reduxAddons && reduxAddons.forEach((addOn: keyof typeof REDUX_ADDONS) => {
@@ -152,8 +150,10 @@ const mappedAnswers = (answers: Answers) => {
   warnings.forEach((warning, i) => console.log(`${!i ? '\n' : ''}${chalk.keyword('orange')(warning)}`));
 
   return {
+    sagas,
     routes,
     folders,
+    reduxAddons,
     dependencies,
     devDependencies,
     isRoutingNeeded,

@@ -32,10 +32,12 @@ const init = async () => {
 
     // map the raw input in a proper structure
     const {
+      sagas,
       routes,
       appName,
       folders,
       scssUsed,
+      reduxAddons,
       namedExport,
       dependencies,
       stateManagement,
@@ -57,7 +59,8 @@ const init = async () => {
       ts,
       namedExport,
       fileExtensions,
-      stateManagement ? { type: stateManagement, storesOrReducers } : undefined,
+      stateManagement ? { type: stateManagement, storesOrReducers, sagas } : undefined,
+      reduxAddons,
     );
 
     // notify user about the directory
