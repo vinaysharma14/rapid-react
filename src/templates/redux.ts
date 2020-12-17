@@ -52,6 +52,22 @@ ${sagas.map(saga => `    ${mockCmt(0)}fork(${saga}),`).join('\n')}
   };
 };
 
+const reduxLoggerTemplate = (useSaga: boolean) => (`
+const middleWares: Middleware[] = [${useSaga ? 'sagaMiddleware' : ''}];
+
+// redux action should be logged only in development environment
+if (process.env.NODE_ENV === 'development') {
+  middleWares.push(createLogger({
+    // * all the logs would be collapsed so as to prevent console from being cluttered
+    // * you can uncomment the below line or completely line it as per your requirement
+    collapsed: true,
+    // * you can prevent actions to be logged by specifying their action type
+    // * e.g. redux form logs can be blacklisted from being logged by
+    // * specifying the type of it's actions, .i.e. '@@redux-form'
+    // predicate: (_, action) => !action.type.includes('@@redux-form'),
+  }));
+}\n`);
+
 export const reduxTemplate = (
   customReducers: string[],
   customSagas: string[],
@@ -75,6 +91,7 @@ export const reduxTemplate = (
   }
 
   const useLogger = addons?.includes('Redux Logger');
+  const loggerImport = `${useLogger ? `\nimport { createLogger } from 'redux-logger';\n` : ''}`;
 
   const reduxImports = sortArr([
     'createStore',
@@ -83,19 +100,23 @@ export const reduxTemplate = (
     ...useLogger ? ['compose', ...ts ? ['Middleware'] : []] : [],
   ]);
 
+  const storeCreation = useLogger ?
+    'compose(applyMiddleware(...middleWares))(createStore)(rootReducer)' :
+    `createStore(rootReducer${useSaga ? ', applyMiddleware(sagaMiddleware)' : ''})`;
+
   return `${reduxImports.length <= 3 ?
     `import { ${reduxImports.join(', ')} } from 'redux';` :
     `import {
 ${reduxImports.map((importName) => `  ${importName},`).join('\n')}
 } from 'redux';`
   }
-${formImport}${useSaga ? `\n${sagaImports}\n` : ''}
+${loggerImport}${formImport}${useSaga ? `\n${sagaImports}\n` : ''}
 ${reducerImports}
 
 ${rootReducer}
 ${useSaga ? `\n${rootSaga}
 
-const sagaMiddleware = createSagaMiddleware();` : ''}
-${namedExport ? 'export ' : ''}const store = createStore(rootReducer${useSaga ? ', applyMiddleware(sagaMiddleware)' : ''});
+const sagaMiddleware = createSagaMiddleware();` : ''}${useLogger ? reduxLoggerTemplate(!!useSaga) : ''}
+${namedExport ? 'export ' : ''}const store = ${storeCreation};
 ${useSaga ? '\nsagaMiddleware.run(rootSaga);\n' : ''}${namedExport ? '' : '\nexport default store;\n'}${ts ? '\nexport type AppState = ReturnType<typeof rootReducer>;\n' : ''}`;
 };
