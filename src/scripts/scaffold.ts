@@ -6,7 +6,10 @@ import {
   mobxTemplate,
   storeTemplate,
   reduxTemplate,
+  typesTemplate,
   routerTemplate,
+  actionsTemplate,
+  reducerTemplate,
   componentTemplate,
   stylesheetTemplate,
   rootExportTemplate,
@@ -77,7 +80,7 @@ export const generateScaffoldConfig = (
       children: [{
         name: `index.${fileExt}`,
         children: mobxTemplate(stateManagement.storesOrReducers, namedExport),
-      }, ...stateManagement?.storesOrReducers.length ?
+      }, ...stateManagement?.storesOrReducers.length ? // scaffold stores if user has entered any
         stateManagement.storesOrReducers.map(name => ({
           name: `${toKebabCase(name)}.${fileExt}`,
           children: storeTemplate(name, ts, namedExport),
@@ -95,7 +98,28 @@ export const generateScaffoldConfig = (
           namedExport,
           reduxAddons,
         ),
-      }],
+      }, ...stateManagement?.storesOrReducers.length ? [{ // scaffold reducers if user has entered any
+        name: 'reducers',
+        children: stateManagement.storesOrReducers.map(name => ({
+          name: toKebabCase(name),
+          children: [{
+            name: `index.${fileExt}`,
+            children: reducerTemplate(name, ts, namedExport),
+          }, {
+            name: `types.${fileExt}`,
+            children: typesTemplate(),
+          }, {
+            name: `actions.${fileExt}`,
+            children: actionsTemplate(),
+          }],
+        })),
+      }] : []],
     }] : [],
   ];
 };
+
+// TODO:
+// templates can be grouped into folders and scaffolding can be made
+// modular by shifting logic to index files of each template folder
+// e.g. redux folder can contain files for it's templates: reducer and redux store
+// and it's index file can scaffold redux related templates

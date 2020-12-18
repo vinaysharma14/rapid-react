@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-import { toUniqueArray } from "../utils";
+import { capitalizeFirstLetter, toUniqueArray } from "../utils";
 
 import {
   STYLES,
@@ -93,7 +93,7 @@ const mappedAnswers = (answers: Answers) => {
       routes = toUniqueArray(routesInput, true);
 
       // map routes with capitalized first letter of each
-      routes = routes.map((route) => `${route.charAt(0).toUpperCase()}${route.slice(1)}`);
+      routes = routes.map((route) => capitalizeFirstLetter(route));
     } else {
       // add a mock route if user doesn't enter any
       routes = [DEFAULT_ROUTE];
