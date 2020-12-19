@@ -100,7 +100,7 @@ export const generateScaffoldConfig = (
         ),
       }, ...stateManagement?.storesOrReducers.length ? [{ // scaffold reducers if user has entered any
         name: 'reducers',
-        children: stateManagement.storesOrReducers.map(name => ({
+        children: [...stateManagement.storesOrReducers.map(name => ({
           name: toKebabCase(name),
           children: [{
             name: `index.${fileExt}`,
@@ -112,7 +112,10 @@ export const generateScaffoldConfig = (
             name: `actions.${fileExt}`,
             children: actionsTemplate(),
           }],
-        })),
+        })), ...namedExport ? [{
+          name: `index.${fileExt}`,
+          children: rootExportTemplate('reducers', stateManagement.storesOrReducers.map(name => toKebabCase(name))),
+        }] : []],
       }] : []],
     }] : [],
   ];
