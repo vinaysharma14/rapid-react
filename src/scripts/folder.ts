@@ -1,7 +1,7 @@
 import ora from 'ora';
 
-import { LANG_CONFIG } from '../constants';
 import { jsConfig, tsConfig } from '../templates';
+import { LANG_CONFIG, STATE_MANAGEMENT } from '../constants';
 
 import { Extensions, ScaffoldConfig } from '../types';
 import { createDir, writeToFile, deleteFile, replaceFileContents } from '../utils';
@@ -55,7 +55,7 @@ export const writeFolderStructure = async (
   fileExtensions: Extensions,
   isRoutingNeeded: boolean,
   namedExport: boolean,
-  mobxUsed: boolean,
+  stateManagement?: keyof typeof STATE_MANAGEMENT,
 ) => {
   const spinner = ora('Scaffolding the folder structure...').start();
   spinner.start();
@@ -77,22 +77,39 @@ export const writeFolderStructure = async (
   await Promise.all(directories.map(({ path }) => createDir(path, true)));
 
   // decorators need to be enabled explicitly
-  if(mobxUsed) {
+  if(stateManagement === 'MobX') {
     await enableExperimentalDecorators(projectName, fileExt === 'ts');
   }
 
-  // write all the files afterwards
-  await Promise.all([
-    ...files.map(({ path, data }) => writeToFile(path, data)),
-    // replace default app imports by router if routing needed
-    ...isRoutingNeeded ? [replaceFileContents(`${rootPath}/index.${cmpExt}`, [{
+  // wrap the app with provider in case redux is used
+  if(stateManagement === 'Redux') {
+    await replaceFileContents(`${rootPath}/index.${cmpExt}`, [{
+      subStr: /import ReactDOM from 'react-dom';/g,
+      newSubStr: 'import ReactDOM from \'react-dom\';\nimport { Provider } from \'react-redux\';\n',
+    }, {
+      subStr: /ReactDOM.render\(/g,
+      newSubStr: `import ${namedExport ? '{ store }' : 'store'} from './store';\n\nReactDOM.render(`,
+    }, {
+      subStr: /\<App \/\>/g,
+      newSubStr: `<Provider store={store}>
+      <App />
+    </Provider>`,
+    }]);
+  }
+
+  // replace default app imports by router if routing needed
+  if(isRoutingNeeded) {
+    await replaceFileContents(`${rootPath}/index.${cmpExt}`, [{
       subStr: /import App from '.\/App';/g,
       newSubStr: `import ${namedExport ? '{ Router }' : 'Router'} from './router';`,
     }, {
       subStr: /\<App \/\>/g,
       newSubStr: '<Router />',
-    }])] : [],
-  ]);
+    }]);
+  }
+
+  // write all the files
+  await Promise.all(files.map(({ path, data }) => writeToFile(path, data)));
 
   spinner.succeed('Folder structure successfully scaffolded!');
 };

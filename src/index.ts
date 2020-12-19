@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import chalk from 'chalk';
 
+import { commands } from './constants';
 import { messages, features } from './messages';
 import { run, getFileExtensions } from './utils';
-import { commands, STATE_MANAGEMENT } from './constants';
 
 import {
   handleSetup,
@@ -80,8 +80,9 @@ const init = async () => {
       appName,
       scaffoldConfig,
       fileExtensions,
-      !!routes.length, namedExport,
-      stateManagement === STATE_MANAGEMENT.MobX.label,
+      !!routes.length,
+      namedExport,
+      stateManagement,
     );
 
     // install dependencies in the project directory
