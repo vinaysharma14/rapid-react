@@ -52,8 +52,8 @@ ${sagas.map(saga => `    ${mockCmt(0)}fork(${saga}Saga),`).join('\n')}
   };
 };
 
-const reduxLoggerTemplate = (useSaga: boolean) => (`
-const middleWares: Middleware[] = [${useSaga ? 'sagaMiddleware' : ''}];
+const reduxLoggerTemplate = (useSaga: boolean, ts: boolean) => (`
+const middleWares${ts ? ': Middleware[]' : ''} = [${useSaga ? 'sagaMiddleware' : ''}];
 
 // redux action should be logged only in development environment
 if (process.env.NODE_ENV === 'development') {
@@ -116,7 +116,7 @@ ${reducerImports}
 ${rootReducer}
 ${useSaga ? `\n${rootSaga}
 
-const sagaMiddleware = createSagaMiddleware();` : ''}${useLogger ? reduxLoggerTemplate(!!useSaga) : ''}
+const sagaMiddleware = createSagaMiddleware();` : ''}${useLogger ? reduxLoggerTemplate(!!useSaga, ts) : ''}
 ${namedExport ? 'export ' : ''}const store = ${storeCreation};
 ${useSaga ? '\nsagaMiddleware.run(rootSaga);\n' : ''}${namedExport ? '' : '\nexport default store;\n'}${ts ? '\nexport type AppState = ReturnType<typeof rootReducer>;\n' : ''}`;
 };
