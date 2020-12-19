@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-import { toUniqueArray } from "../utils";
+import { capitalizeFirstLetter, toUniqueArray } from "../utils";
 
 import {
   STYLES,
@@ -14,9 +14,11 @@ import {
 } from "../constants";
 
 interface Answers {
+  sagas?: string;
   routes?: string;
   stores?: string;
   appName?: string;
+  reducers: string;
   dependencies: string;
   devDependencies: string;
   isRoutingNeeded: boolean;
@@ -34,7 +36,9 @@ const mappedAnswers = (answers: Answers) => {
   let dependencies: any[] = [];
   let devDependencies: any[] = [];
 
+  let sagas: string[] = [];
   let stores: string[] = [];
+  let reducers: string[] = [];
   let routes: string[] = [];
   let folders: string[] = [];
 
@@ -50,8 +54,10 @@ const mappedAnswers = (answers: Answers) => {
     predefinedFolders,
     additionalFolders,
     stylingPreference,
+    sagas: sagasInput,
     routes: routesInput,
     stores: storesInput,
+    reducers: reducersInput,
     dependencies: setupDependencies,
     devDependencies: setupDevDependencies,
   } = answers;
@@ -84,10 +90,10 @@ const mappedAnswers = (answers: Answers) => {
     // construct routes config
     if (routesInput) {
       // remove extra white space & duplicates
-      routes = toUniqueArray(routesInput);
+      routes = toUniqueArray(routesInput, true);
 
       // map routes with capitalized first letter of each
-      routes = routes.map((route) => `${route.charAt(0).toUpperCase()}${route.slice(1)}`);
+      routes = routes.map((route) => capitalizeFirstLetter(route));
     } else {
       // add a mock route if user doesn't enter any
       routes = [DEFAULT_ROUTE];
@@ -111,9 +117,9 @@ const mappedAnswers = (answers: Answers) => {
     ];
 
     // remove extra white space & duplicates
-    if (storesInput) {
-      stores = toUniqueArray(storesInput);
-    }
+    sagas = toUniqueArray(sagasInput, true);
+    stores = toUniqueArray(storesInput, true);
+    reducers = toUniqueArray(reducersInput, true);
 
     // add redux addons based on whether they are dev dependency or not
     reduxAddons && reduxAddons.forEach((addOn: keyof typeof REDUX_ADDONS) => {
@@ -144,17 +150,18 @@ const mappedAnswers = (answers: Answers) => {
   warnings.forEach((warning, i) => console.log(`${!i ? '\n' : ''}${chalk.keyword('orange')(warning)}`));
 
   return {
+    sagas,
     routes,
     folders,
+    reduxAddons,
     dependencies,
     devDependencies,
     isRoutingNeeded,
     stateManagement,
-    // TODO: reducers in case of Redux
-    storesOrReducers: stores,
     appName: appName || DEFAULT_APP_NAME,
     scssUsed: stylingPreference === STYLES.scss,
     typescriptUsed: language === LANGUAGES.typescript,
+    storesOrReducers: stores.length ? stores : reducers,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
   };
 };

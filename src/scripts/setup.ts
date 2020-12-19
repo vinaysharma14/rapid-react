@@ -76,6 +76,18 @@ export const handleSetup = async () => {
       message: 'Would you like to install any of these additional dependencies usually needed for redux?',
     },
     {
+      type: 'input',
+      name: 'reducers',
+      message: 'Enter space separated reducer(s) you\'d like to have:',
+      when: (answers: any) => answers.stateManagement === STATE_MANAGEMENT.Redux.label,
+    },
+    {
+      type: 'input',
+      name: 'sagas',
+      message: 'Enter space separated saga(s) you\'d like to have:',
+      when: (answers: any) => answers?.reduxAddons?.includes(REDUX_ADDONS['Redux Saga'].label),
+    },
+    {
       type: 'checkbox',
       name: 'predefinedFolders',
       choices: FOLDERS,

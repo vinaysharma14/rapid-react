@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import chalk from 'chalk';
 
+import { commands } from './constants';
 import { messages, features } from './messages';
 import { run, getFileExtensions } from './utils';
-import { commands, STATE_MANAGEMENT } from './constants';
 
 import {
   handleSetup,
@@ -32,10 +32,12 @@ const init = async () => {
 
     // map the raw input in a proper structure
     const {
+      sagas,
       routes,
       appName,
       folders,
       scssUsed,
+      reduxAddons,
       namedExport,
       dependencies,
       stateManagement,
@@ -57,7 +59,8 @@ const init = async () => {
       ts,
       namedExport,
       fileExtensions,
-      stateManagement ? { type: stateManagement, storesOrReducers } : undefined,
+      stateManagement ? { type: stateManagement, storesOrReducers, sagas } : undefined,
+      reduxAddons,
     );
 
     // notify user about the directory
@@ -77,8 +80,9 @@ const init = async () => {
       appName,
       scaffoldConfig,
       fileExtensions,
-      !!routes.length, namedExport,
-      stateManagement === STATE_MANAGEMENT.MobX.label,
+      !!routes.length,
+      namedExport,
+      stateManagement,
     );
 
     // install dependencies in the project directory
