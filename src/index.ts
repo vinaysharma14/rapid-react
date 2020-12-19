@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 import chalk from 'chalk';
+import figlet from 'figlet';
 
 import { commands } from './constants';
-import { messages, features } from './messages';
 import { run, getFileExtensions } from './utils';
+import { name, messages, features } from './messages';
 
 import {
   handleSetup,
@@ -21,8 +22,11 @@ const init = async () => {
     raiseIssue,
   } = messages;
 
+  const asciiArt = figlet.textSync(name, { font: 'ANSI Shadow' });
+
   // greetings
-  console.log(`\n${welcome}\n`);
+  console.log(`\n${chalk.cyan(asciiArt)}`);
+  console.log(`${welcome}\n`);
   features.forEach((value, index) => console.log(`${chalk.green('✔')} ${value} ${index === features.length - 1 ? '\n' : ''}`));
   console.log(`${chalk.cyan(walkThrough)}\n`);
 
