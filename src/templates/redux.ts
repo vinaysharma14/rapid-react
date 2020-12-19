@@ -10,12 +10,12 @@ const reducerTemplates = (customReducers: string[], namedExport: boolean, useFor
 
   const reducerImports = `${namedExport ?
     `${mockCmt(0)}import {
-${reducers.map(reducer => `${mockCmt(2)}${reducer},`).join('\n')}
+${reducers.map(reducer => `${mockCmt(2)}${reducer}Reducer,`).join('\n')}
 ${mockCmt(0)}} from './reducers';` :
-    `${reducers.map(reducer => `${mockCmt(0)}import ${reducer} from './reducers/${toKebabCase(reducer)}';`).join('\n')}`}`;
+    `${reducers.map(reducer => `${mockCmt(0)}import ${reducer}Reducer from './reducers/${toKebabCase(reducer)}';`).join('\n')}`}`;
 
   const rootReducer = `const rootReducer = combineReducers({
-${reducers.map(reducer => `  ${mockCmt(0)}${reducer},`).join('\n')}${useForm ? '\n  formReducer,' : ''}
+${reducers.map(reducer => `  ${mockCmt(0)}${reducer}Reducer,`).join('\n')}${useForm ? '\n  formReducer,' : ''}
 });`;
 
   return {
@@ -36,13 +36,13 @@ import { all, fork } from 'redux-saga/effects';
 
 ${namedExport ?
     `${mockCmt(0)}import {
-${sagas.map(saga => `${mockCmt(2)}${saga},`).join('\n')}
+${sagas.map(saga => `${mockCmt(2)}${saga}Saga,`).join('\n')}
 ${mockCmt(0)}} from './sagas';` :
-    `${sagas.map(saga => `${mockCmt(0)}import ${saga} from './sagas/${toKebabCase(saga)}';`).join('\n')}`}`;
+    `${sagas.map(saga => `${mockCmt(0)}import ${saga}Saga from './sagas/${toKebabCase(saga)}';`).join('\n')}`}`;
 
   const rootSaga = `function* rootSaga()${ts ? ': Generator' : ''} {
   yield all([
-${sagas.map(saga => `    ${mockCmt(0)}fork(${saga}),`).join('\n')}
+${sagas.map(saga => `    ${mockCmt(0)}fork(${saga}Saga),`).join('\n')}
   ]);
 }`;
 

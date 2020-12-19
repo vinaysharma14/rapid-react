@@ -1,6 +1,6 @@
-const MOCK_SAGAS = ['sagaA', 'sagaB', 'sagaC', 'sagaD', 'sagaE'];
+const MOCK_SAGAS = ['a', 'b', 'c', 'd', 'e'];
 
-const MOCK_REDUCERS = ['reducerA', 'reducerB', 'reducerC', 'reducerD', 'reducerE'];
+const MOCK_REDUCERS = ['a', 'b', 'c', 'd', 'e'];
 
 export {
   MOCK_SAGAS,
