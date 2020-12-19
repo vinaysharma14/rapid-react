@@ -1,9 +1,9 @@
-import { sortArr, toKebabCase } from "../utils";
+import { sortArr, toKebabCase, unCapitalizeFirstLetter } from "../utils";
 import { MOCK_SAGAS, MOCK_REDUCERS, REDUX_ADDONS } from '../constants';
 
 const reducerTemplates = (customReducers: string[], namedExport: boolean, useForm: boolean) => {
   const useMock = !customReducers.length;
-  const reducers = useMock ? MOCK_REDUCERS : customReducers;
+  const reducers = useMock ? MOCK_REDUCERS : customReducers.map(name => unCapitalizeFirstLetter(name));
 
   // comment in case of mock reducers or whitespace(s) in case of custom ones
   const mockCmt = (whiteSpaces: number) => useMock ? '// ' : ' '.repeat(whiteSpaces);
@@ -26,7 +26,7 @@ ${reducers.map(reducer => `  ${mockCmt(0)}${reducer}Reducer,`).join('\n')}${useF
 
 const sagaTemplates = (customSagas: string[], ts: boolean, namedExport: boolean) => {
   const useMock = !customSagas.length;
-  const sagas = useMock ? MOCK_SAGAS : customSagas;
+  const sagas = useMock ? MOCK_SAGAS : customSagas.map(name => unCapitalizeFirstLetter(name));
 
   // comment in case of mock sagas or whitespace(s) in case of custom ones
   const mockCmt = (whiteSpaces: number) => useMock ? '// ' : ' '.repeat(whiteSpaces);
@@ -83,7 +83,7 @@ export const reduxTemplate = (
   let sagaImports = '', rootSaga = '';
   const useSaga = addons?.includes('Redux Saga');
 
-  if(useSaga) {
+  if (useSaga) {
     const { sagaImports: sgImports, rootSaga: rootSg } = sagaTemplates(customSagas, ts, namedExport);
 
     sagaImports = sgImports;
