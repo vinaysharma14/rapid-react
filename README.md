@@ -23,6 +23,8 @@
   <a href="#license-page_facing_up">License</a>
 </p>
 
+![screenshot](docs/intro.gif)
+
 ## About :information_source:
 
 <a href="https://github.com/vinaysharma14/react-cli" target="_blank">@react/cli</a> is an interactive CLI tool which automates the repetitive steps involved every time a new React app is setup. Usually developers :man_technologist: go through a time consuming process which involves waiting for **create-react-app** to finish it's boilerplate setup, followed by installation of dependencies & dev dependencies, setup of folder structure, routing, state management, e.t.c. before it can finally start working on the app. :construction:
