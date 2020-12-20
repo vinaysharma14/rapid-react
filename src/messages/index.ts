@@ -8,7 +8,7 @@ const messages = {
   walkThrough: 'This utility will walk you through steps to configure a React boilerplate as per your requirements.',
   complete: 'Setup is complete! You can check app in',
   thanks: `Thanks for using ${chalk.bold(name)}. Happy Coding! </>`,
-  raiseIssue: `Raise an issue here: ${chalk.green(repo)}`,
+  raiseIssue: `Found an issue? Raise here: ${chalk.green(repo)}`,
 };
 
 const features = [
