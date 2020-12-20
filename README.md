@@ -14,22 +14,22 @@
 </p>
 
 <p align="center">
-  <a href="#information_source-about">About</a> •
-  <a href="#tada-features">Features</a> •
-  <a href="#white_check_mark-requirements">Requirements</a> •
-  <a href="#rocket-installation">Installation</a> •
-  <a href="#green_book-how-to-use">How to use</a> •
-  <a href="#handshake-contributing">Contributing</a> •
-  <a href="#page_facing_up-license">License</a>
+  <a href="#about-information_source">About</a> •
+  <a href="#features-tada">Features</a> •
+  <a href="#requirements-white_check_mark">Requirements</a> •
+  <a href="#installation-rocket">Installation</a> •
+  <a href="#documentation-green_book">Documentation</a> •
+  <a href="#contributing-handshake">Contributing</a> •
+  <a href="#license-page_facing_up">License</a>
 </p>
 
-## :information_source: About
+## About :information_source:
 
 <a href="https://github.com/vinaysharma14/react-cli" target="_blank">@react/cli</a> is an interactive CLI tool which automates the repetitive steps involved every time a new React app is setup. Usually developers :man_technologist: go through a time consuming process which involves waiting for **create-react-app** to finish it's boilerplate setup, followed by installation of dependencies & dev dependencies, setup of folder structure, routing, state management, e.t.c. before it can finally start working on the app. :construction:
 
 Well, now you can grab a cup of :coffee: while **@react/cli** scaffolds the app for you! :relieved:
 
-## :tada: Features
+## Features :tada:
 
 - Supports both [JavaScript](https://www.w3schools.com/js/) and [TypeScript](https://www.typescriptlang.org/). :heart_eyes:
 - Installs both dependencies and dev dependencies.
@@ -45,12 +45,12 @@ Well, now you can grab a cup of :coffee: while **@react/cli** scaffolds the app 
 - Setups [MobX](https://mobx.js.org/README.html) state management with user defined stores.
 - ...and much more! :tada:
 
-## :white_check_mark: Requirements
+## Requirements :white_check_mark:
 
 - [Node.js](https://nodejs.org/en/download/) installed on your system.
 - An active internet connection for CLI to work.
 
-## :rocket: Installation
+## Installation :rocket:
 
 From your terminal run:
 
@@ -62,12 +62,12 @@ $ npm install @react/cli
 $ react
 ```
 
-## :green_book: How to use
+## Documentation :green_book:
 
-## :handshake: Contributing
+## Contributing :handshake:
 
 Your contributions are always welcome! Please have a look at the [contribution guidelines](https://github.com/vinaysharma14/react-cli/blob/development/CONTRIBUTING.md) first. 🎉
 
-## :page_facing_up: License
+## License :page_facing_up:
 
 **@react/cli** is licensed under the terms of [MIT License](https://github.com/vinaysharma14/react-cli/blob/development/LICENSE.md).
