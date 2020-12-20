@@ -1,7 +1,7 @@
 {
   "name": "@react/cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "A light weight interactive CLI Automation Tool 🛠️ to scaffold React apps quickly. Uses Create React App under the hood. ⚛️",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,15 +9,39 @@
     "start": "npx ts-node src/index.ts",
     "build": "tsc -p ."
   },
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/vinaysharma14/react-cli.git"
   },
-  "author": "vinay sharma",
-  "license": "ISC",
+  "author": "Vinay Sharma <vinaysharma7811@gmail.com> (https://www.linkedin.com/in/vinaysharma-/)",
+  "license": "MIT",
   "bin": {
     "react": "./lib/index.js"
   },
+  "keywords": [
+    "cli-app",
+    "tool",
+    "scaffolder",
+    "javascript",
+    "typescript",
+    "react",
+    "reactjs",
+    "react-router",
+    "react-redux",
+    "react-hooks",
+    "react-router-dom",
+    "mobx-react",
+    "redux-saga",
+    "redux-form",
+    "redux-logger",
+    "sass",
+    "scss",
+    "css",
+    "es6"
+  ],
   "bugs": {
     "url": "https://github.com/vinaysharma14/react-cli/issues"
   },
