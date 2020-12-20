@@ -108,7 +108,7 @@ export const handleSetup = async () => {
       type: 'input',
       name: 'devDependencies',
       message: 'Enter space separated required dev dependencies:',
-      default: '@types/react-bootstrap @types/lodash @types/moment',
+      default: 'prettier husky lint-staged',
     },
   ]);
 };
