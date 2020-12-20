@@ -23,7 +23,7 @@
   <a href="#license-page_facing_up">License</a>
 </p>
 
-![screenshot](docs/intro.gif)
+![intro-gif](docs/images/intro.gif)
 
 ## About :information_source:
 
@@ -59,12 +59,93 @@ From your terminal run:
 ```bash
 # install the package from NPM
 $ npm install @react/cli
-
-# run the tool and we are good to go!
-$ react
 ```
 
 ## Documentation :green_book:
+
+**@react/cli** installs `react` command in your system. To run the tool, you need to invoke this command from your terminal:
+
+```bash
+# that's it!
+$ react
+```
+
+As soon as run the command you are greeted by the CLI.
+
+![greetings-screenshot](docs/images/greetings.png)
+
+From there on, you are asked a couple of question for a tailored experience for your app setup.
+
+![walk-through-screenshot](docs/images/walk-through.png)
+
+The utility would walk you through from following:
+
+- **Language Preference**<br>
+  Choose between JavaScript and TypeScript
+
+- **App Name** <br>
+  Enter your app name. By default it fallbacks to _my-app_.<br>
+
+  :white_check_mark: valid app names<br>
+  foo<br>
+  123foo<br>
+  foo123<br>
+  foo-bar<br>
+
+  :x: invalid app names<br>
+  Foo<br>
+  Foo-Bar<br>
+  FooBar<br>
+
+- **Export Type Preference**<br>
+  Choose between Named and Default.
+
+- **StyleSheet Preference**<br>
+  Choose between CSS and SCSS.
+
+- **Routing requirement**<br>
+  Choose either Yes or No.
+
+  - **If required, enter space separated route names**<br>
+    e.g. `home login about signIn signUp`
+
+    :white_check_mark: valid route names<br>
+    foo<br>
+    fooBar<br>
+    FooBar<br>
+    Foo123<br>
+
+    :x: invalid route names<br>
+    123foo<br>
+    foo-bar<br>
+    foo.bar<br>
+    foo?bar<br>
+
+- **State management requirement**<br>
+  Choose either Yes or No.
+
+  - **If required, select one**<br>
+    Choose between MobX and Redux. Once chosen you'll be prompted to **enter space separated** names of stores(in case of MobX) or reducers(in case of Redux). The conventions would be same as routes.
+
+  - **Installing additional Redux libraries**<br>
+    If you chose Redux you'll be prompted to choose from these additional libraries usually needed with Redux:
+    - Redux Form
+    - Redux Logger
+    - Redux Saga (plus, you can **enter space separated** sagas as well)
+
+- **Scaffold folders**:
+
+  - **Standard**<br>
+    You can choose from commonly used folder to scaffold: `assets`, `components`, `data`, `errors`, `fallbacks`, `hooks`, `layouts`, `services`, `types`, `utils`, `validations`.
+  - **Custom**<br>
+    You can **enter space separated** folders. The conventions would be same as routes.
+
+- **Dependencies**:<br>
+  You can **enter space separated** dependencies. The conventions would be same as routes. E.g. `antd lodash moment`.<br>
+  :warning: In case you are using **TypeScript** you'll have to explicitly mention type definition packages required for these dependencies. Such packages usually start with `@types/` prefix and are installed as dev dependencies.
+
+- **Dev Dependencies**:
+  You can **enter space separated** dev dependencies. The conventions would be same as routes. If you're not sure about what a dev dependency is, you can refer to [this](https://stackoverflow.com/a/22004559/11220479).
 
 ## Contributing :handshake:
 
