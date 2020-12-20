@@ -1,6 +1,6 @@
 # Contributing to @react/cli :tada:
 
-Contributions are always welcome. :partying_face: Before contributing please read the [code of conduct](https://github.com/vinaysharma14/react-cli/blob/development/CODE_OF_CONDUCT.md). To contribute, [fork](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) **@react/cli**, commit your changes, & send a [pull request](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests). :balloon:
+Contributions are always welcome. :partying_face: Before contributing please read the [code of conduct](https://github.com/vinaysharma14/react-cli/blob/development/CODE_OF_CONDUCT.md). To contribute, [fork](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) **@react/cli**, commit your changes, & send a [pull request](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests) pointing to `development` branch. :balloon:
 
 ```bash
 $ git clone https://github.com/<your-github-username>/react-cli
