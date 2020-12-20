@@ -149,8 +149,8 @@ The utility would walk you through from following:
 
 ## Contributing :handshake:
 
-Your contributions are always welcome! Please have a look at the [contribution guidelines](https://github.com/vinaysharma14/react-cli/blob/development/CONTRIBUTING.md) first. 🎉
+Your contributions are always welcome! Please have a look at the [contribution guidelines](https://github.com/vinaysharma14/react-cli/blob/master/CONTRIBUTING.md) first. 🎉
 
 ## License :page_facing_up:
 
-**@react/cli** is licensed under the terms of [MIT License](https://github.com/vinaysharma14/react-cli/blob/development/LICENSE.md).
+**@react/cli** is licensed under the terms of [MIT License](https://github.com/vinaysharma14/react-cli/blob/master/LICENSE.md).
