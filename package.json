@@ -1,28 +1,42 @@
 {
-  "name": "cra-setup",
+  "name": "@react/cli",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon"
+    "lint": "npx eslint --fix 'src/**/*.ts'",
+    "start": "npx ts-node src/index.ts",
+    "build": "tsc -p ."
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vinaysharma14/cra-setup.git"
+    "url": "https://github.com/vinaysharma14/react-cli.git"
   },
   "author": "vinay sharma",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/vinaysharma14/cra-setup/issues"
+  "bin": {
+    "react": "./lib/index.js"
   },
-  "homepage": "https://github.com/vinaysharma14/cra-setup#readme",
+  "bugs": {
+    "url": "https://github.com/vinaysharma14/react-cli/issues"
+  },
+  "homepage": "https://github.com/vinaysharma14/react-cli#readme",
   "dependencies": {
-    "@types/node": "^14.14.10",
-    "nodemon": "^2.0.6",
-    "typescript": "^4.1.2"
+    "chalk": "^4.1.0",
+    "figlet": "^1.5.0",
+    "inquirer": "^7.3.3",
+    "ora": "^5.1.0"
   },
   "devDependencies": {
-    "ts-node": "^9.0.0"
+    "@types/figlet": "^1.2.1",
+    "@types/inquirer": "^7.3.1",
+    "@types/node": "^14.14.10",
+    "@typescript-eslint/parser": "^4.9.1",
+    "eslint": "^7.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.5",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.2"
   }
 }
