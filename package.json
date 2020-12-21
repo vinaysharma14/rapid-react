@@ -1,7 +1,7 @@
 {
-  "name": "react-js-cli",
+  "name": "rapid-react",
   "version": "1.0.0",
-  "description": "A light weight interactive CLI Automation Tool 🛠️ to scaffold React apps quickly using Create React App under the hood. ⚛️",
+  "description": "A light weight interactive CLI Automation Tool 🛠️ for rapid scaffolding of React apps with Create React App under the hood. ⚛️",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,12 +15,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vinaysharma14/react-js-cli.git"
+    "url": "https://github.com/vinaysharma14/rapid-react.git"
   },
   "author": "Vinay Sharma <vinaysharma7811@gmail.com> (https://www.linkedin.com/in/vinaysharma-/)",
   "license": "MIT",
   "bin": {
-    "react": "./lib/index.js"
+    "rapid-react": "./lib/index.js"
   },
   "keywords": [
     "cli-app",
@@ -44,9 +44,9 @@
     "es6"
   ],
   "bugs": {
-    "url": "https://github.com/vinaysharma14/react-js-cli/issues"
+    "url": "https://github.com/vinaysharma14/rapid-react/issues"
   },
-  "homepage": "https://github.com/vinaysharma14/react-js-cli#readme",
+  "homepage": "https://github.com/vinaysharma14/rapid-react#readme",
   "dependencies": {
     "chalk": "^4.1.0",
     "figlet": "^1.5.0",
