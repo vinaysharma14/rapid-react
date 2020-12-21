@@ -3,7 +3,9 @@
 </h1>
 
 <h4 align="center">
-  A light weight interactive CLI Automation Tool :hammer_and_wrench: to scaffold React apps quickly using
+  A light weight interactive CLI Automation Tool :hammer_and_wrench: to scaffold React apps quickly,
+  <br>
+  using
   <a href="https://create-react-app.dev/" target="_blank">Create React App</a> under the hood. :atom:
 </h4>
 
