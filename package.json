@@ -1,7 +1,7 @@
 {
   "name": "react-js-cli",
   "version": "1.0.0",
-  "description": "A light weight interactive CLI Automation Tool 🛠️ to scaffold React apps quickly. Uses Create React App under the hood. ⚛️",
+  "description": "A light weight interactive CLI Automation Tool 🛠️ to scaffold React apps quickly using Create React App under the hood. ⚛️",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
