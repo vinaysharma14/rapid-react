@@ -1,11 +1,11 @@
 <h1 align="center">
-  @react/cli :hammer_and_wrench:
+  React JS CLI :hammer_and_wrench:
 </h1>
 
 <h4 align="center">
-  A light weight interactive CLI Automation Tool :hammer_and_wrench: to scaffold React apps quickly.
+  A light weight interactive CLI Automation Tool :hammer_and_wrench: to scaffold React apps quickly,
   <br>
-  Uses
+  using
   <a href="https://create-react-app.dev/" target="_blank">Create React App</a> under the hood. :atom:
 </h4>
 
@@ -27,9 +27,9 @@
 
 ## About :information_source:
 
-<a href="https://github.com/vinaysharma14/react-cli" target="_blank">@react/cli</a> is an interactive CLI tool which automates the repetitive steps involved every time a new React app is setup. Usually developers :man_technologist: go through a time consuming process which involves waiting for **create-react-app** to finish it's boilerplate setup, followed by installation of dependencies & dev dependencies, setup of folder structure, routing, state management, e.t.c. before it can finally start working on the app. :construction:
+<a href="https://github.com/vinaysharma14/react-js-cli" target="_blank">React JS CLI</a> is an interactive CLI tool which automates the repetitive steps involved every time a new React app is setup. Usually developers :man_technologist: go through a time consuming process which involves waiting for **create-react-app** to finish it's boilerplate setup, followed by installation of dependencies & dev dependencies, setup of folder structure, routing, state management, e.t.c. before it can finally start working on the app. :construction:
 
-Well, now you can grab a cup of :coffee: while **@react/cli** scaffolds the app for you! :relieved:
+Well, now you can grab a cup of :coffee: while **React JS CLI** scaffolds the app for you! :relieved:
 
 ## Features :tada:
 
@@ -58,12 +58,12 @@ From your terminal run:
 
 ```bash
 # install the package from NPM
-$ npm install @react/cli
+$ npm install react-js-cli
 ```
 
 ## Documentation :green_book:
 
-**@react/cli** installs `react` command in your system. To run the tool, you need to invoke this command from your terminal:
+**React JS CLI** installs `react` command in your system. To run the tool, you need to invoke this command from your terminal:
 
 ```bash
 # that's it!
@@ -149,8 +149,8 @@ The utility would walk you through from following:
 
 ## Contributing :handshake:
 
-Your contributions are always welcome! Please have a look at the [contribution guidelines](https://github.com/vinaysharma14/react-cli/blob/master/CONTRIBUTING.md) first. 🎉
+Your contributions are always welcome! Please have a look at the [contribution guidelines](https://github.com/vinaysharma14/react-js-cli/blob/master/CONTRIBUTING.md) first. 🎉
 
 ## License :page_facing_up:
 
-**@react/cli** is licensed under the terms of [MIT License](https://github.com/vinaysharma14/react-cli/blob/master/LICENSE.md).
+**React JS CLI** is licensed under the terms of [MIT License](https://github.com/vinaysharma14/react-js-cli/blob/master/LICENSE.md).
