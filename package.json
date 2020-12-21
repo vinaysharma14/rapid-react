@@ -1,5 +1,5 @@
 {
-  "name": "@react/cli",
+  "name": "react-js-cli",
   "version": "1.0.0",
   "description": "A light weight interactive CLI Automation Tool 🛠️ to scaffold React apps quickly. Uses Create React App under the hood. ⚛️",
   "main": "lib/index.js",
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vinaysharma14/react-cli.git"
+    "url": "https://github.com/vinaysharma14/react-js-cli.git"
   },
   "author": "Vinay Sharma <vinaysharma7811@gmail.com> (https://www.linkedin.com/in/vinaysharma-/)",
   "license": "MIT",
@@ -43,9 +43,9 @@
     "es6"
   ],
   "bugs": {
-    "url": "https://github.com/vinaysharma14/react-cli/issues"
+    "url": "https://github.com/vinaysharma14/react-js-cli/issues"
   },
-  "homepage": "https://github.com/vinaysharma14/react-cli#readme",
+  "homepage": "https://github.com/vinaysharma14/react-js-cli#readme",
   "dependencies": {
     "chalk": "^4.1.0",
     "figlet": "^1.5.0",

@@ -1,7 +1,7 @@
 import chalk from "chalk";
 
-const name = '@react/cli';
-const repo = 'https://github.com/vinaysharma14/react-cli/issues';
+const name = 'React JS CLI';
+const repo = 'https://github.com/vinaysharma14/react-js-cli/issues';
 
 const messages = {
   welcome: `Welcome to ${chalk.bold(name)}! A zero config lightweight CLI for automating React boilerplate setup.`,
