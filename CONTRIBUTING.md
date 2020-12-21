@@ -1,10 +1,10 @@
-# Contributing to React JS CLI :tada:
+# Contributing to Rapid React :tada:
 
-Contributions are always welcome. :partying_face: Before contributing please read the [code of conduct](https://github.com/vinaysharma14/react-js-cli/blob/master/CODE_OF_CONDUCT.md). To contribute, [fork](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) **React JS CLI**, commit your changes, & send a [pull request](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests) pointing to `development` branch. :balloon:
+Contributions are always welcome. :partying_face: Before contributing please read the [code of conduct](https://github.com/vinaysharma14/rapid-react/blob/master/CODE_OF_CONDUCT.md). To contribute, [fork](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo) **Rapid React**, commit your changes, & send a [pull request](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests) pointing to `development` branch. :balloon:
 
 ```bash
-$ git clone https://github.com/<your-github-username>/react-js-cli
-$ cd react-js-cli
+$ git clone https://github.com/<your-github-username>/rapid-react
+$ cd rapid-react
 $ npm install
 ```
 
@@ -19,14 +19,14 @@ $ npm install
 
 ## Found a bug? Missing a specific feature? :mailbox_with_mail:
 
-Feel free to raise a bug or a feature request. Please search the [issue tracker](https://github.com/vinaysharma14/react-js-cli/issues) beforehand, your issue/feature may have already been discussed or fixed in master.
+Feel free to raise a bug or a feature request. Please search the [issue tracker](https://github.com/vinaysharma14/rapid-react/issues) beforehand, your issue/feature may have already been discussed or fixed in master.
 
 ### File a bug :beetle:
 
 In case you've encountered a bug, please make sure:
 
 - You are using the latest version.
-- You have read the [documentation](https://github.com/vinaysharma14/react-js-cli/blob/master/README.md) first, and double-checked your configuration.
+- You have read the [documentation](https://github.com/vinaysharma14/rapid-react/blob/master/README.md) first, and double-checked your configuration.
 - You have acknowledged from troubleshooting & debugging the errors are likely a bug in this project, and not coming from e.g. your environment or custom scripts/commands.
 - In your issue description, please include:
   - A clear and descriptive title.
@@ -70,4 +70,4 @@ Guidelines are enforced using [ESLint](https://eslint.org/):
 $ npm run lint
 ```
 
-**Note:** make sure to always keep [README.md](https://github.com/vinaysharma14/react-js-cli/blob/master/README.md) up to date with new features being added, existing functionalities being deprecated, e.t.c.
+**Note:** make sure to always keep [README.md](https://github.com/vinaysharma14/rapid-react/blob/master/README.md) up to date with new features being added, existing functionalities being deprecated, e.t.c.

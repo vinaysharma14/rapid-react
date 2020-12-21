@@ -1,10 +1,10 @@
 import chalk from "chalk";
 
-const name = 'React JS CLI';
-const repo = 'https://github.com/vinaysharma14/react-js-cli/issues';
+const name = 'Rapid React';
+const repo = 'https://github.com/vinaysharma14/rapid-react/issues';
 
 const messages = {
-  welcome: `Welcome to ${chalk.bold(name)}! A light weight interactive CLI Automation Tool 🛠️  to scaffold React apps quickly using Create React App under the hood. ⚛️`,
+  welcome: `Welcome to ${chalk.bold(name)}! A light weight interactive CLI Automation Tool 🛠️  for rapid scaffolding of React apps with Create React App under the hood. ⚛️`,
   walkThrough: 'This utility will walk you through steps to configure a React boilerplate as per your requirements.',
   complete: 'Setup is complete! You can check app in',
   thanks: `Thanks for using ${chalk.bold(name)}. Happy Coding! </>`,
