@@ -16,7 +16,7 @@ import {
   BrowserRouter,
 } from 'react-router-dom';
 
-${namedExport ? `export {
+${namedExport ? `import {
 ${routes.map(route => `  ${route},`).join('\n')}  
 } from '../routes';` : routes.map((route) => `import ${route} from '..routes/${route}';`).join('\n')}
 
