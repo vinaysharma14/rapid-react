@@ -62,6 +62,8 @@ const mappedAnswers = (answers: Answers) => {
     devDependencies: setupDevDependencies,
   } = answers;
 
+  const scssUsed = stylingPreference === STYLES.scss;
+
   // default app name as fallback incase user doesn't enter one
   if (!appName) {
     warnings.push(`App has been named as '${DEFAULT_APP_NAME}' since you didn\'t enter one.`);
@@ -81,6 +83,9 @@ const mappedAnswers = (answers: Answers) => {
   if (language === 'JavaScript' && devDependencies.length > 0) {
     devDependencies = devDependencies.filter((value: string) => !value.startsWith('@types/'));
   }
+
+  // sass needs to be installed explicitly
+  scssUsed && dependencies.push('sass');
 
   if (isRoutingNeeded) {
     // add routing dependencies
@@ -153,13 +158,13 @@ const mappedAnswers = (answers: Answers) => {
     sagas,
     routes,
     folders,
+    scssUsed,
     reduxAddons,
     dependencies,
     devDependencies,
     isRoutingNeeded,
     stateManagement,
     appName: appName || DEFAULT_APP_NAME,
-    scssUsed: stylingPreference === STYLES.scss,
     typescriptUsed: language === LANGUAGES.typescript,
     storesOrReducers: stores.length ? stores : reducers,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
