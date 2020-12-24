@@ -6,14 +6,14 @@ export const routerTemplate = (routes: string[], ts: boolean, namedExport: boole
     cmpExport,
     rootImport,
     cmpDefinition,
-  } = commonTemplates('Routes', ts, namedExport);
+  } = commonTemplates('Router', ts, namedExport);
 
   return `${rootImport}
 
 import {
   Route,
   Switch,
-  BrowserRouter as Router,
+  BrowserRouter,
 } from 'react-router-dom';
 
 ${namedExport ? `export {
@@ -21,11 +21,11 @@ ${routes.map(route => `  ${route},`).join('\n')}
 } from '../routes';` : routes.map((route) => `import ${route} from '..routes/${route}';`).join('\n')}
 
 ${cmpDefinition}
-  <Router>
+  <BrowserRouter>
     <Switch>
 ${routes.map((route) => `      <Route path="/${toKebabCase(route)}" component={${route}} />`).join('\n')}
     </Switch>
-  </Router>
+  </BrowserRouter>
 );
 ${cmpExport}`;
 };
