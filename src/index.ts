@@ -8,6 +8,7 @@ import { name, messages, features } from './messages';
 
 import {
   handleSetup,
+  checkUpdate,
   mappedAnswers,
   writeFolderStructure,
   generateScaffoldConfig,
@@ -26,6 +27,9 @@ const init = async () => {
 
   // greetings
   console.log(`\n${chalk.cyan(asciiArt)}`);
+
+  await checkUpdate();
+
   console.log(`${welcome}\n`);
   features.forEach((value, index) => console.log(`${chalk.green('✔')} ${value} ${index === features.length - 1 ? '\n' : ''}`));
   console.log(`${chalk.cyan(walkThrough)}\n`);
