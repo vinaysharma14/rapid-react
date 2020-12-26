@@ -6,7 +6,7 @@ import semverDiff from 'semver-diff';
 
 import { capitalizeFirstLetter } from '../utils';
 
-import { name, version } from '../../package.json';
+const { name, version } = require('../../package.json');
 
 export const checkUpdate = async() => {
   const { version: latestVersion } = await pkgJson(name);
