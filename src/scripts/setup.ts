@@ -71,7 +71,7 @@ export const handleSetup = async () => {
     {
       type: 'checkbox',
       name: 'reduxAddons',
-      choices: [REDUX_ADDONS['Redux Saga'].label, REDUX_ADDONS['Redux Logger'].label, REDUX_ADDONS['Redux Form'].label],
+      choices: [REDUX_ADDONS['Redux Saga'].label, REDUX_ADDONS['Redux Logger'].label],
       when: (answers: any) => answers.stateManagement === STATE_MANAGEMENT.Redux.label,
       message: 'Would you like to install any of these additional dependencies usually needed for redux?',
     },

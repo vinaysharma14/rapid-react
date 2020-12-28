@@ -40,12 +40,6 @@ const REDUX_ADDONS = {
     lib: 'redux-saga',
     label: 'Redux Saga',
   },
-  'Redux Form': {
-    dev: false,
-    lib: 'redux-form',
-    label: 'Redux Form',
-    types: '@types/redux-form',
-  },
   'Redux Logger': {
     dev: true,
     lib: 'redux-logger',

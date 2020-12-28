@@ -44,7 +44,6 @@ Well, now you can grab a cup of :coffee: while **Rapid React** scaffolds the app
 - Setups [routing](https://reactrouter.com/) with user defined routes.
 - Setups [Redux](https://react-redux.js.org/) state management with user defined reducers along with:
   - [Redux Saga](https://redux-saga.js.org/)
-  - [Redux Form](https://redux-form.com/)
   - [Redux Logger](https://github.com/LogRocket/redux-logger#readme)
 - Setups [MobX](https://mobx.js.org/README.html) state management with user defined stores.
 - ...and much more! :tada:
@@ -131,7 +130,6 @@ The utility would walk you through from following:
 
   - **Installing additional Redux libraries**<br>
     If you chose Redux you'll be prompted to choose from these additional libraries usually needed with Redux:
-    - Redux Form
     - Redux Logger
     - Redux Saga (plus, you can **enter space separated** sagas as well)
 

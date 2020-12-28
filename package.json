@@ -36,7 +36,6 @@
     "react-router-dom",
     "mobx-react",
     "redux-saga",
-    "redux-form",
     "redux-logger",
     "sass",
     "scss",

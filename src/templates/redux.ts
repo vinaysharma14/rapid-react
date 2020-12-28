@@ -1,7 +1,7 @@
 import { sortArr, toKebabCase, unCapitalizeFirstLetter } from "../utils";
 import { MOCK_SAGAS, MOCK_REDUCERS, REDUX_ADDONS } from '../constants';
 
-const reducerTemplates = (customReducers: string[], namedExport: boolean, useForm: boolean) => {
+const reducerTemplates = (customReducers: string[], namedExport: boolean) => {
   const useMock = !customReducers.length;
   const reducers = useMock ? MOCK_REDUCERS : customReducers.map(name => unCapitalizeFirstLetter(name));
 
@@ -15,7 +15,7 @@ ${mockCmt(0)}} from './reducers';` :
     `${reducers.map(reducer => `${mockCmt(0)}import ${reducer}Reducer from './reducers/${toKebabCase(reducer)}';`).join('\n')}`}`;
 
   const rootReducer = `const rootReducer = combineReducers({
-${reducers.map(reducer => `  ${mockCmt(0)}${reducer}Reducer,`).join('\n')}${useForm ? '\n  formReducer,' : ''}
+${reducers.map(reducer => `  ${mockCmt(0)}${reducer}Reducer,`).join('\n')}
 });`;
 
   return {
@@ -62,9 +62,7 @@ if (process.env.NODE_ENV === 'development') {
     // * you can uncomment the below line or completely line it as per your requirement
     collapsed: true,
     // * you can prevent actions to be logged by specifying their action type
-    // * e.g. redux form logs can be blacklisted from being logged by
-    // * specifying the type of it's actions, .i.e. '@@redux-form'
-    // predicate: (_, action) => !action.type.includes('@@redux-form'),
+    // predicate: (_, action) => !action.type.includes('action-type'),
   }));
 }\n`);
 
@@ -75,10 +73,7 @@ export const reduxTemplate = (
   namedExport: boolean,
   addons?: [keyof typeof REDUX_ADDONS],
 ) => {
-  const useForm = addons?.includes('Redux Form');
-  const formImport = useForm ? `\nimport { reducer as formReducer } from 'redux-form';\n` : '';
-
-  const { reducerImports, rootReducer } = reducerTemplates(customReducers, namedExport, !!useForm);
+  const { reducerImports, rootReducer } = reducerTemplates(customReducers, namedExport);
 
   let sagaImports = '', rootSaga = '';
   const useSaga = addons?.includes('Redux Saga');
@@ -110,7 +105,7 @@ export const reduxTemplate = (
 ${reduxImports.map((importName) => `  ${importName},`).join('\n')}
 } from 'redux';`
   }
-${loggerImport}${formImport}${useSaga ? `\n${sagaImports}\n` : ''}
+${loggerImport}${useSaga ? `\n${sagaImports}\n` : ''}
 ${reducerImports}
 
 ${rootReducer}
