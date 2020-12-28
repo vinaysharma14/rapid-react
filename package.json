@@ -1,6 +1,6 @@
 {
   "name": "rapid-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A light weight interactive CLI Automation Tool 🛠️ for rapid scaffolding of React apps with Create React App under the hood. ⚛️",
   "main": "lib/index.js",
   "scripts": {
