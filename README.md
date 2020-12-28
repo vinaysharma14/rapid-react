@@ -19,6 +19,7 @@
   <a href="#requirements-white_check_mark">Requirements</a> •
   <a href="#installation-rocket">Installation</a> •
   <a href="#documentation-green_book">Documentation</a> •
+  <a href="https://github.com/vinaysharma14/rapid-react/blob/master/ROADMAP.md" target="_blank">Road Map</a> •
   <a href="#contributing-handshake">Contributing</a> •
   <a href="#license-page_facing_up">License</a>
 </p>
@@ -33,6 +34,7 @@ Well, now you can grab a cup of :coffee: while **Rapid React** scaffolds the app
 
 ## Features :tada:
 
+- Get notification every time an update is available. :gear:
 - Supports both [JavaScript](https://www.w3schools.com/js/) and [TypeScript](https://www.typescriptlang.org/). :heart_eyes:
 - Installs both dependencies and dev dependencies.
 - Supports popularly used CSS preprocessor [SASS](https://sass-lang.com/)! :fire:
