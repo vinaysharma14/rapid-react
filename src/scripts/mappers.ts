@@ -109,6 +109,7 @@ const mappedAnswers = (answers: Answers) => {
       ...dependencies,
       STATE_MANAGEMENT[stateManagement].lib,
       STATE_MANAGEMENT[stateManagement].binding,
+      ...stateManagement === 'Redux' ? [REDUX_ADDONS['Redux Toolkit'].lib] : [],
     ];
 
     // add state management types definition to the list of dev dependencies (if exists)

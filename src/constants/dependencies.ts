@@ -40,6 +40,12 @@ const REDUX_ADDONS = {
     lib: 'redux-saga',
     label: 'Redux Saga',
   },
+  'Redux Toolkit': {
+    dev: false,
+    types: undefined,
+    lib: '@reduxjs/toolkit',
+    label: 'Redux Toolkit',
+  },
   'Redux Logger': {
     dev: true,
     lib: 'redux-logger',
