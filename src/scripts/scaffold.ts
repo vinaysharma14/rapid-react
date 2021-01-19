@@ -3,7 +3,6 @@ import { Extensions, ScaffoldConfig } from '../types';
 import { REDUX_ADDONS, STATE_MANAGEMENT } from '../constants';
 
 import {
-  sagaTemplate,
   mobxTemplate,
   storeTemplate,
   reduxTemplate,
@@ -17,7 +16,6 @@ import {
 } from '../templates';
 
 type StateType = {
-  sagas: string[],
   storesOrReducers: string[],
   type: keyof typeof STATE_MANAGEMENT,
 }
@@ -94,7 +92,6 @@ export const generateScaffoldConfig = (
         name: `index.${fileExt}`,
         children: reduxTemplate(
           stateManagement.storesOrReducers,
-          stateManagement.sagas,
           ts,
           namedExport,
           reduxAddons,
@@ -116,16 +113,6 @@ export const generateScaffoldConfig = (
         })), ...namedExport ? [{
           name: `index.${fileExt}`,
           children: rootExportTemplate('reducers', stateManagement.storesOrReducers.map(name => toKebabCase(name))),
-        }] : []],
-      }] : [],
-      ...stateManagement?.sagas.length ? [{ // scaffold sagas if user has entered any
-        name: 'sagas',
-        children: [...stateManagement.sagas.map(name => ({
-          name: `${toKebabCase(name)}.${fileExt}`,
-          children: sagaTemplate(name, ts, namedExport),
-        })), ...namedExport ? [{
-          name: `index.${fileExt}`,
-          children: rootExportTemplate('sagas', stateManagement.sagas.map(name => toKebabCase(name))),
         }] : []],
       }] : []],
     }] : [],

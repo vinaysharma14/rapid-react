@@ -40,7 +40,6 @@ const init = async () => {
 
     // map the raw input in a proper structure
     const {
-      sagas,
       routes,
       appName,
       folders,
@@ -67,7 +66,7 @@ const init = async () => {
       ts,
       namedExport,
       fileExtensions,
-      stateManagement ? { type: stateManagement, storesOrReducers, sagas } : undefined,
+      stateManagement ? { type: stateManagement, storesOrReducers } : undefined,
       reduxAddons,
     );
 

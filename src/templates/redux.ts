@@ -24,9 +24,9 @@ ${reducers.map(reducer => `    ${mockCmt(0)}${reducer}Reducer,`).join('\n')}
   };
 };
 
-const sagaTemplates = (customSagas: string[], ts: boolean, namedExport: boolean) => {
-  const useMock = !customSagas.length;
-  const sagas = useMock ? MOCK_SAGAS : customSagas.map(name => unCapitalizeFirstLetter(name));
+const sagaTemplates = (customReducers: string[], ts: boolean, namedExport: boolean) => {
+  const useMock = !customReducers.length;
+  const sagas = useMock ? MOCK_SAGAS : customReducers.map(name => unCapitalizeFirstLetter(name));
 
   // comment in case of mock sagas or whitespace(s) in case of custom ones
   const mockCmt = (whiteSpaces: number) => useMock ? '// ' : ' '.repeat(whiteSpaces);
@@ -37,7 +37,7 @@ import createSagaMiddleware from 'redux-saga';
 ${namedExport ?
     `${mockCmt(0)}import {
 ${sagas.map(saga => `${mockCmt(2)}${saga}Saga,`).join('\n')}
-${mockCmt(0)}} from './sagas';` :
+${mockCmt(0)}} from './features';` :
     `${sagas.map(saga => `${mockCmt(0)}import ${saga}Saga from './sagas/${toKebabCase(saga)}';`).join('\n')}`}`;
 
   const rootSaga = `function* rootSaga()${ts ? ': Generator' : ''} {
@@ -75,7 +75,6 @@ const rtkMiddleware = (useSaga: boolean, useLogger:boolean) => {
 
 export const reduxTemplate = (
   customReducers: string[],
-  customSagas: string[],
   ts: boolean,
   namedExport: boolean,
   addons?: (keyof typeof REDUX_ADDONS)[],
@@ -86,7 +85,7 @@ export const reduxTemplate = (
   const useSaga = !!addons?.includes('Redux Saga');
 
   if (useSaga) {
-    const { sagaImports: sgImports, rootSaga: rootSg } = sagaTemplates(customSagas, ts, namedExport);
+    const { sagaImports: sgImports, rootSaga: rootSg } = sagaTemplates(customReducers, ts, namedExport);
 
     sagaImports = sgImports;
     rootSaga = rootSg;
