@@ -7,9 +7,9 @@ import {
   storeTemplate,
   reduxTemplate,
   typesTemplate,
+  sliceTemplate,
   routerTemplate,
   actionsTemplate,
-  reducerTemplate,
   componentTemplate,
   stylesheetTemplate,
   rootExportTemplate,
@@ -97,12 +97,12 @@ export const generateScaffoldConfig = (
           reduxAddons,
         ),
       }, ...stateManagement?.storesOrReducers.length ? [{ // scaffold reducers if user has entered any
-        name: 'reducers',
+        name: 'features',
         children: [...stateManagement.storesOrReducers.map(name => ({
           name: toKebabCase(name),
           children: [{
             name: `index.${fileExt}`,
-            children: reducerTemplate(name, ts, namedExport),
+            children: sliceTemplate(name, ts, namedExport),
           }, {
             name: `types.${fileExt}`,
             children: typesTemplate(),
