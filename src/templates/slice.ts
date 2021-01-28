@@ -1,4 +1,3 @@
-import { commonTemplates } from "./common";
 import { capitalizeFirstLetter, unCapitalizeFirstLetter } from "../utils";
 
 export const sliceTemplate = (name: string, ts: boolean, namedExport: boolean) => {
@@ -13,8 +12,6 @@ export const sliceTemplate = (name: string, ts: boolean, namedExport: boolean) =
   value: number;
 }\n\n` : '';
 
-  const { cmpExport } = commonTemplates(`${reducerPrefix}Slice`, ts, namedExport);
-
   const actionPayloadComment = ts ? '// Use the PayloadAction type to declare the contents of \`action.payload\`\n    ' : '';
 
   return `import { createSlice${ts ? ', PayloadAction' : ''} } from '@reduxjs/toolkit';
@@ -25,7 +22,7 @@ ${typeDeclaration}const initialState${reducerReturnType} = {
   value: 0,
 };
 
-${namedExport ? 'export ' : ''}const ${reducerPrefix}Slice = createSlice({
+const ${reducerPrefix}Slice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
@@ -44,5 +41,7 @@ ${namedExport ? 'export ' : ''}const ${reducerPrefix}Slice = createSlice({
     },
   },
 });
-${cmpExport}`;
+
+export ${namedExport ? `const ${reducerPrefix}Reducer = ` : 'default'} ${reducerPrefix}Slice.reducer;
+`;
 };
