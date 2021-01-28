@@ -6,10 +6,8 @@ import {
   mobxTemplate,
   storeTemplate,
   reduxTemplate,
-  typesTemplate,
   sliceTemplate,
   routerTemplate,
-  actionsTemplate,
   componentTemplate,
   stylesheetTemplate,
   rootExportTemplate,
@@ -103,12 +101,6 @@ export const generateScaffoldConfig = (
           children: [{
             name: `index.${fileExt}`,
             children: sliceTemplate(name, ts, namedExport),
-          }, {
-            name: `types.${fileExt}`,
-            children: typesTemplate(),
-          }, {
-            name: `actions.${fileExt}`,
-            children: actionsTemplate(),
           }],
         })), ...namedExport ? [{
           name: `index.${fileExt}`,
