@@ -1,6 +1,6 @@
 import { toKebabCase } from '../utils';
+import { STATE_MANAGEMENT } from '../constants';
 import { Extensions, ScaffoldConfig } from '../types';
-import { REDUX_ADDONS, STATE_MANAGEMENT } from '../constants';
 
 import {
   mobxTemplate,
@@ -19,13 +19,14 @@ type StateType = {
 }
 
 export const generateScaffoldConfig = (
+  ts: boolean,
   routes: string[],
   folders: string[],
-  ts: boolean,
+  sagaUsed: boolean,
+  useLogger: boolean,
   namedExport: boolean,
   fileExtensions: Extensions,
   stateManagement?: StateType,
-  reduxAddons?: [keyof typeof REDUX_ADDONS],
 ): ScaffoldConfig[] => {
   const { cmpExt, fileExt, stylesExt } = fileExtensions;
 
@@ -89,10 +90,11 @@ export const generateScaffoldConfig = (
       children: [{
         name: `index.${fileExt}`,
         children: reduxTemplate(
-          stateManagement.storesOrReducers,
           ts,
+          sagaUsed,
+          useLogger,
           namedExport,
-          reduxAddons,
+          stateManagement.storesOrReducers,
         ),
       }, ...stateManagement?.storesOrReducers.length ? [{ // scaffold reducers if user has entered any
         name: 'features',

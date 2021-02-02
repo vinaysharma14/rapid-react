@@ -1,5 +1,5 @@
+import { MOCK_SAGAS, MOCK_REDUCERS } from '../constants';
 import { toKebabCase, unCapitalizeFirstLetter } from "../utils";
-import { MOCK_SAGAS, MOCK_REDUCERS, REDUX_ADDONS } from '../constants';
 
 const reducerTemplates = (customReducers: string[], namedExport: boolean) => {
   const useMock = !customReducers.length;
@@ -74,15 +74,15 @@ const rtkMiddleware = (useSaga: boolean, useLogger:boolean) => {
 };
 
 export const reduxTemplate = (
-  customReducers: string[],
   ts: boolean,
+  useSaga: boolean,
+  useLogger: boolean,
   namedExport: boolean,
-  addons?: (keyof typeof REDUX_ADDONS)[],
+  customReducers: string[],
 ) => {
   const { reducerImports, rootReducer } = reducerTemplates(customReducers, namedExport);
 
   let sagaImports = '', rootSaga = '';
-  const useSaga = !!addons?.includes('Redux Saga');
 
   if (useSaga) {
     const { sagaImports: sgImports, rootSaga: rootSg } = sagaTemplates(customReducers, ts, namedExport);
@@ -91,7 +91,6 @@ export const reduxTemplate = (
     rootSaga = rootSg;
   }
 
-  const useLogger = !!addons?.includes('Redux Logger');
   const loggerImport = `${useLogger ? `\nimport { createLogger } from 'redux-logger';\n` : ''}`;
 
   const rtkImports = [

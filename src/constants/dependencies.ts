@@ -52,6 +52,12 @@ const REDUX_ADDONS = {
     label: 'Redux Logger',
     types: '@types/redux-logger',
   },
+  'Redux Thunk': {
+    lib: '',
+    dev: false,
+    types: undefined,
+    label: 'Redux Thunk',
+  },
 } as const;
 
 const FOLDERS = [

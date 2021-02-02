@@ -18,16 +18,17 @@ interface Answers {
   stores?: string;
   appName?: string;
   reducers: string;
+  useLogger: boolean;
   dependencies: string;
   devDependencies: string;
   isRoutingNeeded: boolean;
   additionalFolders: string;
   predefinedFolders: string[];
-  reduxAddons?: [keyof typeof REDUX_ADDONS];
   stateManagement?: keyof typeof STATE_MANAGEMENT;
   exportPreference: keyof typeof EXPORT_PREFERENCE,
   language: typeof LANGUAGES[keyof typeof LANGUAGES];
   stylingPreference: typeof STYLES[keyof typeof STYLES],
+  middleware: Exclude<keyof typeof REDUX_ADDONS, 'Redux Logger' | 'Redux Toolkit'>,
 }
 
 const mappedAnswers = (answers: Answers) => {
@@ -45,7 +46,8 @@ const mappedAnswers = (answers: Answers) => {
   const {
     appName,
     language,
-    reduxAddons,
+    useLogger,
+    middleware,
     isRoutingNeeded,
     stateManagement,
     exportPreference,
@@ -59,6 +61,8 @@ const mappedAnswers = (answers: Answers) => {
     devDependencies: setupDevDependencies,
   } = answers;
 
+  const tsUsed = language === 'Typescript';
+  const sagaUsed = middleware === 'Redux Saga';
   const scssUsed = stylingPreference === STYLES.scss;
 
   // default app name as fallback incase user doesn't enter one
@@ -115,7 +119,7 @@ const mappedAnswers = (answers: Answers) => {
     // add state management types definition to the list of dev dependencies (if exists)
     devDependencies = [
       ...devDependencies,
-      ...language === 'Typescript' && STATE_MANAGEMENT[stateManagement].types ?
+      ...tsUsed && STATE_MANAGEMENT[stateManagement].types ?
         [STATE_MANAGEMENT[stateManagement].types] : [],
     ];
 
@@ -123,19 +127,18 @@ const mappedAnswers = (answers: Answers) => {
     stores = toUniqueArray(storesInput, true);
     reducers = toUniqueArray(reducersInput, true);
 
-    // add redux addons based on whether they are dev dependency or not
-    reduxAddons && reduxAddons.forEach((addOn: keyof typeof REDUX_ADDONS) => {
-      if (REDUX_ADDONS[addOn].dev) {
-        devDependencies.push(REDUX_ADDONS[addOn].lib);
-      } else {
-        dependencies.push(REDUX_ADDONS[addOn].lib);
-      }
+    // add redux logger
+    if (useLogger) {
+      const { lib, types } = REDUX_ADDONS['Redux Logger'];
 
-      // add types definition for redux addon if user has chosen typescript
-      if (language === 'Typescript' && REDUX_ADDONS[addOn].types) {
-        devDependencies.push(REDUX_ADDONS[addOn].types);
-      }
-    });
+      devDependencies = [...devDependencies, lib, ...tsUsed ? [types] : []];
+    }
+
+    // thunk doesn't need to be installed
+    // as an additional dependency
+    if (sagaUsed) {
+      dependencies.push(REDUX_ADDONS[middleware].lib);
+    }
   }
 
   // save if user selected any predefined folder(s)
@@ -152,16 +155,17 @@ const mappedAnswers = (answers: Answers) => {
   warnings.forEach((warning, i) => console.log(`${!i ? '\n' : ''}${chalk.keyword('orange')(warning)}`));
 
   return {
+    tsUsed,
     routes,
     folders,
     scssUsed,
-    reduxAddons,
+    sagaUsed,
+    useLogger,
     dependencies,
     devDependencies,
     isRoutingNeeded,
     stateManagement,
     appName: appName || DEFAULT_APP_NAME,
-    typescriptUsed: language === LANGUAGES.typescript,
     storesOrReducers: stores.length ? stores : reducers,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
   };

@@ -40,34 +40,36 @@ const init = async () => {
 
     // map the raw input in a proper structure
     const {
+      tsUsed,
       routes,
       appName,
       folders,
       scssUsed,
-      reduxAddons,
+      sagaUsed,
+      useLogger,
       namedExport,
       dependencies,
       stateManagement,
       devDependencies,
       storesOrReducers,
-      typescriptUsed: ts,
     } = mappedAnswers(inputs);
 
     // directory where app would be installed
     const directory = `${process.cwd()}/${appName}`;
 
     // get extension of component, stylesheet and general files
-    const fileExtensions = getFileExtensions(ts, scssUsed);
+    const fileExtensions = getFileExtensions(tsUsed, scssUsed);
 
     // generate folder structure scaffold
     const scaffoldConfig = generateScaffoldConfig(
+      tsUsed,
       routes,
       folders,
-      ts,
+      sagaUsed,
+      useLogger,
       namedExport,
       fileExtensions,
       stateManagement ? { type: stateManagement, storesOrReducers } : undefined,
-      reduxAddons,
     );
 
     // notify user about the directory
@@ -80,7 +82,7 @@ const init = async () => {
     } = commands;
 
     // create a react app with the given name and typescript template flag conditionally
-    await run(installReact, [appName, ...ts ? ['--template typescript'] : []]);
+    await run(installReact, [appName, ...tsUsed ? ['--template typescript'] : []]);
 
     // write the folder structure in project directory using the scaffold config
     await writeFolderStructure(
