@@ -1,9 +1,9 @@
-import { MOCK_SAGAS, MOCK_REDUCERS } from '../constants';
+import { MOCK_IMPORTS } from '../constants';
 import { toKebabCase, unCapitalizeFirstLetter } from "../utils";
 
 const reducerTemplates = (customReducers: string[], namedExport: boolean) => {
   const useMock = !customReducers.length;
-  const reducers = useMock ? MOCK_REDUCERS : customReducers.map(name => unCapitalizeFirstLetter(name));
+  const reducers = useMock ? MOCK_IMPORTS : customReducers.map(name => unCapitalizeFirstLetter(name));
 
   // comment in case of mock reducers or whitespace(s) in case of custom ones
   const mockCmt = (whiteSpaces: number) => useMock ? '// ' : ' '.repeat(whiteSpaces);
@@ -26,7 +26,7 @@ ${reducers.map(reducer => `    ${mockCmt(0)}${reducer}Reducer,`).join('\n')}
 
 const sagaTemplates = (customReducers: string[], ts: boolean, namedExport: boolean) => {
   const useMock = !customReducers.length;
-  const sagas = useMock ? MOCK_SAGAS : customReducers.map(name => unCapitalizeFirstLetter(name));
+  const sagas = useMock ? MOCK_IMPORTS : customReducers.map(name => unCapitalizeFirstLetter(name));
 
   // comment in case of mock sagas or whitespace(s) in case of custom ones
   const mockCmt = (whiteSpaces: number) => useMock ? '// ' : ' '.repeat(whiteSpaces);

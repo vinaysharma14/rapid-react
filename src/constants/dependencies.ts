@@ -82,12 +82,15 @@ const LANG_CONFIG = {
   js: 'jsconfig.json',
 };
 
+const MOCK_IMPORTS = ['foo', 'bar'];
+
 export {
   STYLES,
   ROUTING,
   FOLDERS,
   LANGUAGES,
   LANG_CONFIG,
+  MOCK_IMPORTS,
   REDUX_ADDONS,
   DEFAULT_ROUTE,
   DEFAULT_APP_NAME,
