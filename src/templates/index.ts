@@ -1,5 +1,6 @@
 export * from './root';
 export * from './saga';
+export * from './thunk';
 export * from './redux';
 export * from './store';
 export * from './slice';

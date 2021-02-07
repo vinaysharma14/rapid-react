@@ -95,8 +95,7 @@ export const reduxTemplate = (
 
   const rtkImports = [
     'configureStore',
-    // TODO: add thunk support
-    // ...!useSaga && ts ? ['ThunkAction', 'Action'] : [],
+    ...!useSaga && ts ? ['Action', 'ThunkAction'] : [],
   ];
 
   return `${`import { ${rtkImports.join(', ')} } from '@reduxjs/toolkit';`}
@@ -108,5 +107,11 @@ const sagaMiddleware = createSagaMiddleware();\n` : ''}
 ${namedExport ? 'export ' : ''}const store = configureStore({
   ${rootReducer}${rtkMiddleware(useSaga, useLogger)}
 });
-${useSaga ? '\nsagaMiddleware.run(rootSaga);\n' : ''}${namedExport ? '' : '\nexport default store;\n'}${ts ? '\nexport type RootState = ReturnType<typeof store.getState>;\n' : ''}`;
+${useSaga ? '\nsagaMiddleware.run(rootSaga);\n' : ''}${namedExport ? '' : '\nexport default store;\n'}
+${ts ? 'export type RootState = ReturnType<typeof store.getState>;\n' : ''}${!useSaga ? `\nexport type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;\n` : ''}`;
 };

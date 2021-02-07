@@ -102,7 +102,7 @@ export const generateScaffoldConfig = (
           name: toKebabCase(name),
           children: [{
             name: `index.${fileExt}`,
-            children: sliceTemplate(name, ts, namedExport),
+            children: sliceTemplate(name, ts, namedExport, sagaUsed),
           }],
         })), ...namedExport ? [{
           name: `index.${fileExt}`,

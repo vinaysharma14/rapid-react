@@ -1,6 +1,7 @@
+import { sagaTemplate, thunkTemplate } from './index';
 import { capitalizeFirstLetter, unCapitalizeFirstLetter } from "../utils";
 
-export const sliceTemplate = (name: string, ts: boolean, namedExport: boolean) => {
+export const sliceTemplate = (name: string, ts: boolean, namedExport: boolean, sagaUsed: boolean) => {
   const typePrefix = capitalizeFirstLetter(name);
   const reducerPrefix = unCapitalizeFirstLetter(name);
 
@@ -15,6 +16,7 @@ export const sliceTemplate = (name: string, ts: boolean, namedExport: boolean) =
   const actionPayloadComment = ts ? '// Use the PayloadAction type to declare the contents of \`action.payload\`\n    ' : '';
 
   return `import { createSlice${ts ? ', PayloadAction' : ''} } from '@reduxjs/toolkit';
+${sagaUsed ? 'import { delay, takeLatest } from \'redux-saga/effects\';' : ts ? 'import { AppThunk } from \'../../index\'' : ''}
 
 ${typeDeclaration}const initialState${reducerReturnType} = {
   // all properties in this state would be passed to the
@@ -42,6 +44,8 @@ const ${reducerPrefix}Slice = createSlice({
   },
 });
 
-export ${namedExport ? `const ${reducerPrefix}Reducer = ` : 'default'} ${reducerPrefix}Slice.reducer;
+export ${namedExport ? `const ${reducerPrefix}Reducer =` : 'default'} ${reducerPrefix}Slice.reducer;
+${sagaUsed ? 'export ' : ''}const { incrementByAmount } = ${reducerPrefix}Slice.actions;
+${sagaUsed ? sagaTemplate(name, ts) : thunkTemplate(name, ts)}
 `;
 };
