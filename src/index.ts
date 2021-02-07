@@ -7,6 +7,7 @@ import { run, getFileExtensions } from './utils';
 import { name, messages, features } from './messages';
 
 import {
+  notify,
   handleSetup,
   checkUpdate,
   mappedAnswers,
@@ -104,6 +105,7 @@ const init = async () => {
     console.log(`\n${complete} ${chalk.green(directory)}\n`);
     console.log(thanks);
     console.log(`${raiseIssue}\n`);
+    notify();
   } catch (error) {
     console.error(error.message);
   }
