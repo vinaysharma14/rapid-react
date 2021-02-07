@@ -1,31 +1,14 @@
-import { commonTemplates } from "./common";
-import { unCapitalizeFirstLetter } from "../utils";
-
-export const sagaTemplate = (name: string, ts: boolean, namedExport: boolean) => {
-  const reducer = 'xyz';
-  const sagaPrefix = unCapitalizeFirstLetter(name);
-
-  const { cmpExport } = commonTemplates(`${sagaPrefix}Saga`, ts, namedExport);
-
-  return `import { takeLatest, put } from 'redux-saga/effects';
-
-import { onSuccessAction, onErrorAction } from '../../reducers/${reducer}/actions';
-import actionTypes${ts ? ', { FooActionCreatorType }' : ''} from '../../reducers/${reducer}/types';
-
-function* ${sagaPrefix}Middleware(action${ts ? ': FooActionCreatorType' : ''})${ts ? ': Generator' : ''} {
-  const bar = action.payload;
-
-  try {
-    const result = yield someAsyncTask(bar);
-    yield put(onSuccessAction(result));
-  } catch (error) {
-    yield put(onErrorAction(error));
-  }
+export const sagaTemplate = (name: string, ts: boolean) => `
+function* incrementHandler(action${ts ? ': ReturnType<typeof incrementByAmount>' : ''}) {
+  yield delay(1000);
+  // perform side effects here
 }
 
-${namedExport ? 'export ' : ''}function* ${sagaPrefix}Saga()${ts ? ': Generator' : ''} {
-  // ${sagaPrefix}Saga would listen to FOO_ACTION and call ${sagaPrefix}Middleware()
-  yield takeLatest(actionTypes.FOO_ACTION, ${sagaPrefix}Middleware);
-}
-${cmpExport}`;
-};
+// The function below is called a saga and allows us to perform async logic. It
+// can be dispatched like a regular action: \`dispatch(${name}Saga(10))\`. This
+// will call the async incrementHandler with the \`action\` as the first argument.
+// Async code can then be executed and other actions can be dispatched with yield method.
+export function* ${name}Saga() {
+  // ${name}Saga would listen to incrementByAmount action and call incrementHandler()
+  yield takeLatest(incrementByAmount, incrementHandler);
+}`;
