@@ -73,12 +73,14 @@ export const handleSetup = async () => {
       type: 'confirm',
       name: 'useLogger',
       message: 'Would you like to use Redux Logger?',
+      when: (answers: any) => answers.stateManagement === STATE_MANAGEMENT.Redux.label,
     },
     {
       type: 'list',
       name: 'middleware',
       message: 'Choose the preferred Redux Middleware:',
       choices: [REDUX_ADDONS['Redux Thunk'].label, REDUX_ADDONS['Redux Saga'].label],
+      when: (answers: any) => answers.stateManagement === STATE_MANAGEMENT.Redux.label,
     },
     {
       type: 'input',
