@@ -1,6 +1,6 @@
 {
   "name": "rapid-react",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "A light weight interactive CLI Automation Tool 🛠️ for rapid scaffolding of React apps with Create React App under the hood. ⚛️",
   "main": "lib/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "author": "Vinay Sharma <vinaysharma7811@gmail.com> (https://www.linkedin.com/in/vinaysharma-/)",
   "license": "MIT",
   "bin": {
-    "rapid-react": "./lib/index.js"
+    "rapid-react": "lib/index.js"
   },
   "keywords": [
     "cli-app",
