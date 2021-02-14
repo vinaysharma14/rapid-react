@@ -40,7 +40,7 @@ Thanks for showing your love for **Rapid React** which has motivated further to 
 
 - **Rapid React** has been re-written from [React Redux](https://react-redux.js.org/) to [Redux Toolkit](https://redux-toolkit.js.org/) APIs. This would dramatically reduce the boilerplate code required to work with Redux and further cut down your development efforts. :weight_lifting:
 
-> Thas been considered after an in-depth advice from [Mark Erikson](https://github.com/markerikson) who is a Redux maintainer. You may check his suggestions [here](https://www.reddit.com/r/reactjs/comments/khhh49/introducing_react_rapid_a_light_weight/) which cover **RTK** as the recommended way to write Redux logic. This would be a **breaking change** for existing users.
+> This has been considered after an in-depth advice from [Mark Erikson](https://github.com/markerikson) who is a Redux maintainer. You may check his suggestions [here](https://www.reddit.com/r/reactjs/comments/khhh49/introducing_react_rapid_a_light_weight/) which cover **RTK** as the recommended way to write Redux logic. This would be a **breaking change** for existing users.
 
 - Added support for Redux Thunk middleware!
 
