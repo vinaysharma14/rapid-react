@@ -40,17 +40,23 @@ const REDUX_ADDONS = {
     lib: 'redux-saga',
     label: 'Redux Saga',
   },
-  'Redux Form': {
+  'Redux Toolkit': {
     dev: false,
-    lib: 'redux-form',
-    label: 'Redux Form',
-    types: '@types/redux-form',
+    types: undefined,
+    lib: '@reduxjs/toolkit',
+    label: 'Redux Toolkit',
   },
   'Redux Logger': {
     dev: true,
     lib: 'redux-logger',
     label: 'Redux Logger',
     types: '@types/redux-logger',
+  },
+  'Redux Thunk': {
+    lib: '',
+    dev: false,
+    types: undefined,
+    label: 'Redux Thunk',
   },
 } as const;
 
@@ -76,12 +82,15 @@ const LANG_CONFIG = {
   js: 'jsconfig.json',
 };
 
+const MOCK_IMPORTS = ['foo', 'bar'];
+
 export {
   STYLES,
   ROUTING,
   FOLDERS,
   LANGUAGES,
   LANG_CONFIG,
+  MOCK_IMPORTS,
   REDUX_ADDONS,
   DEFAULT_ROUTE,
   DEFAULT_APP_NAME,

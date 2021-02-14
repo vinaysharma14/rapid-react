@@ -7,6 +7,7 @@ import { run, getFileExtensions } from './utils';
 import { name, messages, features } from './messages';
 
 import {
+  notify,
   handleSetup,
   checkUpdate,
   mappedAnswers,
@@ -40,35 +41,36 @@ const init = async () => {
 
     // map the raw input in a proper structure
     const {
-      sagas,
+      tsUsed,
       routes,
       appName,
       folders,
       scssUsed,
-      reduxAddons,
+      sagaUsed,
+      useLogger,
       namedExport,
       dependencies,
       stateManagement,
       devDependencies,
       storesOrReducers,
-      typescriptUsed: ts,
     } = mappedAnswers(inputs);
 
     // directory where app would be installed
     const directory = `${process.cwd()}/${appName}`;
 
     // get extension of component, stylesheet and general files
-    const fileExtensions = getFileExtensions(ts, scssUsed);
+    const fileExtensions = getFileExtensions(tsUsed, scssUsed);
 
     // generate folder structure scaffold
     const scaffoldConfig = generateScaffoldConfig(
+      tsUsed,
       routes,
       folders,
-      ts,
+      sagaUsed,
+      useLogger,
       namedExport,
       fileExtensions,
-      stateManagement ? { type: stateManagement, storesOrReducers, sagas } : undefined,
-      reduxAddons,
+      stateManagement ? { type: stateManagement, storesOrReducers } : undefined,
     );
 
     // notify user about the directory
@@ -81,7 +83,7 @@ const init = async () => {
     } = commands;
 
     // create a react app with the given name and typescript template flag conditionally
-    await run(installReact, [appName, ...ts ? ['--template typescript'] : []]);
+    await run(installReact, [appName, ...tsUsed ? ['--template typescript'] : []]);
 
     // write the folder structure in project directory using the scaffold config
     await writeFolderStructure(
@@ -103,6 +105,7 @@ const init = async () => {
     console.log(`\n${complete} ${chalk.green(directory)}\n`);
     console.log(thanks);
     console.log(`${raiseIssue}\n`);
+    notify();
   } catch (error) {
     console.error(error.message);
   }

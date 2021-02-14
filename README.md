@@ -32,6 +32,22 @@
 
 Well, now you can grab a cup of :coffee: while **Rapid React** scaffolds the app for you! :relieved:
 
+## Rapid React 2.0 is out! :gift:
+
+![update-notification](docs/images/update.png)
+
+Thanks for showing your love for **Rapid React** which has motivated further to work on some cool new features!
+
+- **Rapid React** has been re-written from [React Redux](https://react-redux.js.org/) to [Redux Toolkit](https://redux-toolkit.js.org/) APIs. This would dramatically reduce the boilerplate code required to work with Redux and further cut down your development efforts. :weight_lifting:
+
+> Thas been considered after an in-depth advice from [Mark Erikson](https://github.com/markerikson) who is a Redux maintainer. You may check his suggestions [here](https://www.reddit.com/r/reactjs/comments/khhh49/introducing_react_rapid_a_light_weight/) which cover **RTK** as the recommended way to write Redux logic. This would be a **breaking change** for existing users.
+
+- Added support for Redux Thunk middleware!
+
+- A much more comprehensive and better looking version update notification!
+
+- A notification sound would play once the setup is complete! :bellhop_bell:
+
 ## Features :tada:
 
 - Get notification every time an update is available. :gear:
@@ -43,8 +59,8 @@ Well, now you can grab a cup of :coffee: while **Rapid React** scaffolds the app
 - Choose preferred [export type](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export): named/default. :thinking:
 - Setups [routing](https://reactrouter.com/) with user defined routes.
 - Setups [Redux](https://react-redux.js.org/) state management with user defined reducers along with:
+  - [Redux Thunk](https://github.com/reduxjs/redux-thunk)
   - [Redux Saga](https://redux-saga.js.org/)
-  - [Redux Form](https://redux-form.com/)
   - [Redux Logger](https://github.com/LogRocket/redux-logger#readme)
 - Setups [MobX](https://mobx.js.org/README.html) state management with user defined stores.
 - ...and much more! :tada:
@@ -130,10 +146,10 @@ The utility would walk you through from following:
     Choose between MobX and Redux. Once chosen you'll be prompted to **enter space separated** names of stores(in case of MobX) or reducers(in case of Redux). The conventions would be same as routes.
 
   - **Installing additional Redux libraries**<br>
-    If you chose Redux you'll be prompted to choose from these additional libraries usually needed with Redux:
-    - Redux Form
+    If you chose Redux you'll be prompted to choose from these additional libraries usually used with Redux:
     - Redux Logger
-    - Redux Saga (plus, you can **enter space separated** sagas as well)
+    - Redux Thunk
+    - Redux Saga
 
 - **Scaffold folders**:
 

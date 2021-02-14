@@ -1,35 +1,32 @@
 import { toKebabCase } from '../utils';
+import { STATE_MANAGEMENT } from '../constants';
 import { Extensions, ScaffoldConfig } from '../types';
-import { REDUX_ADDONS, STATE_MANAGEMENT } from '../constants';
 
 import {
-  sagaTemplate,
   mobxTemplate,
   storeTemplate,
   reduxTemplate,
-  typesTemplate,
+  sliceTemplate,
   routerTemplate,
-  actionsTemplate,
-  reducerTemplate,
   componentTemplate,
   stylesheetTemplate,
   rootExportTemplate,
 } from '../templates';
 
 type StateType = {
-  sagas: string[],
   storesOrReducers: string[],
   type: keyof typeof STATE_MANAGEMENT,
 }
 
 export const generateScaffoldConfig = (
+  ts: boolean,
   routes: string[],
   folders: string[],
-  ts: boolean,
+  sagaUsed: boolean,
+  useLogger: boolean,
   namedExport: boolean,
   fileExtensions: Extensions,
   stateManagement?: StateType,
-  reduxAddons?: [keyof typeof REDUX_ADDONS],
 ): ScaffoldConfig[] => {
   const { cmpExt, fileExt, stylesExt } = fileExtensions;
 
@@ -93,39 +90,23 @@ export const generateScaffoldConfig = (
       children: [{
         name: `index.${fileExt}`,
         children: reduxTemplate(
-          stateManagement.storesOrReducers,
-          stateManagement.sagas,
           ts,
+          sagaUsed,
+          useLogger,
           namedExport,
-          reduxAddons,
+          stateManagement.storesOrReducers,
         ),
       }, ...stateManagement?.storesOrReducers.length ? [{ // scaffold reducers if user has entered any
-        name: 'reducers',
+        name: 'features',
         children: [...stateManagement.storesOrReducers.map(name => ({
           name: toKebabCase(name),
           children: [{
             name: `index.${fileExt}`,
-            children: reducerTemplate(name, ts, namedExport),
-          }, {
-            name: `types.${fileExt}`,
-            children: typesTemplate(),
-          }, {
-            name: `actions.${fileExt}`,
-            children: actionsTemplate(),
+            children: sliceTemplate(name, ts, namedExport, sagaUsed),
           }],
         })), ...namedExport ? [{
           name: `index.${fileExt}`,
           children: rootExportTemplate('reducers', stateManagement.storesOrReducers.map(name => toKebabCase(name))),
-        }] : []],
-      }] : [],
-      ...stateManagement?.sagas.length ? [{ // scaffold sagas if user has entered any
-        name: 'sagas',
-        children: [...stateManagement.sagas.map(name => ({
-          name: `${toKebabCase(name)}.${fileExt}`,
-          children: sagaTemplate(name, ts, namedExport),
-        })), ...namedExport ? [{
-          name: `index.${fileExt}`,
-          children: rootExportTemplate('sagas', stateManagement.sagas.map(name => toKebabCase(name))),
         }] : []],
       }] : []],
     }] : [],

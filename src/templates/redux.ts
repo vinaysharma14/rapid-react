@@ -1,9 +1,9 @@
-import { sortArr, toKebabCase, unCapitalizeFirstLetter } from "../utils";
-import { MOCK_SAGAS, MOCK_REDUCERS, REDUX_ADDONS } from '../constants';
+import { MOCK_IMPORTS } from '../constants';
+import { toKebabCase, unCapitalizeFirstLetter } from "../utils";
 
-const reducerTemplates = (customReducers: string[], namedExport: boolean, useForm: boolean) => {
+const reducerTemplates = (customReducers: string[], namedExport: boolean) => {
   const useMock = !customReducers.length;
-  const reducers = useMock ? MOCK_REDUCERS : customReducers.map(name => unCapitalizeFirstLetter(name));
+  const reducers = useMock ? MOCK_IMPORTS : customReducers.map(name => unCapitalizeFirstLetter(name));
 
   // comment in case of mock reducers or whitespace(s) in case of custom ones
   const mockCmt = (whiteSpaces: number) => useMock ? '// ' : ' '.repeat(whiteSpaces);
@@ -11,12 +11,12 @@ const reducerTemplates = (customReducers: string[], namedExport: boolean, useFor
   const reducerImports = `${namedExport ?
     `${mockCmt(0)}import {
 ${reducers.map(reducer => `${mockCmt(2)}${reducer}Reducer,`).join('\n')}
-${mockCmt(0)}} from './reducers';` :
-    `${reducers.map(reducer => `${mockCmt(0)}import ${reducer}Reducer from './reducers/${toKebabCase(reducer)}';`).join('\n')}`}`;
+${mockCmt(0)}} from './features';` :
+    `${reducers.map(reducer => `${mockCmt(0)}import ${reducer}Reducer from './features/${toKebabCase(reducer)}';`).join('\n')}`}`;
 
-  const rootReducer = `const rootReducer = combineReducers({
-${reducers.map(reducer => `  ${mockCmt(0)}${reducer}Reducer,`).join('\n')}${useForm ? '\n  formReducer,' : ''}
-});`;
+  const rootReducer = `reducer: {
+${reducers.map(reducer => `    ${mockCmt(0)}${reducer}Reducer,`).join('\n')}
+  },`;
 
   return {
     rootReducer,
@@ -24,25 +24,25 @@ ${reducers.map(reducer => `  ${mockCmt(0)}${reducer}Reducer,`).join('\n')}${useF
   };
 };
 
-const sagaTemplates = (customSagas: string[], ts: boolean, namedExport: boolean) => {
-  const useMock = !customSagas.length;
-  const sagas = useMock ? MOCK_SAGAS : customSagas.map(name => unCapitalizeFirstLetter(name));
+const sagaTemplates = (customReducers: string[], ts: boolean, namedExport: boolean) => {
+  const useMock = !customReducers.length;
+  const sagas = useMock ? MOCK_IMPORTS : customReducers.map(name => unCapitalizeFirstLetter(name));
 
   // comment in case of mock sagas or whitespace(s) in case of custom ones
   const mockCmt = (whiteSpaces: number) => useMock ? '// ' : ' '.repeat(whiteSpaces);
 
-  const sagaImports = `import createSagaMiddleware from 'redux-saga';
-import { all, fork } from 'redux-saga/effects';
+  const sagaImports = `import { all } from 'redux-saga/effects';
+import createSagaMiddleware from 'redux-saga';
 
 ${namedExport ?
     `${mockCmt(0)}import {
 ${sagas.map(saga => `${mockCmt(2)}${saga}Saga,`).join('\n')}
-${mockCmt(0)}} from './sagas';` :
+${mockCmt(0)}} from './features';` :
     `${sagas.map(saga => `${mockCmt(0)}import ${saga}Saga from './sagas/${toKebabCase(saga)}';`).join('\n')}`}`;
 
   const rootSaga = `function* rootSaga()${ts ? ': Generator' : ''} {
   yield all([
-${sagas.map(saga => `    ${mockCmt(0)}fork(${saga}Saga),`).join('\n')}
+${sagas.map(saga => `    ${mockCmt(0)}${saga}Saga,`).join('\n')}
   ]);
 }`;
 
@@ -52,71 +52,66 @@ ${sagas.map(saga => `    ${mockCmt(0)}fork(${saga}Saga),`).join('\n')}
   };
 };
 
-const reduxLoggerTemplate = (useSaga: boolean, ts: boolean) => (`
-const middleWares${ts ? ': Middleware[]' : ''} = [${useSaga ? 'sagaMiddleware' : ''}];
+const reduxLoggerTemplate = () => (`
+    ...process.env.NODE_ENV === 'development' ? [ // actions should be logged only during development
+      createLogger({
+        // * all the logs would be collapsed so as to prevent console from being cluttered
+        // * you can uncomment the below line or completely line it as per your requirement
+        collapsed: true,
+        // * you can prevent actions to be logged by specifying their action type
+        // predicate: (_, action) => !action.type.includes('action-type'),
+      }),
+    ] : [],`
+);
 
-// redux action should be logged only in development environment
-if (process.env.NODE_ENV === 'development') {
-  middleWares.push(createLogger({
-    // * all the logs would be collapsed so as to prevent console from being cluttered
-    // * you can uncomment the below line or completely line it as per your requirement
-    collapsed: true,
-    // * you can prevent actions to be logged by specifying their action type
-    // * e.g. redux form logs can be blacklisted from being logged by
-    // * specifying the type of it's actions, .i.e. '@@redux-form'
-    // predicate: (_, action) => !action.type.includes('@@redux-form'),
-  }));
-}\n`);
+const rtkMiddleware = (useSaga: boolean, useLogger:boolean) => {
+  const saga = useSaga ? '\n    sagaMiddleware,' : '';
+  const logger = useLogger ? reduxLoggerTemplate() : '';
+
+  return !useSaga && !useLogger ? '' : `\n  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware(),${saga}${logger}
+  ],`;
+};
 
 export const reduxTemplate = (
-  customReducers: string[],
-  customSagas: string[],
   ts: boolean,
+  useSaga: boolean,
+  useLogger: boolean,
   namedExport: boolean,
-  addons?: [keyof typeof REDUX_ADDONS],
+  customReducers: string[],
 ) => {
-  const useForm = addons?.includes('Redux Form');
-  const formImport = useForm ? `\nimport { reducer as formReducer } from 'redux-form';\n` : '';
-
-  const { reducerImports, rootReducer } = reducerTemplates(customReducers, namedExport, !!useForm);
+  const { reducerImports, rootReducer } = reducerTemplates(customReducers, namedExport);
 
   let sagaImports = '', rootSaga = '';
-  const useSaga = addons?.includes('Redux Saga');
 
   if (useSaga) {
-    const { sagaImports: sgImports, rootSaga: rootSg } = sagaTemplates(customSagas, ts, namedExport);
+    const { sagaImports: sgImports, rootSaga: rootSg } = sagaTemplates(customReducers, ts, namedExport);
 
     sagaImports = sgImports;
     rootSaga = rootSg;
   }
 
-  const useLogger = addons?.includes('Redux Logger');
   const loggerImport = `${useLogger ? `\nimport { createLogger } from 'redux-logger';\n` : ''}`;
 
-  const reduxImports = sortArr([
-    'createStore',
-    'combineReducers',
-    ...useSaga ? ['applyMiddleware'] : [],
-    ...useLogger ? ['compose', ...ts ? ['Middleware'] : []] : [],
-  ]);
+  const rtkImports = [
+    'configureStore',
+    ...!useSaga && ts ? ['Action', 'ThunkAction'] : [],
+  ];
 
-  const storeCreation = useLogger ?
-    'compose(applyMiddleware(...middleWares))(createStore)(rootReducer)' :
-    `createStore(rootReducer${useSaga ? ', applyMiddleware(sagaMiddleware)' : ''})`;
-
-  return `${reduxImports.length <= 3 ?
-    `import { ${reduxImports.join(', ')} } from 'redux';` :
-    `import {
-${reduxImports.map((importName) => `  ${importName},`).join('\n')}
-} from 'redux';`
-  }
-${loggerImport}${formImport}${useSaga ? `\n${sagaImports}\n` : ''}
+  return `${`import { ${rtkImports.join(', ')} } from '@reduxjs/toolkit';`}
+${loggerImport}${useSaga ? `\n${sagaImports}\n` : ''}
 ${reducerImports}
-
-${rootReducer}
 ${useSaga ? `\n${rootSaga}
 
-const sagaMiddleware = createSagaMiddleware();` : ''}${useLogger ? reduxLoggerTemplate(!!useSaga, ts) : ''}
-${namedExport ? 'export ' : ''}const store = ${storeCreation};
-${useSaga ? '\nsagaMiddleware.run(rootSaga);\n' : ''}${namedExport ? '' : '\nexport default store;\n'}${ts ? '\nexport type AppState = ReturnType<typeof rootReducer>;\n' : ''}`;
+const sagaMiddleware = createSagaMiddleware();\n` : ''}
+${namedExport ? 'export ' : ''}const store = configureStore({
+  ${rootReducer}${rtkMiddleware(useSaga, useLogger)}
+});
+${useSaga ? '\nsagaMiddleware.run(rootSaga);\n' : ''}${namedExport ? '' : '\nexport default store;\n'}
+${ts ? 'export type RootState = ReturnType<typeof store.getState>;\n' : ''}${!useSaga ? `\nexport type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;\n` : ''}`;
 };

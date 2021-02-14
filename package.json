@@ -1,14 +1,14 @@
 {
   "name": "rapid-react",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "A light weight interactive CLI Automation Tool 🛠️ for rapid scaffolding of React apps with Create React App under the hood. ⚛️",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint --fix 'src/**/*.ts'",
-    "start": "npx ts-node src/index.ts",
+    "start": "npx nodemon --no-stdin --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "prebuild": "rm -rf lib",
-    "build": "tsc -p . && npx ts-node src/scripts/minify.ts && npm pack --dry-run"
+    "build": "tsc -p . && npx ts-node src/scripts/minify.ts && npx ncp src/assets lib/assets && npm pack --dry-run"
   },
   "files": [
     "lib"
@@ -20,7 +20,7 @@
   "author": "Vinay Sharma <vinaysharma7811@gmail.com> (https://www.linkedin.com/in/vinaysharma-/)",
   "license": "MIT",
   "bin": {
-    "rapid-react": "./lib/index.js"
+    "rapid-react": "lib/index.js"
   },
   "keywords": [
     "cli-app",
@@ -36,7 +36,6 @@
     "react-router-dom",
     "mobx-react",
     "redux-saga",
-    "redux-form",
     "redux-logger",
     "sass",
     "scss",
@@ -48,12 +47,13 @@
   },
   "homepage": "https://github.com/vinaysharma14/rapid-react#readme",
   "dependencies": {
-    "boxen": "^4.2.0",
+    "boxen": "^5.0.0",
     "chalk": "^4.1.0",
     "figlet": "^1.5.0",
     "inquirer": "^7.3.3",
     "ora": "^5.1.0",
     "package-json": "^6.5.0",
+    "play-sound": "^1.1.3",
     "semver": "^7.3.4",
     "semver-diff": "^3.1.1"
   },
@@ -70,6 +70,8 @@
     "glob": "^7.1.6",
     "husky": "^4.3.5",
     "minify": "^6.0.1",
+    "ncp": "^2.0.0",
+    "nodemon": "^2.0.6",
     "ts-node": "^9.0.0",
     "typescript": "^4.1.2"
   }

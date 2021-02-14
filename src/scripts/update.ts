@@ -21,14 +21,16 @@ export const checkUpdate = async() => {
     }
 
     const msg = {
-      updateAvailable: `${updateType} update available ${chalk.dim(version)} → ${chalk.green(latestVersion)}`,
-      runUpdate: `Run ${chalk.cyan(`npm i -g ${name}`)} to update`,
+      runUpdate: `Run ${chalk.green(`npm i -g ${name}`)} to update`,
+      updateAvailable: `${chalk.bold(updateType)} update available ${chalk.red(version)} → ${chalk.green(latestVersion)}`,
+      changelog: `${chalk.yellow('Changelog:')} ${chalk.cyan(`https://github.com/vinaysharma14/rapid-react/releases/tag/${latestVersion}`)}`,
     };
 
-    console.log(boxen(`${msg.updateAvailable}\n${msg.runUpdate}`, {
+    console.log(boxen(`${msg.updateAvailable}\n${msg.runUpdate}\n\n${msg.changelog}`, {
       margin: 1,
       padding: 1,
       align: 'center',
+      borderStyle: 'round',
     }));
   }
 };
