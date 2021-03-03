@@ -24,8 +24,7 @@ const flattenScaffoldConfig = (
       if (isFile && typeof children === 'string') {
         // maintain all files in an array with path & data
         files.push({ path, data: children });
-      }
-      else {
+      } else {
         // maintain all directories with path
         directories.push({ path });
       }
