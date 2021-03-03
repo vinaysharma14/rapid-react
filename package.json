@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint --fix 'src/**/*.ts'",
-    "start": "npx nodemon --no-stdin --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "start": "npx nodemon --no-stdin --watch 'src/**/*.ts' --exec npx ts-node src/index.ts",
     "prebuild": "rm -rf lib",
     "build": "tsc -p . && npx ts-node src/scripts/minify.ts && npx ncp src/assets lib/assets && npm pack --dry-run"
   },
