@@ -15,25 +15,28 @@ import {
   generateScaffoldConfig,
 } from './scripts';
 
+const { version } = require('../package.json');
+
 const init = async () => {
   const {
-    welcome,
-    walkThrough,
-    complete,
     thanks,
+    welcome,
+    complete,
     raiseIssue,
+    walkThrough,
   } = messages;
 
   const asciiArt = figlet.textSync(name, { font: 'ANSI Shadow' });
 
   // greetings
   console.log(`\n${chalk.cyan(asciiArt)}`);
+  console.log(chalk.green(`(v${version})\n`));
 
   await checkUpdate();
 
   console.log(`${welcome}\n`);
-  features.forEach((value, index) => console.log(`${chalk.green('✔')} ${value} ${index === features.length - 1 ? '\n' : ''}`));
-  console.log(`${chalk.cyan(walkThrough)}\n`);
+  features.forEach(value => console.log(`${chalk.green('✔')} ${value}`));
+  console.log(`\n${chalk.cyan(walkThrough)}\n`);
 
   try {
     // ask user for app information via an interactive setup
