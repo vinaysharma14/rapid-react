@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import chalk from 'chalk';
 import figlet from 'figlet';
+import { platform } from 'os';
 
 import { commands } from './constants';
 import { run, getFileExtensions } from './utils';
@@ -26,6 +27,7 @@ const init = async () => {
     walkThrough,
   } = messages;
 
+  const winPlatform = platform() === 'win32';
   const asciiArt = figlet.textSync(name, { font: 'ANSI Shadow' });
 
   // greetings
@@ -35,7 +37,7 @@ const init = async () => {
   await checkUpdate();
 
   console.log(`${welcome}\n`);
-  features.forEach(value => console.log(`${chalk.green('✔')} ${value}`));
+  features.forEach(value => console.log(`${chalk.green(winPlatform ? '√' : '✔')} ${value}`));
   console.log(`\n${chalk.cyan(walkThrough)}\n`);
 
   try {
@@ -108,7 +110,7 @@ const init = async () => {
     console.log(`\n${complete} ${chalk.green(directory)}\n`);
     console.log(thanks);
     console.log(`${raiseIssue}\n`);
-    await notify();
+    await notify(winPlatform);
   } catch (error) {
     console.error(error.message);
   }
