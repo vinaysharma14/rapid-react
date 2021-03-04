@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import os from 'os';
 import chalk from 'chalk';
 import figlet from 'figlet';
+import { platform } from 'os';
 
 import { commands } from './constants';
 import { run, getFileExtensions } from './utils';
@@ -27,7 +27,7 @@ const init = async () => {
     walkThrough,
   } = messages;
 
-  const winPlatform = os.platform() === 'win32';
+  const winPlatform = platform() === 'win32';
   const asciiArt = figlet.textSync(name, { font: 'ANSI Shadow' });
 
   // greetings
