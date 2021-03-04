@@ -21,7 +21,7 @@ export const checkUpdate = async() => {
     }
 
     const msg = {
-      runUpdate: `Run ${chalk.green(`npm i -g ${name}`)} to update`,
+      runUpdate: `Run ${chalk.green(`npm update ${name} -g`)} to update.`,
       updateAvailable: `${chalk.bold(updateType)} update available ${chalk.red(version)} → ${chalk.green(latestVersion)}`,
       changelog: `${chalk.yellow('Changelog:')} ${chalk.cyan(`https://github.com/vinaysharma14/rapid-react/releases/tag/${latestVersion}`)}`,
     };
