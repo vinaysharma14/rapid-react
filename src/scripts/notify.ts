@@ -1,13 +1,12 @@
-import os from 'os';
 import { exec } from 'child_process';
 
 const player = require('play-sound')();
 const asyncExec = require('util').promisify(exec);
 
-export const notify = async() => {
+export const notify = async(winPlatform: boolean) => {
   const assetPath = __dirname.replace('scripts', 'assets/notification.mp3');
 
-  if (os.platform() === 'win32') {
+  if (winPlatform) {
     // handle audio playback on windows machine explicitly
     // code reference has been taken from https://github.com/nomadhoc/sound-play
 
