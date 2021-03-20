@@ -131,7 +131,8 @@ const mappedAnswers = (answers: Answers) => {
     if (useLogger) {
       const { lib, types } = REDUX_ADDONS['Redux Logger'];
 
-      devDependencies = [...devDependencies, lib, ...tsUsed ? [types] : []];
+      dependencies = [...dependencies, lib];
+      devDependencies = [...devDependencies, ...tsUsed ? [types] : []];
     }
 
     // thunk doesn't need to be installed
