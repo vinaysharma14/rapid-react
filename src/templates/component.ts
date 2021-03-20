@@ -15,7 +15,7 @@ import './styles.${styleExt}';
 
 ${cmpDefinition}
   <div className='${toKebabCase(name)}-container'>
-  {/* JSX goes here */}
+    {/* JSX goes here */}
   </div>
 );
 ${cmpExport}`;
