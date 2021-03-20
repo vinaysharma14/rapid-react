@@ -25,7 +25,7 @@ ${typeDeclaration}const initialState${reducerReturnType} = {
 };
 
 const ${reducerPrefix}Slice = createSlice({
-  name: 'counter',
+  name: '${reducerPrefix}',
   initialState,
   reducers: {
     increment: (state${stateSuffix}) => {
