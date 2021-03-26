@@ -34,12 +34,8 @@ export const generateScaffoldConfig = (
     ...routes.length ? [
       // * ---------- router ---------- * //
       node(
-        'router',
-        [
-          node(
-            `index.${cmpExt}`,
-            routerTemplate(routes, ts, namedExport),
-          ),
+        'router', [
+          node(`index.${cmpExt}`, routerTemplate(routes, ts, namedExport)),
         ],
       ),
 
@@ -49,27 +45,17 @@ export const generateScaffoldConfig = (
         [
           ...routes.map(route => (
             node(
-              route,
-              [
+              route, [
                 // component
-                node(
-                  `index.${cmpExt}`,
-                  componentTemplate(route, ts, namedExport, stylesExt),
-                ),
+                node(`index.${cmpExt}`, componentTemplate(route, ts, namedExport, stylesExt)),
                 // stylesheet
-                node(
-                  `styles.${stylesExt}`,
-                  stylesheetTemplate(route),
-                ),
+                node(`styles.${stylesExt}`, stylesheetTemplate(route)),
               ],
             )
           )),
           // named route exports
           ...namedExport ? [
-            node(
-              `index.${fileExt}`,
-              rootExportTemplate('routes', routes),
-            ),
+            node(`index.${fileExt}`, rootExportTemplate('routes', routes)),
           ] : [],
         ],
       ),
@@ -81,10 +67,7 @@ export const generateScaffoldConfig = (
         folder,
         // named folder exports
         namedExport ? [
-          node(
-            `index.${fileExt}`,
-            rootExportTemplate(folder),
-          ),
+          node(`index.${fileExt}`, rootExportTemplate(folder)),
         ] : [],
       ),
     ) : [],
@@ -94,16 +77,10 @@ export const generateScaffoldConfig = (
       node(
         'store',
         [
-          node(
-            `index.${fileExt}`,
-            mobxTemplate(stateManagement.storesOrReducers, namedExport),
-          ),
+          node(`index.${fileExt}`, mobxTemplate(stateManagement.storesOrReducers, namedExport)),
           // stores
           ...stateManagement?.storesOrReducers.length ? stateManagement.storesOrReducers.map(name =>
-            node(
-              `${toKebabCase(name)}.${fileExt}`,
-              storeTemplate(name, ts, namedExport),
-            ),
+            node(`${toKebabCase(name)}.${fileExt}`, storeTemplate(name, ts, namedExport)),
           ) : [],
         ],
       ),
@@ -116,13 +93,7 @@ export const generateScaffoldConfig = (
         [
           node(
             `index.${fileExt}`,
-            reduxTemplate(
-              ts,
-              sagaUsed,
-              useLogger,
-              namedExport,
-              stateManagement.storesOrReducers,
-            ),
+            reduxTemplate(ts, sagaUsed, useLogger, namedExport, stateManagement.storesOrReducers),
           ),
           ...stateManagement?.storesOrReducers.length ? [
             node(
@@ -131,12 +102,8 @@ export const generateScaffoldConfig = (
                 // slices
                 ...stateManagement.storesOrReducers.map(name =>
                   node(
-                    toKebabCase(name),
-                    [
-                      node(
-                        `index.${fileExt}`,
-                        sliceTemplate(name, ts, namedExport, sagaUsed),
-                      ),
+                    toKebabCase(name), [
+                      node(`index.${fileExt}`, sliceTemplate(name, ts, namedExport, sagaUsed)),
                     ],
                   ),
                 ),
