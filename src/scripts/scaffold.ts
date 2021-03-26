@@ -89,18 +89,26 @@ export const generateScaffoldConfig = (
       ),
     ) : [],
 
-    // generate MobX template
-    ...stateManagement?.type === STATE_MANAGEMENT.MobX.label ? [{
-      name: 'store',
-      children: [{
-        name: `index.${fileExt}`,
-        children: mobxTemplate(stateManagement.storesOrReducers, namedExport),
-      }, ...stateManagement?.storesOrReducers.length ? // scaffold stores if user has entered any
-        stateManagement.storesOrReducers.map(name => ({
-          name: `${toKebabCase(name)}.${fileExt}`,
-          children: storeTemplate(name, ts, namedExport),
-        })) : []],
-    }] : [],
+    // * ---------- MobX ---------- * //
+    ...stateManagement?.type === STATE_MANAGEMENT.MobX.label ? [
+      node(
+        'store',
+        [
+          node(
+            `index.${fileExt}`,
+            mobxTemplate(stateManagement.storesOrReducers, namedExport),
+          ),
+          // stores
+          ...stateManagement?.storesOrReducers.length ? stateManagement.storesOrReducers.map(name =>
+            node(
+              `${toKebabCase(name)}.${fileExt}`,
+              storeTemplate(name, ts, namedExport),
+            ),
+          ) : [],
+        ],
+      ),
+    ] : [],
+
     // generate Redux template
     ...stateManagement?.type === STATE_MANAGEMENT.Redux.label ? [{
       name: 'store',
