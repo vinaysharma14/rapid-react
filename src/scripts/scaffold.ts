@@ -109,32 +109,50 @@ export const generateScaffoldConfig = (
       ),
     ] : [],
 
-    // generate Redux template
-    ...stateManagement?.type === STATE_MANAGEMENT.Redux.label ? [{
-      name: 'store',
-      children: [{
-        name: `index.${fileExt}`,
-        children: reduxTemplate(
-          ts,
-          sagaUsed,
-          useLogger,
-          namedExport,
-          stateManagement.storesOrReducers,
-        ),
-      }, ...stateManagement?.storesOrReducers.length ? [{ // scaffold reducers if user has entered any
-        name: 'features',
-        children: [...stateManagement.storesOrReducers.map(name => ({
-          name: toKebabCase(name),
-          children: [{
-            name: `index.${fileExt}`,
-            children: sliceTemplate(name, ts, namedExport, sagaUsed),
-          }],
-        })), ...namedExport ? [{
-          name: `index.${fileExt}`,
-          children: rootExportTemplate('reducers', stateManagement.storesOrReducers.map(name => toKebabCase(name))),
-        }] : []],
-      }] : []],
-    }] : [],
+    // * ---------- Redux ---------- * //
+    ...stateManagement?.type === STATE_MANAGEMENT.Redux.label ? [
+      node(
+        'store',
+        [
+          node(
+            `index.${fileExt}`,
+            reduxTemplate(
+              ts,
+              sagaUsed,
+              useLogger,
+              namedExport,
+              stateManagement.storesOrReducers,
+            ),
+          ),
+          ...stateManagement?.storesOrReducers.length ? [
+            node(
+              'features',
+              [
+                // slices
+                ...stateManagement.storesOrReducers.map(name =>
+                  node(
+                    toKebabCase(name),
+                    [
+                      node(
+                        `index.${fileExt}`,
+                        sliceTemplate(name, ts, namedExport, sagaUsed),
+                      ),
+                    ],
+                  ),
+                ),
+                // named slice exports
+                ...namedExport ? [
+                  node(
+                    `index.${fileExt}`,
+                    rootExportTemplate('reducers', stateManagement.storesOrReducers.map(name => toKebabCase(name))),
+                  ),
+                ] : [],
+              ],
+            ),
+          ] : [],
+        ],
+      ),
+    ] : [],
   ];
 };
 
