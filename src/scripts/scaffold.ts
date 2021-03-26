@@ -75,15 +75,20 @@ export const generateScaffoldConfig = (
       ),
     ] : [],
 
-    // scaffold folder(s) if user chose any
-    ...folders.length ? folders.map(name => ({
-      name,
-      // conditionally add a root export file in case of named exports
-      children: namedExport ? [{
-        name: `index.${fileExt}`,
-        children: rootExportTemplate(name),
-      }] : undefined,
-    })) : [],
+    // * ---------- folders ---------- * //
+    ...folders.length ? folders.map(folder =>
+      node(
+        folder,
+        // named folder exports
+        namedExport ? [
+          node(
+            `index.${fileExt}`,
+            rootExportTemplate(folder),
+          ),
+        ] : [],
+      ),
+    ) : [],
+
     // generate MobX template
     ...stateManagement?.type === STATE_MANAGEMENT.MobX.label ? [{
       name: 'store',
