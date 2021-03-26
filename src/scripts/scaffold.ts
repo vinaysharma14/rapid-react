@@ -42,29 +42,39 @@ export const generateScaffoldConfig = (
           ),
         ],
       ),
-      {
-        name: 'routes',
-        children: [
-          ...routes.map(route => ({
-            name: route,
-            children: [{
-              // component
-              name: `index.${cmpExt}`,
-              children: componentTemplate(route, ts, namedExport, stylesExt),
-            }, {
-              // stylesheet
-              name: `styles.${stylesExt}`,
-              children: stylesheetTemplate(route),
-            }],
-          })),
-          // conditionally add a root export file in case of named exports
-          ...namedExport ? [{
-            name: `index.${fileExt}`,
-            children: rootExportTemplate('routes', routes),
-          }] : [],
+
+      // * ---------- routes ---------- * //
+      node(
+        'routes',
+        [
+          ...routes.map(route => (
+            node(
+              route,
+              [
+                // component
+                node(
+                  `index.${cmpExt}`,
+                  componentTemplate(route, ts, namedExport, stylesExt),
+                ),
+                // stylesheet
+                node(
+                  `styles.${stylesExt}`,
+                  stylesheetTemplate(route),
+                ),
+              ],
+            )
+          )),
+          // named route exports
+          ...namedExport ? [
+            node(
+              `index.${fileExt}`,
+              rootExportTemplate('routes', routes),
+            ),
+          ] : [],
         ],
-      },
+      ),
     ] : [],
+
     // scaffold folder(s) if user chose any
     ...folders.length ? folders.map(name => ({
       name,
