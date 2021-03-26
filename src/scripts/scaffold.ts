@@ -1,4 +1,4 @@
-import { toKebabCase } from '../utils';
+import { node, toKebabCase } from '../utils';
 import { STATE_MANAGEMENT } from '../constants';
 import { Extensions, ScaffoldConfig } from '../types';
 
@@ -31,15 +31,17 @@ export const generateScaffoldConfig = (
   const { cmpExt, fileExt, stylesExt } = fileExtensions;
 
   return [
-    // conditionally scaffold router and routes if any route present
     ...routes.length ? [
-      {
-        name: 'router',
-        children: [{
-          name: `index.${cmpExt}`,
-          children: routerTemplate(routes, ts, namedExport),
-        }],
-      },
+      // * ---------- router ---------- * //
+      node(
+        'router',
+        [
+          node(
+            `index.${cmpExt}`,
+            routerTemplate(routes, ts, namedExport),
+          ),
+        ],
+      ),
       {
         name: 'routes',
         children: [

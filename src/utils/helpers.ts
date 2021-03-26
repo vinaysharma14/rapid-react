@@ -1,4 +1,4 @@
-import { Extensions } from "../types";
+import { Extensions, ScaffoldConfig } from "../types";
 
 const sortArr = (arr: string[]) => arr.sort(({ length: l1 }, { length: l2 }) => l1 - l2);
 
@@ -37,7 +37,13 @@ const getFileExtensions = (ts: boolean, scss: boolean): Extensions => ({
   stylesExt: scss ? 'scss' : 'css', // stylesheet
 });
 
+const node = (name: ScaffoldConfig['name'], children: ScaffoldConfig['children']): ScaffoldConfig=> ({
+  name,
+  children,
+});
+
 export {
+  node,
   sortArr,
   toKebabCase,
   toUniqueArray,
