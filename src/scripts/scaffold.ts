@@ -1,4 +1,4 @@
-import { toKebabCase } from '../utils';
+import { node, toKebabCase } from '../utils';
 import { STATE_MANAGEMENT } from '../constants';
 import { Extensions, ScaffoldConfig } from '../types';
 
@@ -31,85 +31,95 @@ export const generateScaffoldConfig = (
   const { cmpExt, fileExt, stylesExt } = fileExtensions;
 
   return [
-    // conditionally scaffold router and routes if any route present
     ...routes.length ? [
-      {
-        name: 'router',
-        children: [{
-          name: `index.${cmpExt}`,
-          children: routerTemplate(routes, ts, namedExport),
-        }],
-      },
-      {
-        name: 'routes',
-        children: [
-          ...routes.map(route => ({
-            name: route,
-            children: [{
-              // component
-              name: `index.${cmpExt}`,
-              children: componentTemplate(route, ts, namedExport, stylesExt),
-            }, {
-              // stylesheet
-              name: `styles.${stylesExt}`,
-              children: stylesheetTemplate(route),
-            }],
-          })),
-          // conditionally add a root export file in case of named exports
-          ...namedExport ? [{
-            name: `index.${fileExt}`,
-            children: rootExportTemplate('routes', routes),
-          }] : [],
+      // * ---------- router ---------- * //
+      node(
+        'router', [
+          node(`index.${cmpExt}`, routerTemplate(routes, ts, namedExport)),
         ],
-      },
+      ),
+
+      // * ---------- routes ---------- * //
+      node(
+        'routes',
+        [
+          ...routes.map(route => (
+            node(
+              route, [
+                // component
+                node(`index.${cmpExt}`, componentTemplate(route, ts, namedExport, stylesExt)),
+                // stylesheet
+                node(`styles.${stylesExt}`, stylesheetTemplate(route)),
+              ],
+            )
+          )),
+          // named route exports
+          ...namedExport ? [
+            node(`index.${fileExt}`, rootExportTemplate('routes', routes)),
+          ] : [],
+        ],
+      ),
     ] : [],
-    // scaffold folder(s) if user chose any
-    ...folders.length ? folders.map(name => ({
-      name,
-      // conditionally add a root export file in case of named exports
-      children: namedExport ? [{
-        name: `index.${fileExt}`,
-        children: rootExportTemplate(name),
-      }] : undefined,
-    })) : [],
-    // generate MobX template
-    ...stateManagement?.type === STATE_MANAGEMENT.MobX.label ? [{
-      name: 'store',
-      children: [{
-        name: `index.${fileExt}`,
-        children: mobxTemplate(stateManagement.storesOrReducers, namedExport),
-      }, ...stateManagement?.storesOrReducers.length ? // scaffold stores if user has entered any
-        stateManagement.storesOrReducers.map(name => ({
-          name: `${toKebabCase(name)}.${fileExt}`,
-          children: storeTemplate(name, ts, namedExport),
-        })) : []],
-    }] : [],
-    // generate Redux template
-    ...stateManagement?.type === STATE_MANAGEMENT.Redux.label ? [{
-      name: 'store',
-      children: [{
-        name: `index.${fileExt}`,
-        children: reduxTemplate(
-          ts,
-          sagaUsed,
-          useLogger,
-          namedExport,
-          stateManagement.storesOrReducers,
-        ),
-      }, ...stateManagement?.storesOrReducers.length ? [{ // scaffold reducers if user has entered any
-        name: 'features',
-        children: [...stateManagement.storesOrReducers.map(name => ({
-          name: toKebabCase(name),
-          children: [{
-            name: `index.${fileExt}`,
-            children: sliceTemplate(name, ts, namedExport, sagaUsed),
-          }],
-        })), ...namedExport ? [{
-          name: `index.${fileExt}`,
-          children: rootExportTemplate('reducers', stateManagement.storesOrReducers.map(name => toKebabCase(name))),
-        }] : []],
-      }] : []],
-    }] : [],
+
+    // * ---------- folders ---------- * //
+    ...folders.length ? folders.map(folder =>
+      node(
+        folder,
+        // named folder exports
+        namedExport ? [
+          node(`index.${fileExt}`, rootExportTemplate(folder)),
+        ] : [],
+      ),
+    ) : [],
+
+    // * ---------- MobX ---------- * //
+    ...stateManagement?.type === STATE_MANAGEMENT.MobX.label ? [
+      node(
+        'store',
+        [
+          node(`index.${fileExt}`, mobxTemplate(stateManagement.storesOrReducers, namedExport)),
+          // stores
+          ...stateManagement?.storesOrReducers.length ? stateManagement.storesOrReducers.map(name =>
+            node(`${toKebabCase(name)}.${fileExt}`, storeTemplate(name, ts, namedExport)),
+          ) : [],
+        ],
+      ),
+    ] : [],
+
+    // * ---------- Redux ---------- * //
+    ...stateManagement?.type === STATE_MANAGEMENT.Redux.label ? [
+      node(
+        'store',
+        [
+          node(
+            `index.${fileExt}`,
+            reduxTemplate(ts, sagaUsed, useLogger, namedExport, stateManagement.storesOrReducers),
+          ),
+          ...stateManagement?.storesOrReducers.length ? [
+            node(
+              'features',
+              [
+                // slices
+                ...stateManagement.storesOrReducers.map(name =>
+                  node(
+                    toKebabCase(name), [
+                      node(`index.${fileExt}`, sliceTemplate(name, ts, namedExport, sagaUsed)),
+                    ],
+                  ),
+                ),
+                // named slice exports
+                ...namedExport ? [
+                  node(
+                    `index.${fileExt}`,
+                    rootExportTemplate('reducers', stateManagement.storesOrReducers.map(name => toKebabCase(name))),
+                  ),
+                ] : [],
+              ],
+            ),
+          ] : [],
+        ],
+      ),
+    ] : [],
   ];
 };
 
