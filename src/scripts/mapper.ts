@@ -31,35 +31,30 @@ interface Answers {
   middleware: Exclude<keyof typeof REDUX_ADDONS, 'Redux Logger' | 'Redux Toolkit'>,
 }
 
-const mappedAnswers = (answers: Answers) => {
-  // TODO: fix any type
-  let dependencies: any[] = [];
-  let devDependencies: any[] = [];
-
+export const mappedAnswers = ({
+  appName,
+  language,
+  useLogger,
+  middleware,
+  isRoutingNeeded,
+  stateManagement,
+  exportPreference,
+  predefinedFolders,
+  additionalFolders,
+  stylingPreference,
+  routes: routesInput,
+  stores: storesInput,
+  reducers: reducersInput,
+  dependencies: setupDependencies,
+  devDependencies: setupDevDependencies,
+}: Answers) => {
   let stores: string[] = [];
-  let reducers: string[] = [];
   let routes: string[] = [];
   let folders: string[] = [];
-
+  let reducers: string[] = [];
   const warnings: string[] = [];
-
-  const {
-    appName,
-    language,
-    useLogger,
-    middleware,
-    isRoutingNeeded,
-    stateManagement,
-    exportPreference,
-    predefinedFolders,
-    additionalFolders,
-    stylingPreference,
-    routes: routesInput,
-    stores: storesInput,
-    reducers: reducersInput,
-    dependencies: setupDependencies,
-    devDependencies: setupDevDependencies,
-  } = answers;
+  let dependencies: string[] = [];
+  let devDependencies: any[] = [];
 
   const tsUsed = language === 'Typescript';
   const sagaUsed = middleware === 'Redux Saga';
@@ -170,8 +165,4 @@ const mappedAnswers = (answers: Answers) => {
     storesOrReducers: stores.length ? stores : reducers,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
   };
-};
-
-export {
-  mappedAnswers,
 };
