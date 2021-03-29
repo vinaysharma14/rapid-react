@@ -1,6 +1,6 @@
-import { node, toKebabCase } from '../utils';
-import { STATE_MANAGEMENT } from '../constant';
-import { Extensions, ScaffoldConfig } from '../types';
+import { node, toKebabCase } from 'utils';
+import { STATE_MANAGEMENT } from 'constant';
+import { Extensions, ScaffoldConfig } from 'types';
 
 import {
   mobxTemplate,
@@ -11,7 +11,7 @@ import {
   componentTemplate,
   stylesheetTemplate,
   rootExportTemplate,
-} from '../templates';
+} from 'templates';
 
 type StateType = {
   storesOrReducers: string[],

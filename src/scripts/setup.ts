@@ -8,7 +8,7 @@ import {
   STATE_MANAGEMENT,
   DEFAULT_APP_NAME,
   EXPORT_PREFERENCE,
-} from '../constant';
+} from 'constant';
 
 export const handleSetup = async () => {
   return await inquirer.prompt([
