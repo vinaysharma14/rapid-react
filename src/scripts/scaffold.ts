@@ -1,5 +1,5 @@
 import { node, toKebabCase } from '../utils';
-import { STATE_MANAGEMENT } from '../constants';
+import { STATE_MANAGEMENT } from '../constant';
 import { Extensions, ScaffoldConfig } from '../types';
 
 import {

@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import figlet from 'figlet';
 import { platform } from 'os';
 
-import { commands } from './constants';
-import { run, getFileExtensions } from './utils';
-import { name, messages, features } from './messages';
+import { commands } from 'constant';
+import { run, getFileExtensions } from 'utils';
+import { name, messages, features } from 'messages';
 
 import {
   notify,
@@ -14,7 +14,7 @@ import {
   mappedAnswers,
   writeFolderStructure,
   generateScaffoldConfig,
-} from './scripts';
+} from 'scripts';
 
 const { version } = require('../package.json');
 

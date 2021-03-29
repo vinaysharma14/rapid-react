@@ -1,4 +1,4 @@
-import { MOCK_IMPORTS } from '../constants';
+import { MOCK_IMPORTS } from '../constant';
 import { toKebabCase, unCapitalizeFirstLetter } from "../utils";
 
 const reducerTemplates = (customReducers: string[], namedExport: boolean) => {
