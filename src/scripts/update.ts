@@ -4,7 +4,7 @@ import semver from 'semver';
 import pkgJson from 'package-json';
 import semverDiff from 'semver-diff';
 
-import { capitalizeFirstLetter } from '../utils';
+import { capitalizeFirstLetter } from 'utils';
 
 const { name, version } = require('../../package.json');
 

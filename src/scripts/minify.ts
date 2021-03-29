@@ -1,6 +1,6 @@
-import { writeToFile } from '../utils';
 import glob from 'glob';
 import minify from 'minify';
+import { writeToFile } from 'utils';
 
 glob("lib/**/*.js", async (error: Error | null, files: string[]) => {
   if(error === null) {

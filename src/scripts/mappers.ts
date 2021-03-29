@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-import { capitalizeFirstLetter, toUniqueArray } from "../utils";
+import { capitalizeFirstLetter, toUniqueArray } from 'utils';
 
 import {
   STYLES,
@@ -11,7 +11,7 @@ import {
   STATE_MANAGEMENT,
   DEFAULT_APP_NAME,
   EXPORT_PREFERENCE,
-} from "../constant";
+} from 'constant';
 
 interface Answers {
   routes?: string;

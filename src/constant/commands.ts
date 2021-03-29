@@ -1,4 +1,4 @@
-import { CommandCollection } from "../types";
+import { CommandCollection } from 'types';
 
 export const commands: CommandCollection = {
   installReact: {
