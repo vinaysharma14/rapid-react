@@ -1,5 +1,5 @@
-import { name as appName } from '../messages';
-import { capitalizeFirstLetter } from '../utils';
+import { name as appName } from 'messages';
+import { capitalizeFirstLetter } from 'utils';
 
 export const storeTemplate = (name: string, ts: boolean, namedExport: boolean) => (
   `import { action, observable } from 'mobx';

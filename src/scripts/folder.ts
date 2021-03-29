@@ -1,7 +1,7 @@
 import ora from 'ora';
 
 import { jsConfig, tsConfig } from '../templates';
-import { LANG_CONFIG, STATE_MANAGEMENT } from '../constants';
+import { LANG_CONFIG, STATE_MANAGEMENT } from '../constant';
 
 import { Extensions, ScaffoldConfig } from '../types';
 import { createDir, writeToFile, deleteFile, replaceFileContents } from '../utils';

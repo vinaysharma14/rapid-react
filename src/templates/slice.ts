@@ -1,5 +1,5 @@
-import { sagaTemplate, thunkTemplate } from './index';
-import { capitalizeFirstLetter, unCapitalizeFirstLetter } from "../utils";
+import { sagaTemplate, thunkTemplate } from '.';
+import { capitalizeFirstLetter, unCapitalizeFirstLetter } from 'utils';
 
 export const sliceTemplate = (name: string, ts: boolean, namedExport: boolean, sagaUsed: boolean) => {
   const typePrefix = capitalizeFirstLetter(name);

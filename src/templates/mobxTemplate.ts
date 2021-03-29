@@ -2,7 +2,7 @@ import {
   toKebabCase,
   capitalizeFirstLetter,
   unCapitalizeFirstLetter,
-} from '../utils';
+} from 'utils';
 
 export const mobxTemplate = (stores: string[], namedExport: boolean) => (
   `import { observable } from 'mobx';
