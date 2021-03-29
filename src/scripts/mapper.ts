@@ -31,7 +31,25 @@ interface Answers {
   middleware: Exclude<keyof typeof REDUX_ADDONS, 'Redux Logger' | 'Redux Toolkit'>,
 }
 
-export const mappedAnswers = ({
+interface MappedAnswers {
+  ts: boolean;
+  name: string;
+  scss: boolean;
+  routes: string[];
+  folders: string[];
+  sagaUsed: boolean;
+  useLogger: boolean;
+  namedExport: boolean;
+  dependencies: string[];
+  devDependencies: string[];
+  isRoutingNeeded: boolean;
+  storesOrReducers: string[];
+  stateManagement?: keyof typeof STATE_MANAGEMENT;
+}
+
+export let MAPPED_ANSWERS: MappedAnswers;
+
+export const mapAnswers = ({
   appName,
   language,
   useLogger,
@@ -56,9 +74,12 @@ export const mappedAnswers = ({
   let dependencies: string[] = [];
   let devDependencies: any[] = [];
 
-  const tsUsed = language === 'Typescript';
+  const ts = language === 'Typescript';
+  const name = appName || DEFAULT_APP_NAME;
   const sagaUsed = middleware === 'Redux Saga';
-  const scssUsed = stylingPreference === STYLES.scss;
+  const scss = stylingPreference === STYLES.scss;
+  const storesOrReducers = stores.length ? stores : reducers;
+  const namedExport = exportPreference === EXPORT_PREFERENCE.named;
 
   // default app name as fallback incase user doesn't enter one
   if (!appName) {
@@ -81,7 +102,7 @@ export const mappedAnswers = ({
   }
 
   // sass needs to be installed explicitly
-  scssUsed && dependencies.push('sass');
+  scss && dependencies.push('sass');
 
   if (isRoutingNeeded) {
     // add routing dependencies
@@ -114,7 +135,7 @@ export const mappedAnswers = ({
     // add state management types definition to the list of dev dependencies (if exists)
     devDependencies = [
       ...devDependencies,
-      ...tsUsed && STATE_MANAGEMENT[stateManagement].types ?
+      ...ts && STATE_MANAGEMENT[stateManagement].types ?
         [STATE_MANAGEMENT[stateManagement].types] : [],
     ];
 
@@ -127,7 +148,7 @@ export const mappedAnswers = ({
       const { lib, types } = REDUX_ADDONS['Redux Logger'];
 
       dependencies = [...dependencies, lib];
-      devDependencies = [...devDependencies, ...tsUsed ? [types] : []];
+      devDependencies = [...devDependencies, ...ts ? [types] : []];
     }
 
     // thunk doesn't need to be installed
@@ -150,19 +171,8 @@ export const mappedAnswers = ({
   // display all warnings to user
   warnings.forEach((warning, i) => console.log(`${!i ? '\n' : ''}${chalk.keyword('orange')(warning)}`));
 
-  return {
-    tsUsed,
-    routes,
-    folders,
-    scssUsed,
-    sagaUsed,
-    useLogger,
-    dependencies,
-    devDependencies,
-    isRoutingNeeded,
-    stateManagement,
-    appName: appName || DEFAULT_APP_NAME,
-    storesOrReducers: stores.length ? stores : reducers,
-    namedExport: exportPreference === EXPORT_PREFERENCE.named,
+  MAPPED_ANSWERS = {
+    ts, name, scss, routes, folders, sagaUsed, useLogger, namedExport,
+    dependencies, devDependencies, isRoutingNeeded, stateManagement, storesOrReducers,
   };
 };

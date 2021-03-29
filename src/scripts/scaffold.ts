@@ -1,3 +1,4 @@
+import { MAPPED_ANSWERS } from './mapper';
 import { node, toKebabCase } from '../utils';
 import { STATE_MANAGEMENT } from '../constants';
 import { Extensions, ScaffoldConfig } from '../types';
@@ -13,22 +14,19 @@ import {
   rootExportTemplate,
 } from '../templates';
 
-type StateType = {
-  storesOrReducers: string[],
-  type: keyof typeof STATE_MANAGEMENT,
-}
-
-export const generateScaffoldConfig = (
-  ts: boolean,
-  routes: string[],
-  folders: string[],
-  sagaUsed: boolean,
-  useLogger: boolean,
-  namedExport: boolean,
-  fileExtensions: Extensions,
-  stateManagement?: StateType,
-): ScaffoldConfig[] => {
+export const generateScaffoldConfig = (fileExtensions: Extensions): ScaffoldConfig[] => {
   const { cmpExt, fileExt, stylesExt } = fileExtensions;
+
+  const {
+    ts,
+    routes,
+    folders,
+    sagaUsed,
+    useLogger,
+    namedExport,
+    stateManagement,
+    storesOrReducers,
+  } = MAPPED_ANSWERS;
 
   return [
     ...routes.length ? [
@@ -62,7 +60,7 @@ export const generateScaffoldConfig = (
     ] : [],
 
     // * ---------- folders ---------- * //
-    ...folders.length ? folders.map(folder =>
+    ...folders.map(folder =>
       node(
         folder,
         // named folder exports
@@ -70,37 +68,37 @@ export const generateScaffoldConfig = (
           node(`index.${fileExt}`, rootExportTemplate(folder)),
         ] : [],
       ),
-    ) : [],
+    ),
 
     // * ---------- MobX ---------- * //
-    ...stateManagement?.type === STATE_MANAGEMENT.MobX.label ? [
+    ...stateManagement === STATE_MANAGEMENT.MobX.label ? [
       node(
         'store',
         [
-          node(`index.${fileExt}`, mobxTemplate(stateManagement.storesOrReducers, namedExport)),
+          node(`index.${fileExt}`, mobxTemplate(storesOrReducers, namedExport)),
           // stores
-          ...stateManagement?.storesOrReducers.length ? stateManagement.storesOrReducers.map(name =>
+          ...storesOrReducers.map(name =>
             node(`${toKebabCase(name)}.${fileExt}`, storeTemplate(name, ts, namedExport)),
-          ) : [],
+          ),
         ],
       ),
     ] : [],
 
     // * ---------- Redux ---------- * //
-    ...stateManagement?.type === STATE_MANAGEMENT.Redux.label ? [
+    ...stateManagement === STATE_MANAGEMENT.Redux.label ? [
       node(
         'store',
         [
           node(
             `index.${fileExt}`,
-            reduxTemplate(ts, sagaUsed, useLogger, namedExport, stateManagement.storesOrReducers),
+            reduxTemplate(ts, sagaUsed, useLogger, namedExport, storesOrReducers),
           ),
-          ...stateManagement?.storesOrReducers.length ? [
+          ...storesOrReducers.length ? [
             node(
               'features',
               [
                 // slices
-                ...stateManagement.storesOrReducers.map(name =>
+                ...storesOrReducers.map(name =>
                   node(
                     toKebabCase(name), [
                       node(`index.${fileExt}`, sliceTemplate(name, ts, namedExport, sagaUsed)),
@@ -111,7 +109,7 @@ export const generateScaffoldConfig = (
                 ...namedExport ? [
                   node(
                     `index.${fileExt}`,
-                    rootExportTemplate('reducers', stateManagement.storesOrReducers.map(name => toKebabCase(name))),
+                    rootExportTemplate('reducers', storesOrReducers.map(name => toKebabCase(name))),
                   ),
                 ] : [],
               ],

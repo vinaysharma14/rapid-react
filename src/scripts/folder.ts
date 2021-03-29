@@ -1,8 +1,9 @@
 import ora from 'ora';
 
+import { LANG_CONFIG } from '../constants';
 import { jsConfig, tsConfig } from '../templates';
-import { LANG_CONFIG, STATE_MANAGEMENT } from '../constants';
 
+import { MAPPED_ANSWERS } from './mapper';
 import { Extensions, ScaffoldConfig } from '../types';
 import { createDir, writeToFile, deleteFile, replaceFileContents } from '../utils';
 
@@ -52,10 +53,10 @@ export const writeFolderStructure = async (
   projectName: string,
   scaffoldConfig: ScaffoldConfig[],
   fileExtensions: Extensions,
-  isRoutingNeeded: boolean,
-  namedExport: boolean,
-  stateManagement?: keyof typeof STATE_MANAGEMENT,
 ) => {
+  const { routes, namedExport, stateManagement } = MAPPED_ANSWERS;
+  const isRoutingNeeded = !!routes.length;
+
   const spinner = ora('Scaffolding the folder structure...').start();
   spinner.start();
 
