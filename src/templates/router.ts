@@ -1,4 +1,4 @@
-import { toKebabCase } from '../utils';
+import { toKebabCase } from 'utils';
 import { commonTemplates } from './common';
 
 export const routerTemplate = (routes: string[], ts: boolean, namedExport: boolean) => {
