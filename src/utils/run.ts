@@ -1,7 +1,7 @@
 import ora from 'ora';
 import { spawn } from 'child_process';
 
-import { Command } from '../types';
+import { Command } from 'types';
 
 export const run = (
   command: Command,

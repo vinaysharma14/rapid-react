@@ -1,4 +1,4 @@
-import { Extensions, ScaffoldConfig } from "../types";
+import { Extensions, ScaffoldConfig } from 'types';
 
 const sortArr = (arr: string[]) => arr.sort(({ length: l1 }, { length: l2 }) => l1 - l2);
 
