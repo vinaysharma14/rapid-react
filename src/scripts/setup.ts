@@ -10,6 +10,8 @@ import {
   EXPORT_PREFERENCE,
 } from 'constant';
 
+import { setupValidations } from 'utils';
+
 export const handleSetup = async () => {
   return await inquirer.prompt([
     {
@@ -23,6 +25,7 @@ export const handleSetup = async () => {
       name: 'appName',
       default: DEFAULT_APP_NAME,
       message: 'Enter the app name:',
+      validate: setupValidations.appName,
     },
     {
       type: 'list',

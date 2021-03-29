@@ -9,7 +9,6 @@ import {
   REDUX_ADDONS,
   DEFAULT_ROUTE,
   STATE_MANAGEMENT,
-  DEFAULT_APP_NAME,
   EXPORT_PREFERENCE,
 } from 'constant';
 
@@ -64,11 +63,6 @@ const mappedAnswers = (answers: Answers) => {
   const tsUsed = language === 'Typescript';
   const sagaUsed = middleware === 'Redux Saga';
   const scssUsed = stylingPreference === STYLES.scss;
-
-  // default app name as fallback incase user doesn't enter one
-  if (!appName) {
-    warnings.push(`App has been named as '${DEFAULT_APP_NAME}' since you didn\'t enter one.`);
-  }
 
   // remove extra white space & duplicates
   if (setupDependencies.length > 0) {
@@ -158,6 +152,7 @@ const mappedAnswers = (answers: Answers) => {
   return {
     tsUsed,
     routes,
+    appName,
     folders,
     scssUsed,
     sagaUsed,
@@ -166,7 +161,6 @@ const mappedAnswers = (answers: Answers) => {
     devDependencies,
     isRoutingNeeded,
     stateManagement,
-    appName: appName || DEFAULT_APP_NAME,
     storesOrReducers: stores.length ? stores : reducers,
     namedExport: exportPreference === EXPORT_PREFERENCE.named,
   };
