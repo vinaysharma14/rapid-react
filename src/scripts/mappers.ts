@@ -15,7 +15,7 @@ import {
 interface Answers {
   routes?: string;
   stores?: string;
-  appName?: string;
+  appName: string;
   reducers: string;
   useLogger: boolean;
   dependencies: string;
