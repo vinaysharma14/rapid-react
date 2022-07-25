@@ -53,7 +53,7 @@ Thanks for showing your love for **Rapid React** which has motivated further to 
 - Get notification every time an update is available. :gear:
 - Supports both [JavaScript](https://www.w3schools.com/js/) and [TypeScript](https://www.typescriptlang.org/). :heart_eyes:
 - Installs both dependencies and dev dependencies.
-- Supports popularly used CSS preprocessor [SASS](https://sass-lang.com/)! :fire:
+- Supports popularly used [CSS](https://www.scaler.com/topics/css/) preprocessor [SASS](https://sass-lang.com/)! :fire:
 - Choose from commonly used folders (`assets`, `components`, `hooks`, `services`, `utils`, e.t.c.) to scaffold.
 - Scaffolds custom folder as well.
 - Choose preferred [export type](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export): named/default. :thinking:
